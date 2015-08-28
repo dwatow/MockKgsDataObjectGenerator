@@ -1,0 +1,3825 @@
+<DB>
+    <Class Name="Area" ParentClass="">
+        <References>
+            <Reference Name="Layout" Type="Link" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="500"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ParentId" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="AreaLevel" Type="String" Size="50"/>
+            <Property Name="AreaAttribute" Type="String" Size="50"/>
+            <Property Name="BackColor" Type="String" Size="50"/>
+            <Property Name="SizeW" Type="String" Size="50"/>
+            <Property Name="SizeH" Type="String" Size="50"/>
+            <Property Name="MeasurementUnits" Type="String" Size="50"/>
+            <Property Name="LayoutVersion" Type="String" Size="50"/>
+            <Property Name="ParentVersion" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="AreaPoint" ParentClass="">
+        <References>
+            <Reference Name="Area" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="SerialNo" Type="U4" Size="0"/>
+            <Property Name="PosX" Type="I4" Size="0"/>
+            <Property Name="PosY" Type="I4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="AutoPipeLineParam" ParentClass="">
+        <References>
+            <Reference Name="ManufactureProcess" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ShiftId" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="BCPrintPagesRulParameter" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="InputLabel" TargetName="ParameterList" ClassName="StationInputLabel" Relation="Has"/>
+            <Reference SourceName="OutputLabel" TargetName="ParameterList" ClassName="StationOutputLabel" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ParamValue" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="BarRunCardTempMaterialRelation" ParentClass="">
+        <References>
+            <Reference Name="RawMaterial" Type="Link" Relation="Has"/>
+            <Reference Name="BarcodeRunCardTemplate" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+        </Properties>
+    </Class>
+    <Class Name="BarcodeRunCardTemplate" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="I4" Size="0"/>
+            <Property Name="Type" Type="I4" Size="0"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="0"/>
+            <Property Name="Width" Type="Double" Size="0"/>
+            <Property Name="Length" Type="Double" Size="0"/>
+            <Property Name="TemplateData" Type="String" Size="50"/>
+            <Property Name="TemplateDataFormat" Type="String" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="BaseProductParam" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="MeasurementUnits" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="MeasurementUnits_per" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="BcrRelation" ParentClass="">
+        <References>
+            <Reference Name="PeripheralsDevice" Type="Link" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="WorkCenter" TargetName="BcrList" ClassName="WorkCenterGroup" Relation="Has"/>
+            <Reference SourceName="Tool" TargetName="BcrList" ClassName="Tool" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Type" Type="U4" Size="0"/>
+            <Property Name="Priority" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="BomUseMaterial" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="OneUnitQty" Type="String" Size="50"/>
+            <Property Name="Dimension" Type="String" Size="50"/>
+            <Property Name="BomSystemKey" Type="String" Size="50"/>
+            <Property Name="MaterialSystemKey" Type="String" Size="50"/>
+            <Property Name="BomRelSysKey" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="Calendar" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="Description" Type="String" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="CalendarBelongRelation" ParentClass="">
+        <References>
+            <Reference Name="Calendar" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+        </Properties>
+    </Class>
+    <Class Name="CalendarSchduleRelation" ParentClass="">
+        <References>
+            <Reference Name="Calendar" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Title" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="0"/>
+            <Property Name="CalendarTypeId" Type="String" Size="50"/>
+            <Property Name="IsRoutine" Type="U4" Size="0"/>
+            <Property Name="RoutineRange" Type="U4" Size="0"/>
+            <Property Name="BeginDateTime" Type="String" Size="50"/>
+            <Property Name="FinishDateTime" Type="String" Size="50"/>
+            <Property Name="RangeFinishData" Type="String" Size="50"/>
+            <Property Name="IsAllDay" Type="U4" Size="0"/>
+            <Property Name="RoutineCount" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="CalendarType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="Description" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="Company" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="CustomerType" Type="String" Size="50"/>
+            <Property Name="Picture" Type="String" Size="50"/>
+            <Property Name="VAT" Type="String" Size="50"/>
+            <Property Name="EstablishedDate" Type="String" Size="50"/>
+            <Property Name="RegisteredCountryCode" Type="String" Size="50"/>
+            <Property Name="RegisteredStateCode" Type="String" Size="50"/>
+            <Property Name="RegisteredPrefectureLevelCitiesCode" Type="String" Size="50"/>
+            <Property Name="RegisteredCityCode" Type="String" Size="50"/>
+            <Property Name="RegisteredTownCode" Type="String" Size="50"/>
+            <Property Name="RegisteredZipCode" Type="String" Size="50"/>
+            <Property Name="RegisteredAddress" Type="String" Size="500"/>
+            <Property Name="BusinessCountryCode" Type="String" Size="50"/>
+            <Property Name="BusinessStateCode" Type="String" Size="50"/>
+            <Property Name="BusinessCityCode" Type="String" Size="50"/>
+            <Property Name="BusinessPrefectureLevelCitiesCode" Type="String" Size="50"/>
+            <Property Name="BusinessTownCode" Type="String" Size="50"/>
+            <Property Name="BusinessZipCode" Type="String" Size="50"/>
+            <Property Name="BusinessAddress" Type="String" Size="500"/>
+            <Property Name="PhoneCountryCode1" Type="String" Size="50"/>
+            <Property Name="PhoneAreaCode1" Type="String" Size="50"/>
+            <Property Name="Phone1" Type="String" Size="50"/>
+            <Property Name="PhoneCountryCode2" Type="String" Size="50"/>
+            <Property Name="PhoneAreaCode2" Type="String" Size="50"/>
+            <Property Name="Phone2" Type="String" Size="50"/>
+            <Property Name="FaxNoCountryCode1" Type="String" Size="50"/>
+            <Property Name="FaxNoAreaCode1" Type="String" Size="50"/>
+            <Property Name="FaxNo1" Type="String" Size="50"/>
+            <Property Name="FaxNoCountryCode2" Type="String" Size="50"/>
+            <Property Name="FaxNoAreaCode2" Type="String" Size="50"/>
+            <Property Name="FaxNo2" Type="String" Size="50"/>
+            <Property Name="ResponsiblePersonLast" Type="String" Size="50"/>
+            <Property Name="ResponsiblePersonMiddle" Type="String" Size="50"/>
+            <Property Name="ResponsiblePersonFirst" Type="String" Size="50"/>
+            <Property Name="CapitalStock" Type="U8" Size="0"/>
+            <Property Name="CurrencyType" Type="String" Size="50"/>
+            <Property Name="NumberOfEmployees" Type="U4" Size="0"/>
+            <Property Name="Email" Type="String" Size="50"/>
+            <Property Name="WebSite" Type="String" Size="50"/>
+            <Property Name="Turnover1" Type="U8" Size="0"/>
+            <Property Name="Turnover2" Type="U8" Size="0"/>
+            <Property Name="Turnover3" Type="U8" Size="0"/>
+            <Property Name="SupplyType" Type="String" Size="50"/>
+            <Property Name="DistributorTypeSysKey" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="CompanyLicense" ParentClass="">
+        <References>
+            <Reference Name="Company" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="LicenseNumber" Type="String" Size="50"/>
+            <Property Name="LicenseName" Type="String" Size="50"/>
+            <Property Name="LicensePicture" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="ConferenceEmpRelation" ParentClass="">
+        <References>
+            <Reference Name="QualityConferenceParticipants" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Participant" TargetName="ConferenceList" ClassName="Employee" Relation="Has"/>
+            <Reference SourceName="QualityConference" TargetName="ParticipatantList" ClassName="QualityConference" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="SignInDateTime" Type="String" Size="50"/>
+            <Property Name="Type" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="Countermeasures" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="ClassificationA" Type="String" Size="50"/>
+            <Property Name="ClassificationB" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="DefectReason" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="ClassificationA" Type="String" Size="50"/>
+            <Property Name="ClassificationB" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="DefectReasonCF" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="DefectReasonCountermeasuresRelation" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="CountermeasuresSystemKey" Type="String" Size="50"/>
+            <Property Name="DefectReasonSystemKey" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="DemoString" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="DiscussionRawDataNgRelation" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Discussion" TargetName="NgRawDataList" ClassName="QualityConferenceDiscussionRelation" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="NgReasonSysKey" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="DispatchList" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="UserField1" Type="String" Size="0"/>
+            <Property Name="UserField2" Type="String" Size="0"/>
+            <Property Name="UserField3" Type="String" Size="0"/>
+            <Property Name="UserField4" Type="String" Size="0"/>
+            <Property Name="UserField5" Type="String" Size="0"/>
+            <Property Name="Description" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ParentMaterial" Type="String" Size="50"/>
+            <Property Name="ParentMaterialVersion" Type="String" Size="50"/>
+            <Property Name="WorkOrderQuantity" Type="Double" Size="0"/>
+            <Property Name="CanBeStartQuantity" Type="Double" Size="0"/>
+            <Property Name="ProductionUnits" Type="String" Size="50"/>
+            <Property Name="BeginDateOfPlan" Type="String" Size="50"/>
+            <Property Name="FinishDateOfPlan" Type="String" Size="50"/>
+            <Property Name="ManufactureOrg" Type="String" Size="50"/>
+            <Property Name="AppendixDoc" Type="String" Size="500"/>
+            <Property Name="WorkState" Type="String" Size="50"/>
+            <Property Name="BomVersion" Type="String" Size="50"/>
+            <Property Name="IsPrintRunCard" Type="U4" Size="0"/>
+            <Property Name="Producer" Type="U4" Size="0"/>
+            <Property Name="TransformType" Type="U4" Size="0"/>
+            <Property Name="StartedQuantity" Type="Double" Size="0"/>
+            <Property Name="WorkOrderTypeId" Type="String" Size="50"/>
+            <Property Name="IsGovMaterial" Type="U4" Size="0"/>
+            <Property Name="LastStationOutOkQty" Type="Double" Size="0"/>
+            <Property Name="LastStationOutNgQty" Type="Double" Size="0"/>
+            <Property Name="LastStationOutSpQty" Type="Double" Size="0"/>
+            <Property Name="CompletionRate" Type="Double" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="DispatchListCustomerRelation" ParentClass="">
+        <References>
+            <Reference Name="DispatchList" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="CustomerSystemKey" Type="String" Size="50"/>
+            <Property Name="OrderId" Type="String" Size="50"/>
+            <Property Name="RequireQuantity" Type="String" Size="50"/>
+            <Property Name="ProductionUnits" Type="String" Size="50"/>
+            <Property Name="AppendixDoc" Type="String" Size="500"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="DispatchListLotTransformSerialConfig" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ParentType" Type="U4" Size="0"/>
+            <Property Name="ParentSystemKey" Type="String" Size="50"/>
+            <Property Name="GenerateMethod" Type="U4" Size="0"/>
+            <Property Name="SerialGenerateMethod" Type="U4" Size="0"/>
+            <Property Name="SerialQuantity" Type="Double" Size="0"/>
+            <Property Name="SerialFixLength" Type="U4" Size="0"/>
+            <Property Name="Delimiter" Type="U4" Size="0"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="DispatchListRawMaterialRelation" ParentClass="">
+        <References>
+            <Reference Name="DispatchList" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="SizeSystemKey" Type="String" Size="50"/>
+            <Property Name="RequireQuantity" Type="String" Size="50"/>
+            <Property Name="ProductionUnits" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="DispatchListSchedule" ParentClass="">
+        <References>
+            <Reference Name="ManufactureProcessStation" Type="Link" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="EstimatedStartTime" Type="String" Size="50"/>
+            <Property Name="EstimatedCompleteTime" Type="String" Size="50"/>
+            <Property Name="DispatchListSysKey" Type="String" Size="50"/>
+            <Property Name="LotSysKey" Type="String" Size="50"/>
+            <Property Name="SerialSysKey" Type="String" Size="50"/>
+            <Property Name="JobPropertiesSK" Type="String" Size="50"/>
+            <Property Name="CycleTimeSK" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="DispatchListSerialRelation" ParentClass="">
+        <References>
+            <Reference Name="DispatchListLotTransformSerialConfig" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="WorkState" Type="String" Size="50"/>
+            <Property Name="Quantity" Type="Double" Size="0"/>
+            <Property Name="IsPrintRunCard" Type="U4" Size="0"/>
+            <Property Name="Producer" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="DispatchListStatusRelation" ParentClass="">
+        <References>
+            <Reference Name="DispatchList" Type="Link" Relation="Link"/>
+            <Reference Name="DispatchListTransformLotRelation" Type="Link" Relation="Link"/>
+            <Reference Name="ReworkHistory" Type="Link" Relation="Link"/>
+            <Reference Name="DispatchListSerialRelation" Type="Link" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+            <Reference SourceName="ReleaseReason" TargetName="ReleaseStatus" ClassName="ManufactureProcessReleaseHoldReason"/>
+            <Reference SourceName="HoldReason" TargetName="HoldStatus" ClassName="ManufactureProcessHoldReason"/>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="OrginalStatus" Type="String" Size="50"/>
+            <Property Name="ChangedStatus" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="DispatchListToProcess" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="DispatchListSK" Type="String" Size="50"/>
+            <Property Name="LotSK" Type="String" Size="50"/>
+            <Property Name="SerialSK" Type="String" Size="50"/>
+            <Property Name="ProcessSK" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="DispatchListTransformLotRelation" ParentClass="">
+        <References>
+            <Reference Name="DispatchList" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="WorkState" Type="String" Size="50"/>
+            <Property Name="Quantity" Type="Double" Size="0"/>
+            <Property Name="IsPrintRunCard" Type="U4" Size="0"/>
+            <Property Name="Producer" Type="U4" Size="0"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="DispatchLotSplitMergeHistory" ParentClass="">
+        <References>
+            <Reference Name="ManufactureProcessStation" Type="Link" Relation="Link"/>
+            <Reference Name="DispatchList" Type="Link" Relation="Link"/>
+            <Reference Name="DispatchListTransformLotRelation" Type="Link" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+            <Reference SourceName="SubLot" TargetName="ParentLot" ClassName="DispatchListTransformLotRelation"/>
+            <Reference SourceName="SerialList" TargetName="SplitMergeHistory" ClassName="DispatchListSerialRelation"/>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Type" Type="U4" Size="0"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="DistributorType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="Description" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="EmpLoginHistoryRelation" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="LoginModule" Type="String" Size="50"/>
+            <Property Name="LoginFrom" Type="String" Size="50"/>
+            <Property Name="LoginTime" Type="Datetime" Size="0"/>
+            <Property Name="LogoutTime" Type="Datetime" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="Employee" ParentClass="">
+        <References>
+            <Reference Name="CalendarBelongRelation" Type="Unique" Relation="Link"/>
+            <Reference Name="EmpLoginHistoryRelation" Type="Unique" Relation="Link"/>
+            <Reference Name="Shift" Type="Link" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="UserField1" Type="String" Size="0"/>
+            <Property Name="UserField2" Type="String" Size="0"/>
+            <Property Name="UserField3" Type="String" Size="0"/>
+            <Property Name="UserField4" Type="String" Size="0"/>
+            <Property Name="UserField5" Type="String" Size="0"/>
+            <Property Name="OrgAttributeId" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Address" Type="String" Size="500"/>
+            <Property Name="CellPhoneCountryCode1" Type="String" Size="50"/>
+            <Property Name="CellPhone1" Type="String" Size="50"/>
+            <Property Name="Email" Type="String" Size="50"/>
+            <Property Name="FaxNoCountryCode" Type="String" Size="50"/>
+            <Property Name="FaxNoAreaCode" Type="String" Size="50"/>
+            <Property Name="FaxNo" Type="String" Size="50"/>
+            <Property Name="Language" Type="String" Size="50"/>
+            <Property Name="Sex" Type="U4" Size="0"/>
+            <Property Name="Picture" Type="String" Size="50"/>
+            <Property Name="Titles" Type="String" Size="50"/>
+            <Property Name="MessagerAccount1" Type="String" Size="50"/>
+            <Property Name="MessagerAccount2" Type="String" Size="50"/>
+            <Property Name="DirectSupervisor" Type="String" Size="50"/>
+            <Property Name="EffectiveDate" Type="String" Size="50"/>
+            <Property Name="ExpiryDate" Type="String" Size="50"/>
+            <Property Name="BelongsFlag" Type="U4" Size="0"/>
+            <Property Name="MessagerAccount3" Type="String" Size="50"/>
+            <Property Name="NameMiddle" Type="String" Size="50"/>
+            <Property Name="NameFirst" Type="String" Size="50"/>
+            <Property Name="CompanyPhoneCountryCode1" Type="String" Size="50"/>
+            <Property Name="CompanyPhoneAreaCode1" Type="String" Size="50"/>
+            <Property Name="CompanyPhone1" Type="String" Size="50"/>
+            <Property Name="CompanyPhoneExtNo1" Type="String" Size="50"/>
+            <Property Name="CompanyPhoneCountryCode2" Type="String" Size="50"/>
+            <Property Name="CompanyPhoneAreaCode2" Type="String" Size="50"/>
+            <Property Name="CompanyPhone2" Type="String" Size="50"/>
+            <Property Name="CompanyPhoneExtNo2" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="OrgId" Type="String" Size="50"/>
+            <Property Name="CellPhoneCountryCode2" Type="String" Size="50"/>
+            <Property Name="CellPhone2" Type="String" Size="50"/>
+            <Property Name="BelongsInWorkCenter" Type="U4" Size="0"/>
+            <Property Name="PWD" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="EmployeeRelation" ParentClass="">
+        <References>
+            <Reference Name="Employee" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="BelongsType" Type="U4" Size="0"/>
+            <Property Name="BelongsEffectiveDate" Type="String" Size="50"/>
+            <Property Name="BelongsExpiryDate" Type="String" Size="50"/>
+            <Property Name="ParentIdSystemKey" Type="String" Size="50"/>
+            <Property Name="ParentId" Type="String" Size="50"/>
+            <Property Name="TreeVersion" Type="String" Size="50"/>
+            <Property Name="TreeType" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="EmployeeTitles" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="EqAlarmHistory" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ToolId" Type="String" Size="50"/>
+            <Property Name="ToolType" Type="String" Size="50"/>
+            <Property Name="Code" Type="String" Size="50"/>
+            <Property Name="Level" Type="String" Size="50"/>
+            <Property Name="RaisedTime" Type="String" Size="50"/>
+            <Property Name="ReleasedTime" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="EqOutputProductsRelation" ParentClass="">
+        <References>
+            <Reference Name="Tool" Type="Link" Relation="Has"/>
+            <Reference Name="RawMaterial" Type="Link" Relation="Link"/>
+            <Reference Name="RawMaterialSize" Type="Unique" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="EqProcessingData" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="SVID" Type="U4" Size="0"/>
+            <Property Name="DataName" Type="String" Size="50"/>
+            <Property Name="DataValue" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="50"/>
+            <Property Name="IOPort" Type="String" Size="50"/>
+            <Property Name="Format" Type="String" Size="50"/>
+            <Property Name="DIV" Type="I4" Size="0"/>
+            <Property Name="WordLength" Type="I4" Size="0"/>
+            <Property Name="ToolId" Type="String" Size="50"/>
+            <Property Name="ToolType" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="ShutdownReasonSystemKey" Type="String" Size="50"/>
+            <Property Name="AlarmSystemKey" Type="String" Size="50"/>
+            <Property Name="AlarmLevel" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="EqProcssingHistory" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="RaisedTime" Type="String" Size="50"/>
+            <Property Name="SVID" Type="U4" Size="0"/>
+            <Property Name="DataName" Type="String" Size="50"/>
+            <Property Name="DataValue" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="IOPort" Type="String" Size="50"/>
+            <Property Name="Format" Type="String" Size="50"/>
+            <Property Name="DIV" Type="I4" Size="0"/>
+            <Property Name="WordLength" Type="I4" Size="0"/>
+            <Property Name="ToolId" Type="String" Size="50"/>
+            <Property Name="ToolType" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="EqStatusHistory" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ToolId" Type="String" Size="50"/>
+            <Property Name="ToolType" Type="String" Size="50"/>
+            <Property Name="OriginalStatus" Type="String" Size="50"/>
+            <Property Name="ChangedStatus" Type="String" Size="50"/>
+            <Property Name="ShutdownReasonSystemKey" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="AlarmSystemKey" Type="String" Size="50"/>
+            <Property Name="AlarmLevel" Type="String" Size="50"/>
+            <Property Name="SVID" Type="U4" Size="0"/>
+            <Property Name="Type" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="ExecutionStatusReturn" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="50"/>
+            <Property Name="Type" Type="U4" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="FabLinkLicense" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Category" Type="U4" Size="0"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="ParentId" Type="String" Size="50"/>
+            <Property Name="ResourceId" Type="String" Size="50"/>
+            <Property Name="ResourceValue" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="FabLinkLicenseEmpRelation" ParentClass="">
+        <References>
+            <Reference Name="FabLinkLicense" Type="Link" Relation="Has"/>
+            <Reference Name="Employee" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="IsDisplay" Type="U4" Size="0"/>
+            <Property Name="IsExecute" Type="U4" Size="0"/>
+            <Property Name="IsDeny" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="FabLinkLicenseOrgRelation" ParentClass="">
+        <References>
+            <Reference Name="FabLinkLicense" Type="Link" Relation="Has"/>
+            <Reference Name="Organization" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="IsDisplay" Type="U4" Size="0"/>
+            <Property Name="IsExecute" Type="U4" Size="0"/>
+            <Property Name="IsDeny" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="FabLinkSystemMessage" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Category" Type="String" Size="50"/>
+            <Property Name="Code" Type="U4" Size="0"/>
+            <Property Name="Name" Type="String" Size="0"/>
+            <Property Name="Description" Type="String" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="FlexiSchedDemandGroup" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Emp" TargetName="DemandList" ClassName="FlexiSchedEmpExtend" Relation=""/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="EffectiveData" Type="String" Size="50"/>
+            <Property Name="ExpiryDate" Type="String" Size="50"/>
+            <Property Name="TargetOrgSK" Type="String" Size="50"/>
+            <Property Name="TargetWCSK" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="FlexiSchedDemandSupply" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Demand" TargetName="SupplyList" ClassName="FlexiSchedDemandGroup" Relation="Has"/>
+            <Reference SourceName="Emp" TargetName="SupplyList" ClassName="FlexiSchedEmpExtend" Relation=""/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+        </Properties>
+    </Class>
+    <Class Name="FlexiSchedEmpExtend" ParentClass="">
+        <References>
+            <Reference Name="Employee" Type="Unique" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+        </Properties>
+    </Class>
+    <Class Name="FlexiSchedEmpHistory" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="FlexiSchedHistorySK" Type="String" Size="50"/>
+            <Property Name="WCSK" Type="String" Size="50"/>
+            <Property Name="EmpSK" Type="String" Size="50"/>
+            <Property Name="EmpId" Type="String" Size="50"/>
+            <Property Name="Type" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="FlexiSchedEmpRelation" ParentClass="">
+        <References>
+            <Reference Name="FlexiSchedItem" Type="Unique" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Emp" TargetName="FlexiSchedEmpList" ClassName="FlexiSchedEmpExtend" Relation=""/>
+        </ExtendReferences>
+        <ExternalReferences>
+            <Reference SourceName="ToolList" TargetName="FlexiSchedEmpList" ClassName="FlexiSchedToolExtend"/>
+        </ExternalReferences>
+        <Properties>
+        </Properties>
+    </Class>
+    <Class Name="FlexiSchedHistory" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Type" Type="U4" Size="0"/>
+            <Property Name="Mode" Type="U4" Size="0"/>
+            <Property Name="Status" Type="U4" Size="0"/>
+            <Property Name="EffectiveDate" Type="String" Size="20"/>
+            <Property Name="ExpiryDate" Type="String" Size="20"/>
+            <Property Name="ActualExpiryDare" Type="String" Size="20"/>
+            <Property Name="OriginOrgSK" Type="String" Size="50"/>
+            <Property Name="OriginWCSK" Type="String" Size="50"/>
+            <Property Name="TargetOrgSK" Type="String" Size="50"/>
+            <Property Name="TargetWCSK" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="20"/>
+            <Property Name="DemandUser" Type="String" Size="50"/>
+            <Property Name="ReasonSK" Type="String" Size="50"/>
+            <Property Name="FlexiSchedItemSK" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="FlexiSchedItem" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Group" TargetName="ItemList" ClassName="FlexiSchedDemandGroup" Relation="Has"/>
+            <Reference SourceName="Reason" TargetName="FlexiSchedList" ClassName="FlexibleSchedulingReason" Relation=""/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Type" Type="U4" Size="0"/>
+            <Property Name="Mode" Type="U4" Size="0"/>
+            <Property Name="ActualExpiryDate" Type="String" Size="20"/>
+            <Property Name="OriginOrgSK" Type="String" Size="50"/>
+            <Property Name="OriginWCSK" Type="String" Size="50"/>
+            <Property Name="HistorySK" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="FlexiSchedToolExtend" ParentClass="">
+        <References>
+            <Reference Name="Tool" Type="Unique" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+        </Properties>
+    </Class>
+    <Class Name="FlexiSchedToolHistory" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="FlexiSchedHistorySK" Type="String" Size="50"/>
+            <Property Name="ToolSK" Type="String" Size="50"/>
+            <Property Name="ToolId" Type="String" Size="50"/>
+            <Property Name="Type" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="FlexiSchedToolRelation" ParentClass="">
+        <References>
+            <Reference Name="FlexiSchedItem" Type="Unique" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Tool" TargetName="FlexiSchedToolList" ClassName="FlexiSchedToolExtend" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+        </Properties>
+    </Class>
+    <Class Name="FlexibleSchedulingReason" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="0"/>
+            <Property Name="Type" Type="U4" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="20"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="InputControl" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="LogisticsControlMethods" Type="String" Size="50"/>
+            <Property Name="NeedIdentifyControl" Type="U4" Size="0"/>
+            <Property Name="IdentifyingControlStandards" Type="String" Size="50"/>
+            <Property Name="IdentifyGrade" Type="String" Size="50"/>
+            <Property Name="IdentificationTime" Type="String" Size="50"/>
+            <Property Name="NeedIdentifyMaterialControl" Type="U4" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="InputControlCarrierMaterialPosition" ParentClass="">
+        <References>
+            <Reference Name="InputControlCarrierQuantityRelation" Type="Link" Relation="Has"/>
+            <Reference Name="ManufactureProcessMaterial" Type="Link" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Coordinates_X" Type="String" Size="50"/>
+            <Property Name="Coordinates_Y" Type="String" Size="50"/>
+            <Property Name="Coordinates_Z" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="InputControlCarrierQuantityRelation" ParentClass="">
+        <References>
+            <Reference Name="Tool" Type="Link" Relation="Has"/>
+            <Reference Name="ManufactureProcessStation" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Priorities" Type="U4" Size="0"/>
+            <Property Name="ChangeAmount" Type="U4" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="InputControlMaterialRelation" ParentClass="">
+        <References>
+            <Reference Name="InputControl" Type="Link" Relation="Has"/>
+            <Reference Name="ManufactureProcessMaterial" Type="Unique" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="IdentifyingControlStandards" Type="String" Size="50"/>
+            <Property Name="IdentifyGrade" Type="String" Size="50"/>
+            <Property Name="IdentificationTime" Type="String" Size="50"/>
+            <Property Name="TagWay" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="InspectionItem" ParentClass="">
+        <References>
+            <Reference Name="ManufactureProcessStation" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="PrintFlag" Type="U4" Size="0"/>
+            <Property Name="PrintSeq" Type="String" Size="50"/>
+            <Property Name="Type" Type="String" Size="50"/>
+            <Property Name="Caption" Type="String" Size="50"/>
+            <Property Name="DataSource" Type="U4" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="Sequential" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="KITALogMaterialSending" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="DispatchListId" Type="String" Size="50"/>
+            <Property Name="StationName" Type="String" Size="4000"/>
+            <Property Name="RawMaterialId" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="LabelData" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Detail" TargetName="LabelList" ClassName="WipLabel" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="Data" Type="String" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="Layout" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="500"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Detail" Type="String" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="LogBatchModifyStationCt" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="RawMaterialSK" Type="String" Size="50"/>
+            <Property Name="ProcessSK" Type="String" Size="50"/>
+            <Property Name="EmployeeSK" Type="String" Size="50"/>
+            <Property Name="RawMaterialId" Type="String" Size="50"/>
+            <Property Name="ProcessId" Type="String" Size="50"/>
+            <Property Name="StationId" Type="String" Size="50"/>
+            <Property Name="JobPropertyId" Type="String" Size="50"/>
+            <Property Name="CycleTimeId" Type="String" Size="50"/>
+            <Property Name="StationName" Type="String" Size="50"/>
+            <Property Name="JobPropertyName" Type="String" Size="50"/>
+            <Property Name="CycleTimeName" Type="String" Size="50"/>
+            <Property Name="EmployeeId" Type="String" Size="50"/>
+            <Property Name="LogDate" Type="String" Size="50"/>
+            <Property Name="LogTime" Type="String" Size="50"/>
+            <Property Name="OCycleTimeEmp" Type="String" Size="50"/>
+            <Property Name="OCycleTimeEq" Type="String" Size="50"/>
+            <Property Name="NCycleTimeEmp" Type="String" Size="50"/>
+            <Property Name="NCycleTimeEq" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="LogBatchModifyStationSOP" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="RawMaterialSK" Type="String" Size="50"/>
+            <Property Name="ProcessSK" Type="String" Size="50"/>
+            <Property Name="StationSK" Type="String" Size="50"/>
+            <Property Name="EmployeeSK" Type="String" Size="50"/>
+            <Property Name="RawMaterialId" Type="String" Size="50"/>
+            <Property Name="ProcessId" Type="String" Size="50"/>
+            <Property Name="StationId" Type="String" Size="50"/>
+            <Property Name="StationName" Type="String" Size="50"/>
+            <Property Name="EmployeeId" Type="String" Size="50"/>
+            <Property Name="LogDate" Type="String" Size="50"/>
+            <Property Name="LogTime" Type="String" Size="50"/>
+            <Property Name="OSOPName" Type="String" Size="50"/>
+            <Property Name="NSOPName" Type="String" Size="50"/>
+            <Property Name="ActionType" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="LogBatchModifyStationTI" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="RawMaterialSK" Type="String" Size="50"/>
+            <Property Name="ManufactureProcessSK" Type="String" Size="50"/>
+            <Property Name="StationSK" Type="String" Size="50"/>
+            <Property Name="TestItemSK" Type="String" Size="50"/>
+            <Property Name="EmployeeSK" Type="String" Size="50"/>
+            <Property Name="RawMaterialId" Type="String" Size="50"/>
+            <Property Name="ManufactureProcessId" Type="String" Size="50"/>
+            <Property Name="StationId" Type="String" Size="50"/>
+            <Property Name="StationName" Type="String" Size="50"/>
+            <Property Name="TestItemId" Type="String" Size="50"/>
+            <Property Name="TestItemName" Type="String" Size="50"/>
+            <Property Name="UnitName" Type="String" Size="50"/>
+            <Property Name="EmployeeId" Type="String" Size="50"/>
+            <Property Name="LogDate" Type="String" Size="50"/>
+            <Property Name="LogTime" Type="String" Size="50"/>
+            <Property Name="OLowerLimit" Type="String" Size="50"/>
+            <Property Name="OStandard" Type="String" Size="50"/>
+            <Property Name="OUpperLimit" Type="String" Size="50"/>
+            <Property Name="NLowerLimit" Type="String" Size="50"/>
+            <Property Name="NStandard" Type="String" Size="50"/>
+            <Property Name="NUpperLimit" Type="String" Size="50"/>
+            <Property Name="ActionType" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="LogisticsWorkingHours" ParentClass="">
+        <References>
+            <Reference Name="ManufactureProcessStation" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="StationJobPropertiesSystemKey" Type="String" Size="50"/>
+            <Property Name="ProductionCycleTimeSystemKey" Type="String" Size="50"/>
+            <Property Name="TimeValue_People" Type="String" Size="50"/>
+            <Property Name="TimeValue_Tool" Type="String" Size="50"/>
+            <Property Name="TimeUnit" Type="U4" Size="0"/>
+            <Property Name="Priority" Type="U4" Size="0"/>
+            <Property Name="EstimatedStartTime" Type="String" Size="50"/>
+            <Property Name="EstimatedCompleteTime" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ManProStaRepWorkRawDataNgReason" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="TargetType" Type="String" Size="50"/>
+            <Property Name="TargetSystemKey" Type="String" Size="50"/>
+            <Property Name="RawDataSystemKey" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ManufactureProcess" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="DispatchList" TargetName="ProcessList" ClassName="DispatchList" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ProcessProperty" Type="String" Size="50"/>
+            <Property Name="IsMeasuringTurnOut" Type="U4" Size="0"/>
+            <Property Name="BatchBase" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="ManufactureProcessType" Type="String" Size="50"/>
+            <Property Name="ParentRawMaterial" Type="String" Size="50"/>
+            <Property Name="ParentRawMaterialId" Type="String" Size="50"/>
+            <Property Name="BomVersion" Type="String" Size="50"/>
+            <Property Name="HeadCount" Type="U4" Size="0"/>
+            <Property Name="IsProve" Type="U4" Size="0"/>
+            <Property Name="CvSpeed" Type="String" Size="50"/>
+            <Property Name="MeasurementUnits" Type="String" Size="50"/>
+            <Property Name="MeasurementUnits_per" Type="String" Size="50"/>
+            <Property Name="DispatchListFlag" Type="U4" Size="0"/>
+            <Property Name="DispatchListFlagCreateDate" Type="String" Size="50"/>
+            <Property Name="DispatchListFlagCreateUser" Type="String" Size="50"/>
+            <Property Name="ApprovalStatus" Type="U4" Size="0"/>
+            <Property Name="FlowChart" Type="String" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="ManufactureProcessApprovalStatus" ParentClass="">
+        <References>
+            <Reference Name="ManufactureProcess" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+            <Reference SourceName="LogBatchModifyStationCtList" TargetName="ProcessApprovalStatusList" ClassName="LogBatchModifyStationCt"/>
+            <Reference SourceName="LogBatchModifyStationTIList" TargetName="ProcessApprovalStatusList" ClassName="LogBatchModifyStationTI"/>
+            <Reference SourceName="LogBatchModifyStationSOPList" TargetName="ProcessApprovalStatusList" ClassName="LogBatchModifyStationSOP"/>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ApprovalStatus" Type="U4" Size="0"/>
+            <Property Name="ApprovalComment" Type="String" Size="0"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="EmpSystemKey" Type="String" Size="50"/>
+            <Property Name="Type" Type="U4" Size="0"/>
+            <Property Name="CreateUserId" Type="String" Size="50"/>
+            <Property Name="CreateUserSK" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ManufactureProcessHoldReason" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="20"/>
+            <Property Name="ClassificationA" Type="String" Size="50"/>
+            <Property Name="ClassificationB" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ManufactureProcessMaterial" ParentClass="">
+        <References>
+            <Reference Name="RawMaterial" Type="Link" Relation="Link"/>
+            <Reference Name="ManufactureProcessStation" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+            <Reference SourceName="MaterialRuleList" TargetName="StationList" ClassName="SendsMaterialRule"/>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="BomDimension" Type="String" Size="50"/>
+            <Property Name="Count" Type="String" Size="50"/>
+            <Property Name="UOM" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ManufactureProcessReleaseHoldReason" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="20"/>
+            <Property Name="ClassificationA" Type="String" Size="50"/>
+            <Property Name="ClassificationB" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ManufactureProcessStation" ParentClass="">
+        <References>
+            <Reference Name="ManufactureProcess" Type="Link" Relation="Has"/>
+            <Reference Name="InputControl" Type="Unique" Relation="Link"/>
+            <Reference Name="OutputControl" Type="Unique" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="BatchBase" Type="String" Size="50"/>
+            <Property Name="IsReport" Type="U4" Size="0"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="ParentRawMaterial" Type="String" Size="50"/>
+            <Property Name="ParentRawMaterialId" Type="String" Size="50"/>
+            <Property Name="StationType" Type="String" Size="50"/>
+            <Property Name="JobProperties" Type="String" Size="50"/>
+            <Property Name="BomVersion" Type="String" Size="50"/>
+            <Property Name="SumOfSecValue_People" Type="Double" Size="0"/>
+            <Property Name="SumOfSecValue_Tool" Type="Double" Size="0"/>
+            <Property Name="SumOfMinValue_People" Type="Double" Size="0"/>
+            <Property Name="SumOfMinValue_Tool" Type="Double" Size="0"/>
+            <Property Name="SumOfHourValue_People" Type="Double" Size="0"/>
+            <Property Name="SumOfHourValue_Tool" Type="Double" Size="0"/>
+            <Property Name="WorkCenterId" Type="String" Size="50"/>
+            <Property Name="IsSpec" Type="U4" Size="0"/>
+            <Property Name="UseSpec" Type="String" Size="50"/>
+            <Property Name="ManufactureProcessId" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ManufactureProcessStationPreNextRelation" ParentClass="">
+        <References>
+            <Reference Name="ManufactureProcess" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="NextStation" TargetName="PreviousStationList" ClassName="ManufactureProcessStation" Relation="Has"/>
+            <Reference SourceName="PreviousStation" TargetName="NextStationLIst" ClassName="ManufactureProcessStation" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Type" Type="U4" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ManufactureProcessStationReportWorkRawData" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="DispatchListSystemKey" Type="String" Size="50"/>
+            <Property Name="LotSystemKey" Type="String" Size="50"/>
+            <Property Name="SerialSystemKey" Type="String" Size="50"/>
+            <Property Name="StationSystemKey" Type="String" Size="50"/>
+            <Property Name="ToolSystemKey" Type="String" Size="50"/>
+            <Property Name="DeviceId" Type="String" Size="50"/>
+            <Property Name="GroupSystemKey" Type="String" Size="50"/>
+            <Property Name="ItemSystemKey" Type="String" Size="50"/>
+            <Property Name="ReportValue" Type="String" Size="50"/>
+            <Property Name="InspFlag" Type="U4" Size="0"/>
+            <Property Name="IsRework" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="ManufactureProcessStationReportWorkRawDataP" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="DispatchListSystemKey" Type="String" Size="50"/>
+            <Property Name="LotSystemKey" Type="String" Size="50"/>
+            <Property Name="SerialSystemKey" Type="String" Size="50"/>
+            <Property Name="StationSystemKey" Type="String" Size="50"/>
+            <Property Name="ToolSystemKey" Type="String" Size="50"/>
+            <Property Name="DeviceId" Type="String" Size="50"/>
+            <Property Name="GroupSystemKey" Type="String" Size="50"/>
+            <Property Name="ItemSystemKey" Type="String" Size="50"/>
+            <Property Name="ReportValue" Type="String" Size="50"/>
+            <Property Name="InspFlag" Type="U4" Size="0"/>
+            <Property Name="IsRework" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="ManufactureProcessStationTestItemsRelation" ParentClass="">
+        <References>
+            <Reference Name="ManufactureProcessStation" Type="Link" Relation="Has"/>
+            <Reference Name="TestItems" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Priority" Type="U4" Size="0"/>
+            <Property Name="UpperLimit" Type="String" Size="50"/>
+            <Property Name="Standard" Type="String" Size="50"/>
+            <Property Name="LowLimit" Type="String" Size="50"/>
+            <Property Name="Accuracy" Type="U4" Size="0"/>
+            <Property Name="Unit" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="ManufactureProcessTool" ParentClass="">
+        <References>
+            <Reference Name="Tool" Type="Link" Relation="Has"/>
+            <Reference Name="ManufactureProcessStation" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ProductionSequence" Type="U4" Size="0"/>
+            <Property Name="Priority" Type="U4" Size="0"/>
+            <Property Name="Quantity" Type="U4" Size="0"/>
+            <Property Name="OutputCount" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="ManufactureProcessTriggerEventRawData" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="DispatchListSystemKey" Type="String" Size="50"/>
+            <Property Name="LotSystemKey" Type="String" Size="50"/>
+            <Property Name="SerialSystemKey" Type="String" Size="50"/>
+            <Property Name="StationSystemKey" Type="String" Size="50"/>
+            <Property Name="ToolSystemKey" Type="String" Size="50"/>
+            <Property Name="DeviceId" Type="String" Size="50"/>
+            <Property Name="GroupSystemKey" Type="String" Size="50"/>
+            <Property Name="TriggerEvent" Type="String" Size="50"/>
+            <Property Name="EventTime" Type="String" Size="50"/>
+            <Property Name="EventQty" Type="Double" Size="0"/>
+            <Property Name="IsRework" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="MeasurementUnits" ParentClass="">
+        <References>
+            <Reference Name="MeasurementUnitsCF" Type="Link" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="MeasurementUnitsCF" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="Picture" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="MeasurementUnitsConvert" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="SourceId" Type="String" Size="500"/>
+            <Property Name="TargetId" Type="String" Size="50"/>
+            <Property Name="ConvertType" Type="String" Size="50"/>
+            <Property Name="ConvertNumber" Type="String" Size="50"/>
+            <Property Name="ConvertDividend" Type="String" Size="50"/>
+            <Property Name="ConvertDivisor" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ModeOutputCombination" ParentClass="">
+        <References>
+            <Reference Name="Tool" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="CombinationSerial" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ModeOutputCombinationRelation" ParentClass="">
+        <References>
+            <Reference Name="ModeOutputCombination" Type="Link" Relation="Has"/>
+            <Reference Name="RawMaterial" Type="Link" Relation="Link"/>
+            <Reference Name="RawMaterialSize" Type="Unique" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="OutputCount" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="NegativePhenomena" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="ClassificationA" Type="String" Size="50"/>
+            <Property Name="ClassificationB" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="NegativePhenomenaAnalyzedReason" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="RawDataNgReasonSystemKey" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="ClassificationA" Type="String" Size="50"/>
+            <Property Name="ClassificationB" Type="String" Size="50"/>
+            <Property Name="IsAdditional" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="NegativePhenomenaDefectReasonRelation" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="DefectReasonSystemKey" Type="String" Size="50"/>
+            <Property Name="NegativePhenomenaSystemKey" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="OrgEmpRelation" ParentClass="">
+        <References>
+            <Reference Name="Organization" Type="Link" Relation="Has"/>
+            <Reference Name="Employee" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="BelongsType" Type="U4" Size="0"/>
+            <Property Name="BelongsEffectiveDate" Type="String" Size="50"/>
+            <Property Name="BelongsExpiryDate" Type="String" Size="50"/>
+            <Property Name="TreeVersion" Type="String" Size="50"/>
+            <Property Name="TreeType" Type="U4" Size="0"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="OrgWorkCenterRelation" ParentClass="">
+        <References>
+            <Reference Name="Organization" Type="Link" Relation="Has"/>
+            <Reference Name="WorkCenterGroup" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="DefineInOrganization" Type="U4" Size="0"/>
+            <Property Name="BelongsEffectiveDate" Type="String" Size="50"/>
+            <Property Name="BelongsExpiryDate" Type="String" Size="50"/>
+            <Property Name="TreeVersion" Type="String" Size="50"/>
+            <Property Name="TreeType" Type="U4" Size="0"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="Organization" ParentClass="">
+        <References>
+            <Reference Name="CalendarBelongRelation" Type="Unique" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="CoBoss" TargetName="CoManagementList" ClassName="Employee" Relation=""/>
+            <Reference SourceName="Boss" TargetName="ManagementList" ClassName="Employee" Relation=""/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="PhoneCountryCode" Type="String" Size="50"/>
+            <Property Name="PhoneAreaCode" Type="String" Size="50"/>
+            <Property Name="Phone" Type="String" Size="50"/>
+            <Property Name="FaxNoCountryCode" Type="String" Size="50"/>
+            <Property Name="FaxNoAreaCode" Type="String" Size="50"/>
+            <Property Name="FaxNo" Type="String" Size="50"/>
+            <Property Name="CountryCode" Type="String" Size="50"/>
+            <Property Name="StateCode" Type="String" Size="50"/>
+            <Property Name="CityCode" Type="String" Size="50"/>
+            <Property Name="TownCode" Type="String" Size="50"/>
+            <Property Name="ZipCode" Type="String" Size="50"/>
+            <Property Name="Address" Type="String" Size="50"/>
+            <Property Name="EffectiveDate" Type="String" Size="50"/>
+            <Property Name="ExpiryDate" Type="String" Size="50"/>
+            <Property Name="BelongsFlag" Type="U4" Size="0"/>
+            <Property Name="OrganizationType" Type="String" Size="50"/>
+            <Property Name="OrganizationAttribute" Type="String" Size="50"/>
+            <Property Name="PrefectureLevelCities" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="OrganizationAttribute" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="OrganizationRelation" ParentClass="">
+        <References>
+            <Reference Name="Organization" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="BelongsType" Type="U4" Size="0"/>
+            <Property Name="BelongsEffectiveDate" Type="String" Size="50"/>
+            <Property Name="BelongsExpiryDate" Type="String" Size="50"/>
+            <Property Name="ParentIdSystemKey" Type="String" Size="50"/>
+            <Property Name="ParentId" Type="String" Size="50"/>
+            <Property Name="TreeVersion" Type="String" Size="50"/>
+            <Property Name="TreeType" Type="U4" Size="0"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="OutputControl" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="LogisticsControlMethods" Type="String" Size="50"/>
+            <Property Name="NeedIdentifyControl" Type="U4" Size="0"/>
+            <Property Name="IdentifyingControlStandards" Type="String" Size="50"/>
+            <Property Name="IdentifyGrade" Type="String" Size="50"/>
+            <Property Name="IdentificationTime" Type="String" Size="50"/>
+            <Property Name="NeedIdentifyMaterialControl" Type="U4" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="OutputControlCarrierMaterialPosition" ParentClass="">
+        <References>
+            <Reference Name="OutputControlCarrierQuantityRelation" Type="Link" Relation="Has"/>
+            <Reference Name="ManufactureProcessMaterial" Type="Link" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Coordinates_X" Type="String" Size="50"/>
+            <Property Name="Coordinates_Y" Type="String" Size="50"/>
+            <Property Name="Coordinates_Z" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="OutputControlCarrierQuantityRelation" ParentClass="">
+        <References>
+            <Reference Name="Tool" Type="Link" Relation="Has"/>
+            <Reference Name="ManufactureProcessStation" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Priorities" Type="U4" Size="0"/>
+            <Property Name="ChangeAmount" Type="U4" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="OutputControlMaterialRelation" ParentClass="">
+        <References>
+            <Reference Name="OutputControl" Type="Link" Relation="Has"/>
+            <Reference Name="ManufactureProcessMaterial" Type="Unique" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="RawMaterialSysKey" Type="String" Size="50"/>
+            <Property Name="IdentifyingControlStandards" Type="String" Size="50"/>
+            <Property Name="IdentifyGrade" Type="String" Size="50"/>
+            <Property Name="IdentificationTime" Type="String" Size="50"/>
+            <Property Name="TagWay" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="PeripheralsDevice" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="500"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="Picture" Type="String" Size="500"/>
+            <Property Name="PurchaseDate" Type="String" Size="50"/>
+            <Property Name="MoveInDate" Type="String" Size="50"/>
+            <Property Name="Suppliers" Type="String" Size="50"/>
+            <Property Name="PropertyNumber" Type="String" Size="50"/>
+            <Property Name="TechDocument" Type="String" Size="500"/>
+            <Property Name="UserManual" Type="String" Size="500"/>
+            <Property Name="Type" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="PlantToolStaffRelation" ParentClass="">
+        <References>
+            <Reference Name="Employee" Type="Link" Relation="Has"/>
+            <Reference Name="Tool" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Type" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="ProcessMaterialBom" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ParentRawMaterial" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ProcessMaterialBomRelation" ParentClass="">
+        <References>
+            <Reference Name="ProcessMaterialBom" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="RawMaterialASystemKey" Type="String" Size="50"/>
+            <Property Name="RawMaterialBSystemkey" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="BatchQuantity" Type="String" Size="50"/>
+            <Property Name="ItemNo" Type="String" Size="50"/>
+            <Property Name="UnitAmount" Type="String" Size="50"/>
+            <Property Name="LossVolume" Type="String" Size="50"/>
+            <Property Name="LossRate" Type="String" Size="50"/>
+            <Property Name="EffectiveDate" Type="String" Size="50"/>
+            <Property Name="ExpiryDate" Type="String" Size="50"/>
+            <Property Name="UserField1" Type="String" Size="0"/>
+            <Property Name="UserField2" Type="String" Size="0"/>
+            <Property Name="UserField3" Type="String" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="QualityConference" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="QualityConferenceTypeId" Type="String" Size="50"/>
+            <Property Name="IsMainConference" Type="U4" Size="0"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="ParentConferenceId" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="50"/>
+            <Property Name="ConferenceProperty" Type="U4" Size="0"/>
+            <Property Name="PlanDate" Type="String" Size="50"/>
+            <Property Name="PlanStartTime" Type="String" Size="50"/>
+            <Property Name="PlanEndTime" Type="String" Size="50"/>
+            <Property Name="ActualDate" Type="String" Size="50"/>
+            <Property Name="ActualStartTime" Type="String" Size="50"/>
+            <Property Name="ActualEndTime" Type="String" Size="50"/>
+            <Property Name="ConferenceLocation" Type="String" Size="50"/>
+            <Property Name="Status" Type="U4" Size="0"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="QualityConferenceDiscussionRelation" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="QuantityConference" TargetName="DiscussionList" ClassName="QualityConference" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="NegativePhenomenaId" Type="String" Size="50"/>
+            <Property Name="RawMaterialId" Type="String" Size="50"/>
+            <Property Name="IsReview" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="QualityConferenceDiscussionResolutions" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Resolution" TargetName="QualityConferenceDiscussionList" ClassName="QualityConferenceResolutions" Relation="Has"/>
+            <Reference SourceName="QualityConfeerenceDiscussion" TargetName="ResolutionList" ClassName="QualityConferenceDiscussionRelation" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+        </Properties>
+    </Class>
+    <Class Name="QualityConferenceParticipants" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="QualityConferenceTypeId" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="ConferenceProperty" Type="U4" Size="0"/>
+            <Property Name="StartTime" Type="String" Size="50"/>
+            <Property Name="EndTime" Type="String" Size="50"/>
+            <Property Name="ConferenceLocation" Type="String" Size="50"/>
+            <Property Name="NotifyType" Type="U4" Size="0"/>
+            <Property Name="NotifyDays" Type="U4" Size="0"/>
+            <Property Name="RegularDate" Type="U4" Size="0"/>
+            <Property Name="RegularType" Type="U4" Size="0"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="QualityConferenceRecordOfSpeech" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Participant" TargetName="SpeechList" ClassName="ConferenceEmpRelation" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="DateTime" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="QualityConferenceReportExecutionStatus" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="QualityConferenceResolutions" TargetName="ReportExecutionStatusList" ClassName="QualityConferenceResolutions" Relation="Has"/>
+            <Reference SourceName="ExexutionStatus" TargetName="QualityConferenceExexutionList" ClassName="ExecutionStatusReturn" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Content" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="QualityConferenceResolutions" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="ResponsibleEmp" TargetName="ConferenceResolutions" ClassName="Employee" Relation=""/>
+            <Reference SourceName="QualityConference" TargetName="ResolutionList" ClassName="QualityConference" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ItemIndex" Type="U4" Size="0"/>
+            <Property Name="Content" Type="String" Size="0"/>
+            <Property Name="ResolutionType" Type="U4" Size="0"/>
+            <Property Name="PlanStartDate" Type="String" Size="50"/>
+            <Property Name="PlanEndDate" Type="String" Size="50"/>
+            <Property Name="IsReturnProgress" Type="U4" Size="0"/>
+            <Property Name="PlanConferenceDate" Type="String" Size="50"/>
+            <Property Name="ActualConferenceStartDateTime" Type="String" Size="50"/>
+            <Property Name="ActualConferenceEndDateTime" Type="String" Size="50"/>
+            <Property Name="ExecutionStatusReturnId" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="RawDataWipRoute" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ReworkSysKey" Type="String" Size="50"/>
+            <Property Name="DispatchListSysKey" Type="String" Size="50"/>
+            <Property Name="LotSysKey" Type="String" Size="50"/>
+            <Property Name="SerialSysKey" Type="String" Size="50"/>
+            <Property Name="GroupSysKey" Type="String" Size="50"/>
+            <Property Name="ToolSysKey" Type="String" Size="50"/>
+            <Property Name="ProductSizeSysKey" Type="String" Size="50"/>
+            <Property Name="QtyType" Type="U4" Size="0"/>
+            <Property Name="Quantity" Type="Double" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="RawDataWipStatus" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ReworkSysKey" Type="String" Size="50"/>
+            <Property Name="DispatchListSysKey" Type="String" Size="50"/>
+            <Property Name="LotSysKey" Type="String" Size="50"/>
+            <Property Name="SerialSysKey" Type="String" Size="50"/>
+            <Property Name="StationSysKey" Type="String" Size="50"/>
+            <Property Name="ToolSysKey" Type="String" Size="50"/>
+            <Property Name="GroupSysKey" Type="String" Size="50"/>
+            <Property Name="Quantity" Type="Double" Size="0"/>
+            <Property Name="QtyType" Type="U4" Size="0"/>
+            <Property Name="IsOver" Type="U4" Size="0"/>
+            <Property Name="ProductSizeSysKey" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="RawMaterial" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Process" TargetName="MaterialList" ClassName="ManufactureProcess" Relation=""/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="UserField1" Type="String" Size="0"/>
+            <Property Name="UserField2" Type="String" Size="0"/>
+            <Property Name="UserField3" Type="String" Size="0"/>
+            <Property Name="UserField4" Type="String" Size="0"/>
+            <Property Name="UserField5" Type="String" Size="0"/>
+            <Property Name="UserField6" Type="String" Size="0"/>
+            <Property Name="UserField7" Type="String" Size="0"/>
+            <Property Name="UserField8" Type="String" Size="0"/>
+            <Property Name="UserField9" Type="String" Size="0"/>
+            <Property Name="UserField10" Type="String" Size="0"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="0"/>
+            <Property Name="NameLocal" Type="String" Size="0"/>
+            <Property Name="NameEng" Type="String" Size="0"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="RawMaterialAttribute" Type="String" Size="50"/>
+            <Property Name="ManufacturingType" Type="String" Size="50"/>
+            <Property Name="IsControlRawMaterial" Type="U4" Size="0"/>
+            <Property Name="StockingUnit" Type="String" Size="50"/>
+            <Property Name="PurchasingUnit" Type="String" Size="50"/>
+            <Property Name="SalesUnit" Type="String" Size="50"/>
+            <Property Name="ProductionCcontrolMethods" Type="String" Size="50"/>
+            <Property Name="ProductionUnits" Type="String" Size="50"/>
+            <Property Name="ProductionControlBatch" Type="String" Size="50"/>
+            <Property Name="NeedIdentificationLabel" Type="U4" Size="0"/>
+            <Property Name="IdentifyGrade" Type="String" Size="50"/>
+            <Property Name="CarrierId" Type="String" Size="50"/>
+            <Property Name="NeedIdentifyControl" Type="U4" Size="0"/>
+            <Property Name="IdentifyingControlStandards" Type="String" Size="50"/>
+            <Property Name="IdentificationTime" Type="String" Size="50"/>
+            <Property Name="Picture" Type="String" Size="50"/>
+            <Property Name="IsGovMaterial" Type="U4" Size="0"/>
+            <Property Name="IsVirtualMaterial" Type="U4" Size="0"/>
+            <Property Name="IsPrintRunCard" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="RawMaterialAttribteEmpRelation" ParentClass="">
+        <References>
+            <Reference Name="Employee" Type="Link" Relation="Has"/>
+            <Reference Name="RawMaterialAttribute" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Type" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="RawMaterialAttribute" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="RawMaterialCompanyRelation" ParentClass="">
+        <References>
+            <Reference Name="Company" Type="Link" Relation="Has"/>
+            <Reference Name="RawMaterial" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ProductId" Type="String" Size="50"/>
+            <Property Name="ProductName" Type="String" Size="50"/>
+            <Property Name="ProductNameEng" Type="String" Size="50"/>
+            <Property Name="ProductNameLocal" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="RawMaterialSize" ParentClass="">
+        <References>
+            <Reference Name="RawMaterial" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Color" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="Size" Type="String" Size="50"/>
+            <Property Name="SizeW" Type="String" Size="50"/>
+            <Property Name="SizeH" Type="String" Size="50"/>
+            <Property Name="SizeL" Type="String" Size="50"/>
+            <Property Name="MeasurementUnits" Type="String" Size="50"/>
+            <Property Name="SizePicture" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="RealDataCycleTime" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ProcessSK" Type="String" Size="50"/>
+            <Property Name="EmployeeSK" Type="String" Size="50"/>
+            <Property Name="EqSK" Type="String" Size="50"/>
+            <Property Name="RawMaterialSK" Type="String" Size="50"/>
+            <Property Name="DispatchListSK" Type="String" Size="50"/>
+            <Property Name="ReportDate" Type="String" Size="50"/>
+            <Property Name="ReportTime" Type="String" Size="50"/>
+            <Property Name="ReportTimeHour" Type="String" Size="2"/>
+            <Property Name="ReportTimeMin" Type="String" Size="2"/>
+            <Property Name="ReportTimeSec" Type="String" Size="2"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="DispatchListId" Type="String" Size="50"/>
+            <Property Name="LotId" Type="String" Size="50"/>
+            <Property Name="SerialId" Type="String" Size="50"/>
+            <Property Name="ProcessId" Type="String" Size="50"/>
+            <Property Name="ProcessProperty" Type="String" Size="50"/>
+            <Property Name="StationId" Type="String" Size="50"/>
+            <Property Name="JobPropertyId" Type="String" Size="50"/>
+            <Property Name="CycleTimeId" Type="String" Size="50"/>
+            <Property Name="Sequence" Type="U4" Size="0"/>
+            <Property Name="ReportType" Type="U4" Size="0"/>
+            <Property Name="EmployeeId" Type="String" Size="50"/>
+            <Property Name="EmployeeName" Type="String" Size="50"/>
+            <Property Name="EqId" Type="String" Size="50"/>
+            <Property Name="EqName" Type="String" Size="50"/>
+            <Property Name="RawMaterialId" Type="String" Size="50"/>
+            <Property Name="DeviceId" Type="String" Size="50"/>
+            <Property Name="ShiftId" Type="String" Size="50"/>
+            <Property Name="CalenderId" Type="String" Size="50"/>
+            <Property Name="RawMaterialName" Type="String" Size="50"/>
+            <Property Name="ProcessName" Type="String" Size="50"/>
+            <Property Name="StationName" Type="String" Size="50"/>
+            <Property Name="JobPropertyName" Type="String" Size="50"/>
+            <Property Name="CycleTimeName" Type="String" Size="50"/>
+            <Property Name="QtyOk" Type="String" Size="50"/>
+            <Property Name="QtyNg" Type="String" Size="50"/>
+            <Property Name="QtyScrap" Type="String" Size="50"/>
+            <Property Name="QtyRework" Type="String" Size="50"/>
+            <Property Name="QtyTotal" Type="String" Size="50"/>
+            <Property Name="CycleTimeEmp" Type="String" Size="50"/>
+            <Property Name="CycleTimeEq" Type="String" Size="50"/>
+            <Property Name="IsInNoEffective" Type="U4" Size="0"/>
+            <Property Name="NoEffFinishDateTime" Type="String" Size="50"/>
+            <Property Name="CycleTimeEmpPause" Type="String" Size="50"/>
+            <Property Name="CycleTimeEmpPauseCount" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="ReworkHistory" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="TarTableName" Type="String" Size="50"/>
+            <Property Name="TarSK" Type="String" Size="50"/>
+            <Property Name="ReworkId" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="FromStationSK" Type="String" Size="50"/>
+            <Property Name="FromToolSK" Type="String" Size="50"/>
+            <Property Name="FromGroupSK" Type="String" Size="50"/>
+            <Property Name="Quantity" Type="Double" Size="0"/>
+            <Property Name="WorkState" Type="String" Size="50"/>
+            <Property Name="IsPrintRunCard" Type="U4" Size="0"/>
+            <Property Name="Producer" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="ScrappedReason" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="20"/>
+            <Property Name="ClassificationA" Type="String" Size="50"/>
+            <Property Name="ClassificationB" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SendMaterial" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="DispatchListId" Type="String" Size="50"/>
+            <Property Name="LotId" Type="String" Size="50"/>
+            <Property Name="SerialId" Type="String" Size="50"/>
+            <Property Name="ProductionSK" Type="String" Size="50"/>
+            <Property Name="ProductionId" Type="String" Size="50"/>
+            <Property Name="ProductionVer" Type="String" Size="50"/>
+            <Property Name="ProductionName" Type="String" Size="50"/>
+            <Property Name="RawMaterialSizeSK" Type="String" Size="50"/>
+            <Property Name="RawMaterialSizeId" Type="String" Size="50"/>
+            <Property Name="Quantity" Type="Double" Size="0"/>
+            <Property Name="UnitName" Type="String" Size="50"/>
+            <Property Name="ManufactureOrgId" Type="String" Size="50"/>
+            <Property Name="ManufactureOrgName" Type="String" Size="50"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SendMaterialItem" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="SendMaterial" TargetName="ItemList" ClassName="SendMaterial" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="StationId" Type="String" Size="50"/>
+            <Property Name="StationName" Type="String" Size="50"/>
+            <Property Name="MfProcessMaterialSK" Type="String" Size="50"/>
+            <Property Name="RawMaterialSK" Type="String" Size="50"/>
+            <Property Name="RawMaterialId" Type="String" Size="50"/>
+            <Property Name="RawMaterialName" Type="String" Size="50"/>
+            <Property Name="Quantity" Type="Double" Size="0"/>
+            <Property Name="UnitName" Type="String" Size="50"/>
+            <Property Name="RawMaterialSizeSK" Type="String" Size="50"/>
+            <Property Name="RawMaterialSizeId" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SendMaterialItemBOM" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Root" TargetName="DescendantList" ClassName="SendMaterialItemBOMRoot" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Parent" Type="String" Size="50"/>
+            <Property Name="RuleItem" Type="U4" Size="0"/>
+            <Property Name="Qty01" Type="String" Size="50"/>
+            <Property Name="Qty02" Type="String" Size="50"/>
+            <Property Name="Qty03" Type="String" Size="50"/>
+            <Property Name="Qty04" Type="String" Size="50"/>
+            <Property Name="Qty05" Type="String" Size="50"/>
+            <Property Name="MaterialLotId" Type="String" Size="50"/>
+            <Property Name="HandlingEqSK" Type="String" Size="50"/>
+            <Property Name="HandlingEqId" Type="String" Size="50"/>
+            <Property Name="HandlingEqName" Type="String" Size="50"/>
+            <Property Name="ContainerSK" Type="String" Size="50"/>
+            <Property Name="ContainerId" Type="String" Size="50"/>
+            <Property Name="ContainerName" Type="String" Size="50"/>
+            <Property Name="CarrierSK" Type="String" Size="50"/>
+            <Property Name="CarrierId" Type="String" Size="50"/>
+            <Property Name="CarrierName" Type="String" Size="50"/>
+            <Property Name="DenCount" Type="U4" Size="0"/>
+            <Property Name="LocationX" Type="String" Size="50"/>
+            <Property Name="LocationY" Type="String" Size="50"/>
+            <Property Name="LocationZ" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SendMaterialItemBOMRoot" ParentClass="">
+        <References>
+            <Reference Name="SendMaterialItem" Type="Unique" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="WarehouseSK" Type="String" Size="50"/>
+            <Property Name="RuleIndex" Type="U4" Size="0"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SendsMaterialRule" ParentClass="">
+        <References>
+            <Reference Name="RawMaterial" Type="Link" Relation="Has"/>
+            <Reference Name="RawMaterialSize" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="RuleIndex" Type="U4" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SendsMaterialRuleTable" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="RuleIndex" Type="U4" Size="0"/>
+            <Property Name="RuleItem" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="Shift" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+            <Reference SourceName="OrgnizationList" TargetName="ShiftList" ClassName="Organization"/>
+            <Reference SourceName="WorkCenterGroupList" TargetName="ShiftList" ClassName="WorkCenterGroup"/>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="ShiftTimeSliceRelation" ParentClass="">
+        <References>
+            <Reference Name="Shift" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="TimeSliceAttributeId" Type="String" Size="50"/>
+            <Property Name="WorkingStartTime" Type="String" Size="50"/>
+            <Property Name="WorkingEndTime" Type="String" Size="50"/>
+            <Property Name="SerialNo" Type="U4" Size="0"/>
+            <Property Name="ShiftId" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ShutdownPhenomenon" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="ShutdownPhenomenonReasonRelation" ParentClass="">
+        <References>
+            <Reference Name="ShutdownReason" Type="Link" Relation="Has"/>
+            <Reference Name="ShutdownPhenomenon" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+        </Properties>
+    </Class>
+    <Class Name="ShutdownReason" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="SmAddressAreaCurrencyType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="CountrySystemKey" Type="String" Size="50"/>
+            <Property Name="CurrencySystemKey" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmAddrssAreaCodeType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Type" Type="U4" Size="0"/>
+            <Property Name="ParentId" Type="String" Size="50"/>
+            <Property Name="Picture" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmAutoGenBarcode" ParentClass="">
+        <References>
+            <Reference Name="SmProductManufacturingParameter" Type="Unique" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Enabled" Type="U4" Size="0"/>
+            <Property Name="Length" Type="U4" Size="0"/>
+            <Property Name="Type" Type="U4" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmAutoGenBcRuleContents" ParentClass="">
+        <References>
+            <Reference Name="SmBCFlowNumGroupBase" Type="Unique" Relation="Link"/>
+            <Reference Name="SmBCFlowNumGZRule" Type="Unique" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="AutoGenBarcode" TargetName="ContentList" ClassName="SmAutoGenBarcode" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="SerialNo" Type="U4" Size="0"/>
+            <Property Name="Length" Type="U4" Size="0"/>
+            <Property Name="Attribute" Type="U4" Size="0"/>
+            <Property Name="SubAttribute" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmBCFlowNumGZRule" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmBCFlowNumGZRuleParam" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Rule" TargetName="ParameterList" ClassName="SmBCFlowNumGZRule" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ParameterValue" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmBCFlowNumGroupBase" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmBCPrintPagesRule" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmBCPrintPagesRuleParam" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Rule" TargetName="ParameterList" ClassName="SmBCPrintPagesRule" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ParameterValue" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmCompanyType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmCurrencyType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="ExchangeRate" Type="Double" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="SmDcDeviceType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="Picture" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmDutyType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="Category" Type="U4" Size="0"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="50"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmFablinkSystemParameter" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="SectionId" Type="String" Size="50"/>
+            <Property Name="TargetParameter" Type="String" Size="50"/>
+            <Property Name="TargetValue" Type="String" Size="50"/>
+            <Property Name="TargetId" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmJobProperties" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="SmManufactureProcessType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="SmOrgEstablishmentType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="SmProductManufacturingParameter" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Type" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="SmProductionCycleTime" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="Picture" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmQualityConferenceType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="20"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmShiftTimeSliceAttribute" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="SortType" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="SmStationJobProperties" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="Picture" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmStationJobPropertiesProductionCycleTime" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="JobSystemKey" Type="String" Size="50"/>
+            <Property Name="TimeSystemKey" Type="String" Size="50"/>
+            <Property Name="SerialNo" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="SmStationType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="SmSupplyType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="SmTelecomCodeType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Type" Type="U4" Size="0"/>
+            <Property Name="ParentId" Type="String" Size="50"/>
+            <Property Name="Picture" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmToolType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmUserInterfaceText" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="DefaultDescription" Type="String" Size="50"/>
+            <Property Name="DefineDescription" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmWorkCenterType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Picture" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmWorkOrderStatusType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="Picture" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmWorkOrderType" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="Picture" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="SmsRecord" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ReceivedUserSystemKey" Type="String" Size="50"/>
+            <Property Name="SendMessage" Type="String" Size="50"/>
+            <Property Name="SendTime" Type="Datetime" Size="0"/>
+            <Property Name="SendUserSystemKey" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="StationInputLabel" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Station" TargetName="InputPrintLabelList" ClassName="ManufactureProcessStation" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ProductManufacturingParameterId" Type="String" Size="50"/>
+            <Property Name="BCFormatType" Type="U4" Size="0"/>
+            <Property Name="BCFormatId" Type="String" Size="50"/>
+            <Property Name="BCPrintPagesRuleId" Type="String" Size="50"/>
+            <Property Name="IsNeedBCList" Type="U4" Size="0"/>
+            <Property Name="BCListFormatType" Type="U4" Size="0"/>
+            <Property Name="BCListFormatId" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="StationOutputLabel" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Station" TargetName="OutputPrintLabelList" ClassName="ManufactureProcessStation" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ProductManufacturingParameterId" Type="String" Size="50"/>
+            <Property Name="BCFormatType" Type="U4" Size="0"/>
+            <Property Name="BCFormatId" Type="String" Size="50"/>
+            <Property Name="BCPrintPagesRuleId" Type="String" Size="50"/>
+            <Property Name="IsNeedBCList" Type="U4" Size="0"/>
+            <Property Name="BCListFormatType" Type="U4" Size="0"/>
+            <Property Name="BCListFormatId" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="StationSop" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Station" TargetName="SopList" ClassName="ManufactureProcessStation" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="SOPFilePath" Type="String" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="StationWorkingReportDeviceRelation" ParentClass="">
+        <References>
+            <Reference Name="WorkingReportDevice" Type="Link" Relation="Has"/>
+            <Reference Name="ManufactureProcessStation" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Type" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="TempStationLabel" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ToolSysKey" Type="String" Size="50"/>
+            <Property Name="ShiftId" Type="String" Size="50"/>
+            <Property Name="Serial" Type="I4" Size="0"/>
+            <Property Name="ModifyDateTime" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="TestItems" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Accuracy" Type="U4" Size="0"/>
+            <Property Name="Unit" Type="U4" Size="0"/>
+            <Property Name="UpperLimit" Type="String" Size="50"/>
+            <Property Name="Standard" Type="String" Size="50"/>
+            <Property Name="LowLimit" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="ClassificationA" Type="String" Size="50"/>
+            <Property Name="ClassificationB" Type="String" Size="50"/>
+            <Property Name="MeasurementUnits" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="Tool" ParentClass="">
+        <References>
+            <Reference Name="ToolAlarmGroup" Type="Link" Relation="Link"/>
+            <Reference Name="Layout" Type="Link" Relation="Link"/>
+            <Reference Name="Area" Type="Link" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="500"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="50"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="ToolType" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="Picture" Type="String" Size="500"/>
+            <Property Name="PurchaseDate" Type="String" Size="50"/>
+            <Property Name="MoveInDate" Type="String" Size="50"/>
+            <Property Name="Suppliers" Type="String" Size="50"/>
+            <Property Name="PropertyNumber" Type="String" Size="50"/>
+            <Property Name="TechDocument" Type="String" Size="500"/>
+            <Property Name="UserManual" Type="String" Size="500"/>
+            <Property Name="ToolGroup" Type="String" Size="50"/>
+            <Property Name="AreaId" Type="String" Size="50"/>
+            <Property Name="AreaVersion" Type="String" Size="50"/>
+            <Property Name="TopAxis" Type="I4" Size="0"/>
+            <Property Name="LeftAxis" Type="I4" Size="0"/>
+            <Property Name="LayoutVersion" Type="String" Size="50"/>
+            <Property Name="DenCount" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="ToolAlarmGroup" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ToolAlarmTable" ParentClass="">
+        <References>
+            <Reference Name="ToolAlarmGroup" Type="Link" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="0"/>
+            <Property Name="Level" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="ToolGroup" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+            <Reference SourceName="ToolList" TargetName="ToolGroupList" ClassName="Tool"/>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="500"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="ToolType" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+        </Properties>
+    </Class>
+    <Class Name="ToolParameterRelation" ParentClass="">
+        <References>
+            <Reference Name="Tool" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="IsInspection" Type="U4" Size="0"/>
+            <Property Name="PrintFlag" Type="U4" Size="0"/>
+            <Property Name="PrintSeq" Type="String" Size="50"/>
+            <Property Name="DataSource" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="Unit" Type="U4" Size="0"/>
+            <Property Name="Accuracy" Type="U4" Size="0"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="Priority" Type="U4" Size="0"/>
+            <Property Name="IsDefineInStation" Type="U4" Size="0"/>
+            <Property Name="UpperLimit" Type="Double" Size="0"/>
+            <Property Name="Standard" Type="Double" Size="0"/>
+            <Property Name="LowLimit" Type="Double" Size="0"/>
+            <Property Name="MeasurementUnits" Type="String" Size="50"/>
+            <Property Name="ReportValue" Type="String" Size="50"/>
+            <Property Name="RaisedTime" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="TreeVersion" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Type" Type="U4" Size="0"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="Warehouse" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+            <Reference SourceName="ToolCollection" TargetName="WarehouseCollection" ClassName="Tool"/>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Attribute" Type="U4" Size="0"/>
+            <Property Name="Type" Type="U4" Size="0"/>
+            <Property Name="StoreContent" Type="String" Size="50"/>
+            <Property Name="WorkCenterId" Type="String" Size="50"/>
+            <Property Name="IsCreateLocation" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="WarehouseLocationRelation" ParentClass="">
+        <References>
+            <Reference Name="Warehouse" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="MeasurementUnits" Type="String" Size="50"/>
+            <Property Name="LocationX" Type="String" Size="50"/>
+            <Property Name="LocationY" Type="String" Size="50"/>
+            <Property Name="LocationZ" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="WipLabel" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="PrintDate" Type="String" Size="50"/>
+            <Property Name="ProductManufacturingParameterSK" Type="String" Size="50"/>
+            <Property Name="DispatchListSK" Type="String" Size="50"/>
+            <Property Name="LotSK" Type="String" Size="50"/>
+            <Property Name="SerialSK" Type="String" Size="50"/>
+            <Property Name="StationSK" Type="String" Size="50"/>
+            <Property Name="ToolSK" Type="String" Size="50"/>
+            <Property Name="GroupSK" Type="String" Size="50"/>
+            <Property Name="WorkCenterSK" Type="String" Size="50"/>
+            <Property Name="BCRTempSK" Type="String" Size="50"/>
+            <Property Name="PeripheralsDeviceSK" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="WipOpSignHistory" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ParentSK" Type="String" Size="50"/>
+            <Property Name="ParentType" Type="String" Size="50"/>
+            <Property Name="EmpId" Type="String" Size="50"/>
+            <Property Name="DeviceId" Type="String" Size="50"/>
+            <Property Name="SignInDateTime" Type="String" Size="50"/>
+            <Property Name="SignOutDateTime" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="WorkCenterEmpRelation" ParentClass="">
+        <References>
+            <Reference Name="WorkCenterGroup" Type="Link" Relation="Has"/>
+            <Reference Name="Employee" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="BelongsEffectiveDate" Type="String" Size="50"/>
+            <Property Name="BelongsExpiryDate" Type="String" Size="50"/>
+            <Property Name="TreeVersion" Type="String" Size="50"/>
+            <Property Name="TreeType" Type="U4" Size="0"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="WorkCenterGroup" ParentClass="">
+        <References>
+            <Reference Name="CalendarBelongRelation" Type="Unique" Relation="Link"/>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Head" TargetName="WorkCenterList" ClassName="Employee" Relation=""/>
+        </ExtendReferences>
+        <ExternalReferences>
+            <Reference SourceName="TestItemList" TargetName="WorkCenterList" ClassName="TestItems"/>
+            <Reference SourceName="ToolList" TargetName="WorkCenterGroupList" ClassName="Tool"/>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="ModifyDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="50"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="WorkCenterType" Type="String" Size="50"/>
+            <Property Name="DefineInOrganization" Type="U4" Size="0"/>
+            <Property Name="IsInside" Type="U4" Size="0"/>
+            <Property Name="Picture" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="WorkingReportDevice" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="Name" Type="String" Size="50"/>
+            <Property Name="NameLocal" Type="String" Size="50"/>
+            <Property Name="NameEng" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Version" Type="String" Size="500"/>
+            <Property Name="VersionDescription" Type="String" Size="500"/>
+            <Property Name="TitleColor" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="Description" Type="String" Size="500"/>
+            <Property Name="Picture" Type="String" Size="500"/>
+            <Property Name="PurchaseDate" Type="String" Size="50"/>
+            <Property Name="MoveInDate" Type="String" Size="50"/>
+            <Property Name="Suppliers" Type="String" Size="50"/>
+            <Property Name="PropertyNumber" Type="String" Size="50"/>
+            <Property Name="TechDocument" Type="String" Size="500"/>
+            <Property Name="UserManual" Type="String" Size="500"/>
+            <Property Name="BelongType" Type="U4" Size="0"/>
+            <Property Name="BelongSystemKey" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="WorkingReportItem" ParentClass="">
+        <References>
+            <Reference Name="WorkingReportItemGroup" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="PrintFlag" Type="U4" Size="0"/>
+            <Property Name="PrintSeq" Type="String" Size="50"/>
+            <Property Name="Type" Type="String" Size="50"/>
+            <Property Name="Caption" Type="String" Size="0"/>
+            <Property Name="DataSource" Type="U4" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="Sequential" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="WorkingReportItemGroup" ParentClass="">
+        <References>
+            <Reference Name="ManufactureProcessStation" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="IsReportOnNextTime" Type="U4" Size="0"/>
+            <Property Name="ReportType" Type="U4" Size="0"/>
+            <Property Name="StationJobPropertiesSystemKey" Type="String" Size="50"/>
+            <Property Name="ProductionCycleTimeSystemKey" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="WorkingReportItemGroupP" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="Station" TargetName="SecondaryReportGroupList" ClassName="ManufactureProcessStation" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="IsReportOnNextTime" Type="U4" Size="0"/>
+            <Property Name="ReportType" Type="U4" Size="0"/>
+            <Property Name="StationJobPropertiesSystemKey" Type="String" Size="50"/>
+            <Property Name="ProductionCycleTimeSystemKey" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+    <Class Name="WorkingReportItemP" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+            <Reference SourceName="SecondaryReportGroup" TargetName="SecondaryReportItemList" ClassName="WorkingReportItemGroupP" Relation="Has"/>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="PrintFlag" Type="U4" Size="0"/>
+            <Property Name="PrintSeq" Type="String" Size="50"/>
+            <Property Name="Type" Type="String" Size="50"/>
+            <Property Name="Caption" Type="String" Size="0"/>
+            <Property Name="DataSource" Type="U4" Size="0"/>
+            <Property Name="CreateUser" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="ActiveFlag" Type="U4" Size="0"/>
+            <Property Name="Sequential" Type="U4" Size="0"/>
+        </Properties>
+    </Class>
+    <Class Name="WorkingReportPeripheralsDeviceRelation" ParentClass="">
+        <References>
+            <Reference Name="WorkingReportDevice" Type="Link" Relation="Has"/>
+            <Reference Name="PeripheralsDevice" Type="Link" Relation="Has"/>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+        </Properties>
+    </Class>
+</DB>

@@ -1,0 +1,13 @@
+<DB>
+    <Class Name="DemoString" ParentClass="">
+        <References>
+        </References>
+        <ExtendReferences>
+        </ExtendReferences>
+        <ExternalReferences>
+        </ExternalReferences>
+        <Properties>
+            <Property Name="Id" Type="String" Size="50"/>
+        </Properties>
+    </Class>
+</DB>
