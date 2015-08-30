@@ -1,5 +1,5 @@
 <DB>
-    <Class Name="DemoString" ParentClass="">
+    <Class Name="EmpLoginHistoryRelation" ParentClass="">
         <References>
         </References>
         <ExtendReferences>
@@ -7,7 +7,10 @@
         <ExternalReferences>
         </ExternalReferences>
         <Properties>
-            <Property Name="Id" Type="String" Size="50"/>
+            <Property Name="LoginModule" Type="String" Size="50"/>
+            <Property Name="LoginFrom" Type="String" Size="50"/>
+            <Property Name="LoginTime" Type="Datetime" Size="0"/>
+            <Property Name="LogoutTime" Type="Datetime" Size="0"/>
         </Properties>
     </Class>
 </DB>
