@@ -36,12 +36,14 @@ class Constructor:
 		if var.type == 'string':
 			return '	' * tab_level + var.name + '("' + self.className + '_' + var.name + '")' + ',\n'
 		elif var.type == 'double' or var.type == 'float':
-			return '	' * tab_level + var.name + '("' + '0.0' + '")' + ',\n'
+			return '	' * tab_level + var.name + '(' + '0.0' + ')' + ',\n'
 		elif 'int' in var.type: #unsigned int or int
-			return '	' * tab_level + var.name + '("' + '0' + '")' + ',\n'
+			return '	' * tab_level + var.name + '(' + '0' + ')' + ',\n'
 		else:
 			return ''
 
+	def GetClassNameNum(self, num):
+		return self.className + str(num)
 
 	def init_var(self, tab_level, var_list):
 		code = ':\n'
@@ -53,26 +55,18 @@ class Constructor:
 		return code
 
 	def dotHCode(self, tab_level):
-		code = '	' * tab_level + self.className
-		code += '();'
-		return code + '\n\n'
+		code = '	' * tab_level + self.GetClassNameNum(1) + '();\n'
+		code += '	' * tab_level + self.GetClassNameNum(1) + '(KDo' + self.className + '* KDataObject);\n'
+		return code
 
-	def dotFullHCode(self, tab_level, var_list):
-		code = self.dotHCode(tab_level)
-		code = code[0:code.index(';')]
-
-		if len(var_list) > 0:
-			code += self.init_var(1, var_list) + '{}'
-		else:
-			code += ';'
-
-		return code + '\n\n'
-
-	def dotCppCode(self, tab_level, var_list):
+	def dotCppCode(self, tab_level, var_list, ref_list):
 		#code = self.dotHCode()
 		code = self.dotHCode(tab_level)
 		code = self.className + '::' + code[0:code.index(';')]
 		code += self.init_var(0, var_list) + '{\n'
+		for ref in ref_list:
+			#print (ref.dotCppInit())
+			code += '	' * (tab_level+1) + ref.dotCppInit() + '\n'
 		code += '	' * (tab_level+1) + 'cv_ClassName = "' + self.className[len('KDo'):len(self.className)] + '";\n'
 		code += '}'
 		return code
@@ -85,13 +79,15 @@ class xmlFunction:
 		self.parameterList = parameter_list
 
 	def dotHCode(self, tab_level):
-		code = self.returnType + ' ' + self.functionName + '('
+		code = 'static ' + self.returnType + ' ' + self.functionName + '('
 		for parameter in self.parameterList:
-			code += parameter.GetType() + ' ' + parameter.GetName() + ', '
-
+			if ' =' in parameter.GetName():
+				code += parameter.GetType() + ' ' + parameter.GetName()[0:parameter.GetName().index(' =')] + ', '
+			else:
+				code += parameter.GetType() + ' ' + parameter.GetName() + ', '
 		if ', ' in code:
 			code = code[0:len(code)-2] #remove ', '
-
+		code += ');'
 		return code
 
 	def CppFunction(self, tab_level):
@@ -111,7 +107,7 @@ class xmlFunction:
 			code += '	' * tab_level + '{\n'
 			code += '	' * tab_level + '	return 0;\n'
 			code += '	' * tab_level + '}\n'
-		elif 'KDoEmployeeRelation*' in self.returnType:
+		elif '' + self.className + '*' in self.returnType:
 			code = '	' * tab_level + 'return new ' + self.className + '();\n'
 
 		return code;
@@ -130,53 +126,38 @@ class xmlFunction:
 		return code
 
 class xml2Class:
-	def _InitStaticFunction(self):
-		self.static_function_list.append(xmlFunction(self.className, 'KDoEmployeeRelation*', 'CreateDoObject', []))
-		self.static_function_list.append(xmlFunction(self.className, 'KDoEmployeeRelation*', 'GetDoObject', [xml2Variable('string', 'm_SystemKey')]))
-		self.static_function_list.append(xmlFunction(self.className, 'list<KDoEmployeeRelation*>', 'GetDoObjectsByFilter', [xml2Variable('map<string, string>&', 'm_Filter')]))
-		self.static_function_list.append(xmlFunction(self.className, 'list<KDoEmployeeRelation*>', 'GetDoObjectsByFilter', [xml2Variable('map<string, list<string> >&', 'm_Filter')]))
-		self.static_function_list.append(xmlFunction(self.className, 'list<KDoEmployeeRelation*>', 'GetDoObjectsByFilter', [xml2Variable('list< map<string, string> >&', 'm_Filter')]))
-		self.static_function_list.append(xmlFunction(self.className, 'list<KDoEmployeeRelation*>', 'GetDoObjectsByFilter', [xml2Variable('map<string, string>&', 'm_Filter'), xml2Variable('int', 'm_StartIndex'), xml2Variable('int', 'm_Number'), xml2Variable('list<string>&', 'm_OrderList'), xml2Variable('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xmlFunction(self.className, 'list<KDoEmployeeRelation*>', 'GetDoObjectsByFilter', [xml2Variable('map<string, list<string> >&', 'm_Filter'), xml2Variable('int', 'm_StartIndex'), xml2Variable('int', 'm_Number'), xml2Variable('list<string>&', 'm_OrderList'), xml2Variable('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xmlFunction(self.className, 'list<KDoEmployeeRelation*>', 'GetDoObjectsByFilter', [xml2Variable('list< map<string, string> >&', 'm_Filter'), xml2Variable('int', 'm_StartIndex'), xml2Variable('int', 'm_Number'), xml2Variable('list<string>&', 'm_OrderList'), xml2Variable('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xmlFunction(self.className, 'int', 'GetDoObjectsCountBySql', [xml2Variable('string', 'm_SqlFilter')]))
-		self.static_function_list.append(xmlFunction(self.className, 'int', 'GetDoObjectsCountByFilter', [xml2Variable('map<string, string>&', 'm_Filter')]))
-		self.static_function_list.append(xmlFunction(self.className, 'int', 'GetDoObjectsCountByFilter', [xml2Variable('map<string, list<string> >&', 'm_Filter')]))
-		self.static_function_list.append(xmlFunction(self.className, 'int', 'GetDoObjectsCountByFilter', [xml2Variable('list< map<string, string> >&', 'm_Filter')]))
-		self.static_function_list.append(xmlFunction(self.className, 'int', 'GetDoObjectsCountByFilter', [xml2Variable('map<string, string>&', 'm_Filter'), xml2Variable('set<string>&', 'm_LikeColumns')]))
-		self.static_function_list.append(xmlFunction(self.className, 'int', 'GetDoObjectsCountByFilter', [xml2Variable('map<string, list<string> >&', 'm_Filter'), xml2Variable('set<string>&', 'm_LikeColumns')]))
-		self.static_function_list.append(xmlFunction(self.className, 'int', 'GetDoObjectsCountByFilter', [xml2Variable('list< map<string, string> >&', 'm_Filter'), xml2Variable('set<string>&', 'm_LikeColumns')]))
-		self.static_function_list.append(xmlFunction(self.className, 'list<KDoEmployeeRelation*>', 'GetDoObjectsBySql', [xml2Variable('string', 'm_SqlFilter'), xml2Variable('int', 'm_StartIndex'), xml2Variable('int', 'm_Number'), xml2Variable('list<string>&', 'm_OrderList'), xml2Variable('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xmlFunction(self.className, 'list<KDoEmployeeRelation*>', 'GetDoObjectsByFilter', [xml2Variable('map<string, string>&', 'm_Filter'), xml2Variable('set<string>&', 'm_LikeColumns')]))
-		self.static_function_list.append(xmlFunction(self.className, 'list<KDoEmployeeRelation*>', 'GetDoObjectsByFilter', [xml2Variable('map<string, list<string> >&', 'm_Filter'), xml2Variable('set<string>&', 'm_LikeColumns')]))
-		self.static_function_list.append(xmlFunction(self.className, 'list<KDoEmployeeRelation*>', 'GetDoObjectsByFilter', [xml2Variable('list< map<string, string> >&', 'm_Filter'), xml2Variable('set<string>&', 'm_LikeColumns')]))
-		self.static_function_list.append(xmlFunction(self.className, 'list<KDoEmployeeRelation*>', 'GetDoObjectsByFilter', [xml2Variable('map<string, string>&', 'm_Filter'), xml2Variable('set<string>&', 'm_LikeColumns'), xml2Variable('int', 'm_StartIndex'), xml2Variable('int', 'm_Number'), xml2Variable('list<string>&', 'm_OrderList'), xml2Variable('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xmlFunction(self.className, 'list<KDoEmployeeRelation*>', 'GetDoObjectsByFilter', [xml2Variable('map<string, list<string> >&', 'm_Filter'), xml2Variable('set<string>&', 'm_LikeColumns'), xml2Variable('int', 'm_StartIndex'), xml2Variable('int', 'm_Number'), xml2Variable('list<string>&', 'm_OrderList'), xml2Variable('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xmlFunction(self.className, 'list<KDoEmployeeRelation*>', 'GetDoObjectsByFilter', [xml2Variable('list< map<string, string> >&', 'm_Filter'), xml2Variable('set<string>&', 'm_LikeColumns'), xml2Variable('int', 'm_StartIndex'), xml2Variable('int', 'm_Number'), xml2Variable('list<string>&', 'm_OrderList'), xml2Variable('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xmlFunction(self.className, 'KDoEmployeeRelation*', 'GetDoObjectByFilter', [xml2Variable('map<string, string>&', 'm_Filter')]))
-		self.static_function_list.append(xmlFunction(self.className, 'KDoEmployeeRelation*', 'GetDoObjectBySql', [xml2Variable('string', 'm_SqlFilter')]))
-
-	def __init__(self, name):
+	def _InitCollection(self):
 		self.member_list = []
-		self.static_function_list = []
 		self.include_list = []
 		self.include_stdlib_list = []
 		self.using_namespace = []
-		self.className = 'KDo' + name
+
+	def __init__(self, name):
+		self._InitCollection()
+		self.className = name
 		self.construct = Constructor(self.className)
-		self._InitStaticFunction()
 
 	def AddMemberVariable(self, type, name):
+		print(type, name)
 		self.member_list.append(xml2Variable(type, name))
 		if type == 'string':
 			self.include_stdlib_list.append(type)
-			self.using_namespace.append(str('std::') + type)
+			self.using_namespace.append('std::' + type)
+		elif 'map' in type:
+			self.include_stdlib_list.append('map')
+			self.using_namespace.append('std::map')
+		elif 'list' in type:
+			self.include_stdlib_list.append('list')
+			self.using_namespace.append('std::list')
+
 		if type == 'datetime':
 			self.include_list.append('KDateTime')
 			self.using_namespace.append(str('KGS::DateTime'))
 
-	#.cpp file
+	def GetClassNameNum(self, num):
+		return self.className + str(num)
 
+	#.cpp file
 	def CppFieldStaticString(self):
 		code = '\n'
 		#code += 'const string ' + self.className + '::ClassDbTableName = "' + '";
@@ -194,10 +175,7 @@ class xml2Class:
 		code = '#include "stdafx.h"\n'
 		code += '#include "' + self.className + '.h"\n'
 		code += self.CppFieldStaticString()
-		code += '\n' + self.construct.dotCppCode(0, self.member_list)
-
-		for function in self.static_function_list:
-			code += '\n' + function.dotCppCode(0)
+		code += '\n' + self.construct.dotCppCode(0, self.member_list, self.reference_list)
 
 		return code
 
@@ -212,7 +190,11 @@ class xml2Class:
 		file.close()
 	#.h file
 	def HInclude(self):
-		dot_h_include = '#include "KDO.h"\n'
+		dot_h_include = '#include "KDoProxy1.h"\n'
+		dot_h_include += '#include "KDoTransaction.h"\n'
+		dot_h_include += '#include "KXmlItem.h"\n'
+		dot_h_include += '#include "KDo' + self.className + '.h"\n'
+
 		for filename in set(self.include_list):
 			dot_h_include += '#include "' + filename + '"\n'
 		for std_namespace in set(self.include_stdlib_list):
@@ -222,46 +204,37 @@ class xml2Class:
 	def HUsingNameSpace(self):
 		dot_h_using_namespace = ''
 		for namespace in set(self.using_namespace):
-			dot_h_using_namespace += 'using ' + namespace + '\n'
+			dot_h_using_namespace += 'using ' + namespace + ';\n'
 		return dot_h_using_namespace
 
-	def HFieldStaticString(self, tab_level):
+	def ditHTableBaseEvent(self, tab_level):
 		code = ''
-		#code += '	' * tab_level + 'static const string ClassDbTableName;\n\n'
-		code += '	' * tab_level + 'static const string Field_SystemKey;\n'
-		code += '	' * tab_level + 'static const string Field_SystemKeyType;\n'
-
-		code += '\n'
-		for var in self.member_list:
-			if var.name == 'SystemKey':
-				continue
-			code += '	' * tab_level + var.dotHFieldStr() + '\n'
-		return code
-
-	def HStaticFunction(self, tab_level):
-		code =''
-		for static_function in self.static_function_list:
-			code += '	' * tab_level + static_function.dotHCode(tab_level) + '\n'
+		code += '	' * tab_level + 'void CreateToTable(KXmlItem m_XmlInfo);\n'
+		code += '	' * tab_level + 'void ModifyToTable(KXmlItem m_XmlInfo);\n'
+		code += '	' * tab_level + 'void Delete();\n'
 		return code
 
 	def HClassCode(self, tab_level, var_list):
-		out = 'class ' + self.className + ' : public KDataPersistentObject' + '\n'
-		out += '{\npublic:\n'
+		out = ''
+		out += 'class ' + self.GetClassNameNum(1) + ' : public KDoProxy1' + '\n'
+		out += '{\n'
 		tab_level += 1
-		out += self.HFieldStaticString(tab_level) + '\n'
-		out += '	' * tab_level + 'friend class KDoFactory;\n\n'
-		out += self.HStaticFunction(tab_level) + '\n'
+		out += '	' * tab_level + 'KDoTransaction* cv_Transaction;\n'
+		out += 'public:\n'
 		out += self.construct.dotHCode(tab_level)
-		#out += self.construct.dotFullHCode(tab_level, var_list)
-
-		for member_var in self.member_list:
-			out += '	' + str(member_var) + '\n'
+		out += 'public:\n'
+		out += '	' * tab_level + 'KDo' + self.className + '* GetDataObject() const;\n'
+		out += '	' * tab_level + 'KDo' + self.className + '* operator->() const;\n'
+		out += 'public:\n'
+		out += self.ditHTableBaseEvent(tab_level)
+		out += 'public:\n'
+		out += '	' * tab_level + 'KXmlItem GetXml_' + self.className + 'Info();\n'
 		return out + '};\n'
 
 	def PrintDotHFile(self):
-		dot_h_code = '#ifndef ' + self.className + '_H\n'
-		dot_h_code += '#define ' + self.className + '_H\n'
-		dot_h_code += self.HInclude()
+		dot_h_code  = '#ifndef ' + self.className + '_H\n'
+		dot_h_code += '#define ' + self.className + '_H\n\n'
+		dot_h_code += self.HInclude() + '\n'
 		dot_h_code += self.HUsingNameSpace() + '\n'
 		dot_h_code += self.HClassCode(0, self.member_list)
 		dot_h_code += '\n#endif'
@@ -277,12 +250,13 @@ class xml2Class:
 		file.write(self.PrintDotHFile())
 		file.close()
 
-
 if __name__ == "__main__":
 	classX = xml2Class("Employee")
 	classX.AddMemberVariable("string", "Id")
 	classX.AddMemberVariable("string", "SystemKey")
 	classX.AddMemberVariable("unsigned int", "Active_Flag")
 	classX.AddMemberVariable("float", "SomeValue")
+	classX.AddReference('RawMaterial', 'Link' , 'Has')
+	classX.AddReference('RawMaterialSize', 'Link' , 'Has')
 	classX.Write2DotHFile('')
 	classX.Write2DotCppFile('')
