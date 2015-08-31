@@ -201,7 +201,8 @@ class xml2Class:
 		self.member_list.append(xml2Variable(type, name))
 		if type == 'string':
 			self.include_stdlib_list.append(type)
-			self.using_namespace.append(str('std::') + type)
+			self.using_namespace.append('std::' + type)
+
 		if type == 'datetime':
 			self.include_list.append('KDateTime')
 			self.using_namespace.append(str('KGS::DateTime'))
@@ -249,8 +250,14 @@ class xml2Class:
 		dot_h_include += '#include "KDoObjects.h"\n'
 		for filename in set(self.include_list):
 			dot_h_include += '#include "' + filename + '"\n'
+		dot_h_include += '#include <string>\n'
+		dot_h_include += '#include <list>\n'
+		dot_h_include += '#include <map>\n\n'
 		for std_namespace in set(self.include_stdlib_list):
 			dot_h_include += '#include <' + std_namespace + '>\n'
+		dot_h_include += 'using std::string;\n'
+		dot_h_include += 'using std::list;\n'
+		dot_h_include += 'using std::map;\n'
 		return dot_h_include
 
 	def HUsingNameSpace(self):
