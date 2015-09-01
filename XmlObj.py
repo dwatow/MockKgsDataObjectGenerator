@@ -1,74 +1,81 @@
 class xml2Variable:
-	def CovertType(self, type):
-		if type == 'u4' or type == 'u8':
+	def CovertType_Xml2Cpp(self, cpp_type):
+		if cpp_type == 'u4' or cpp_type == 'u8':
 			return 'unsigned int'
-		elif type == 'i4':
+		elif cpp_type == 'i4':
 			return 'int'
-		elif type == 'f4':
+		elif cpp_type == 'f4':
 			return 'float'
-		elif type == 'u8':
+		elif cpp_type == 'u8':
 			return 'unsigned __int64'
-		elif type == 'datetime':
+		elif cpp_type == 'datetime':
 			return 'KDateTime'
 		else:
-			return str(type)
+			return str(cpp_type)
 
-	def __init__(self, type, name):
+	def CovertType_Cpp2Xml(self, xml_type):
+		if xml_type == 'unsigned int':
+			return 'U4'
+		elif xml_type == 'int':
+			return 'I4'
+		elif xml_type == 'float':
+			return 'String'
+		elif xml_type == 'unsigned __int64':
+			return 'U4'
+		elif xml_type == 'KDateTime':
+			return 'String'
+		elif xml_type == 'string':
+			return 'String'
+		else:
+			return str(xml_type)
+
+	def __init__(self, xml_type, name):
 		self.name = name
-		self.type = self.CovertType(type.lower())
-	def __str__(self):
-		return str(self.type) + ' ' + str(self.name) + ';'
-	def dotHFieldStr(self):
-		return 'static const string Field_' + str(self.name) + ';'
-	def dotCppFieldStr(self, class_name):
-		return 'const string ' + class_name + '::Field_' + str(self.name) + ' = "' + str(self.name) + '";'
+		self.cpp_type = self.CovertType_Xml2Cpp(xml_type.lower())
 
-	def GetType(self):
-		return self.type
-	def GetName(self):
-		return self.name
+	def GetXmlElemant(self):
+		xml = '<' + self.name + ' KGS_TYPE="' + self.CovertType_Xml2Cpp(self.cpp_type) + ' KGS_ITEM_NUMBER="' + str(len(self.name)) + '">'
+		return xml
+
+	def SetKXmlItem(self, kxmlitem_var_name):
+		return kxmlitem_var_name + '.ItemsByLevelName["' + self.name + '"].As' + self.CovertType_Cpp2Xml(self.cpp_type)
+
+	def GetKXmlItem(self, kxmlitem_var_name):
+		return kxmlitem_var_name + '.ItemsByName["' + self.name + '"].As' + self.CovertType_Cpp2Xml(self.cpp_type)
 
 class Constructor:
 	def __init__(self, className):
 		self.className = className
 
-	def init_type_value(self, tab_level, var):
-		if var.type == 'string':
-			return '	' * tab_level + var.name + '("' + self.className + '_' + var.name + '")' + ',\n'
-		elif var.type == 'double' or var.type == 'float':
-			return '	' * tab_level + var.name + '(' + '0.0' + ')' + ',\n'
-		elif 'int' in var.type: #unsigned int or int
-			return '	' * tab_level + var.name + '(' + '0' + ')' + ',\n'
-		else:
-			return ''
-
 	def GetClassNameNum(self, num):
 		return self.className + str(num)
 
-	def init_var(self, tab_level, var_list):
-		code = ':\n'
-		#print(self.className)
-		for var in var_list:
-			#print('	', var.name)
-			code += self.init_type_value(tab_level, var)
-		code = code[0:len(code)-2] + '\n' + '	' * tab_level
-		return code
-
 	def dotHCode(self, tab_level):
-		code = '	' * tab_level + self.GetClassNameNum(1) + '();\n'
-		code += '	' * tab_level + self.GetClassNameNum(1) + '(KDo' + self.className + '* KDataObject);\n'
+		code = '	' * tab_level + self.GetClassNameNum(1) + '(KDoTransaction* const m_Transaction = 0);\n'
+		code += '	' * tab_level + self.GetClassNameNum(1) + '(KDo' + self.className + '* m_KDataObject, KDoTransaction* const m_Transaction = 0);\n'
 		return code
 
-	def dotCppCode(self, tab_level, var_list, ref_list):
+	def dotCppCode(self, tab_level, main_code_list):
 		#code = self.dotHCode()
-		code = self.dotHCode(tab_level)
-		code = self.className + '::' + code[0:code.index(';')]
-		code += self.init_var(0, var_list) + '{\n'
-		for ref in ref_list:
-			#print (ref.dotCppInit())
-			code += '	' * (tab_level+1) + ref.dotCppInit() + '\n'
-		code += '	' * (tab_level+1) + 'cv_ClassName = "' + self.className[len('KDo'):len(self.className)] + '";\n'
-		code += '}'
+		function_title1 = '	' * tab_level + self.GetClassNameNum(1) + '(KDoTransaction* const m_Transaction);\n'
+		code  = '	' * tab_level + self.GetClassNameNum(1) + '::' + function_title1[0:function_title1.index(';')] + ':\n'
+		code += '	' * tab_level + 'KDoProxy1(KDo' + self.GetClassNameNum(1) + '::CreateObject()), cv_Transaction(m_Transaction)\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		for main_code in main_code_list:
+			code += '	' * tab_level + main_code
+		tab_level -= 1
+		code += '}\n'
+		code += '\n'
+		function_title2 = '	' * tab_level + self.GetClassNameNum(1) + '(KDo' + self.className + '* m_KDataObject, KDoTransaction* const m_Transaction);\n'
+		code += '	' * tab_level + self.GetClassNameNum(1) + '::' + function_title2[0:function_title2.index(';')] + ':\n'
+		code += '	' * tab_level + 'KDoProxy1(m_KDataObject), cv_Transaction(m_Transaction)\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		for main_code in main_code_list:
+			code += '	' * tab_level + main_code
+		tab_level -= 1
+		code += '}\n'
 		return code
 
 class xmlFunction:
@@ -78,104 +85,118 @@ class xmlFunction:
 		self.functionName = function_name
 		self.parameterList = parameter_list
 
-	def dotHCode(self, tab_level):
-		code = 'static ' + self.returnType + ' ' + self.functionName + '('
-		for parameter in self.parameterList:
-			if ' =' in parameter.GetName():
-				code += parameter.GetType() + ' ' + parameter.GetName()[0:parameter.GetName().index(' =')] + ', '
-			else:
-				code += parameter.GetType() + ' ' + parameter.GetName() + ', '
-		if ', ' in code:
-			code = code[0:len(code)-2] #remove ', '
-		code += ');'
-		return code
-
-	def CppFunction(self, tab_level):
-		code = ''
-		if 'list' in self.returnType:
-			code  = '	' * tab_level + self.returnType + ' list;\n'
-			code += '	' * tab_level + 'list.push_back(new ' + self.className + '());\n'
-			code += '	' * tab_level + 'return list;\n'
-		elif 'Count' in self.functionName:
-			code = '	' * tab_level + 'return 1;\n'
-		elif self.functionName == 'GetDoObject':
-			code  = '	' * tab_level + 'if ("SystemKey" == m_SystemKey)\n'
-			code += '	' * tab_level + '{\n'
-			code += '	' * tab_level + '	return new ' + self.className + '();\n'
-			code += '	' * tab_level + '}\n'
-			code += '	' * tab_level + 'else\n'
-			code += '	' * tab_level + '{\n'
-			code += '	' * tab_level + '	return 0;\n'
-			code += '	' * tab_level + '}\n'
-		elif '' + self.className + '*' in self.returnType:
-			code = '	' * tab_level + 'return new ' + self.className + '();\n'
-
-		return code;
-
-	def dotCppCode(self, tab_level):
-		code = '\n'
-		code += self.returnType + ' '  + self.className + '::' + self.functionName + '('
-		for parameter in self.parameterList:
-			code += parameter.GetType() + ' ' + parameter.GetName() + ', '
-		if ', ' in code :
-			code = code[0:len(code)-2] #remove ', '
-		code += ')\n'
-		code += '{\n'
-		code += '	' * tab_level + self.CppFunction(tab_level+1)
-		code += '}'
-		return code
 
 class xml2Class:
 	def _InitCollection(self):
-		self.member_list = []
 		self.include_list = []
 		self.include_stdlib_list = []
 		self.using_namespace = []
 
 	def __init__(self, name):
 		self._InitCollection()
+		self.member_dict = {}
 		self.className = name
 		self.construct = Constructor(self.className)
 
 	def AddMemberVariable(self, type, name):
-		print(type, name)
-		self.member_list.append(xml2Variable(type, name))
-		if type == 'string':
-			self.include_stdlib_list.append(type)
-			self.using_namespace.append('std::' + type)
-		elif 'map' in type:
-			self.include_stdlib_list.append('map')
-			self.using_namespace.append('std::map')
-		elif 'list' in type:
-			self.include_stdlib_list.append('list')
-			self.using_namespace.append('std::list')
-
-		if type == 'datetime':
-			self.include_list.append('KDateTime')
-			self.using_namespace.append(str('KGS::DateTime'))
+		self.member_dict[name] = xml2Variable(type, name)
 
 	def GetClassNameNum(self, num):
 		return self.className + str(num)
+	def GetClassNameListNum(self, num):
+		return self.className + 'List' + str(num)
 
 	#.cpp file
-	def CppFieldStaticString(self):
-		code = '\n'
-		#code += 'const string ' + self.className + '::ClassDbTableName = "' + '";
-		code += 'const string ' + self.className + '::Field_SystemKey = "SystemKey";\n'
-		code += 'const string ' + self.className + '::Field_SystemKeyType = "SystemKeyType";\n\n'
+	def _init_AddTransaction(self, tab_level):
+		head = '	'
+		code_list = []
+		code_list.append(head * tab_level + 'if (cv_Transaction != 0)\n')
+		code_list.append(head * tab_level + '{\n')
+		code_list.append(head * (tab_level+1) + 'if (!cv_Transaction->AddObject(GetDataObject()))\n')
+		code_list.append(head * (tab_level+1) + '{\n')
+		code_list.append(head * (tab_level+2) + 'throw new FablinkException(ERROR_FABLINK_START_TRANSACTION_FALSE);\n')
+		code_list.append(head * (tab_level+1) + '}\n')
+		code_list.append(head * tab_level + '}\n')
+		return code_list
 
-		for member in self.member_list:
-			if member.name == 'SystemKey':
-				continue
-			code += member.dotCppFieldStr(self.className) + '\n'
+	def dotCppGetPtrFunction(self, tab_level):
+		code = ''
+		code += '	' * tab_level + 'KDoEmpLoginHistoryRelation* ' + self.GetClassNameNum(1) + '::GetDataObject() const\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + 'return (KDo' + self.className + '*)GetBaseObject();\n'
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		code += '	' * tab_level + '\n'
+		code += '	' * tab_level + 'KDoEmpLoginHistoryRelation* ' + self.GetClassNameNum(1) + '::operator->() const\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + 'return GetDataObject();\n'
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		#code += '	' * tab_level +
+		return code
 
+	def SetData2TableFunction(self, tab_level, funciton_event):
+		xml_var_name = 'm_XmlInfo'
+		code  = '	' * tab_level + 'void ' + self.GetClassNameNum(1) + '::' + funciton_event + 'ToTable(KXmlItem& ' + xml_var_name + ')\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + '//this function was refactoried not yet....\n'
+		for var in self.member_dict.values():
+			code += '	' * tab_level + 'GetDataObject()->' + var.name + ' = ' +  var.GetKXmlItem(xml_var_name) + ';\n';
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		return code
+
+	def Delete2TableFunction(self, tab_level):
+		code  = '	' * tab_level + 'void ' + self.GetClassNameNum(1) + '::Delete()\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + '//this function was refactoried not yet....\n'
+		if 'ActiveFlag' in self.member_dict:
+			code += '	' * tab_level + 'GetDataObject()->ActiveFlag = aftInactive;\n'
+		else:
+			code += '	' * tab_level + 'GetDataObject()->DeleteObject();\n';
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		return code
+
+	def KXmlItemInfo(self, tab_level):
+		code = ''
+		code += '	' * tab_level + 'KXmlItem ' + self.GetClassNameNum(1) + '::GetXml_' + self.className + 'Info(const string& m_InfoName) const\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + '//this function was refactoried not yet....\n'
+		code += '	' * tab_level + 'KXmlItem xml;\n'
+		code += '	' * tab_level + 'xml.Name = m_InfoName;\n'
+		code += '	' * tab_level + 'xml.ItemType = itxList;\n'
+		code += '	' * tab_level + '\n'
+		#code += '	' * tab_level +
+		for var in self.member_dict.values():
+			code += '	' * tab_level + var.SetKXmlItem('xml') + ' = ' + 'GetDataObject()->' + var.name + ';\n'
+		code += '	' * tab_level + '\n'
+		code += '	' * tab_level + 'return xml;\n'
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
 		return code
 
 	def PrintDotCppFile(self):
 		code = '#include "stdafx.h"\n'
-		code += '#include "' + self.className + '.h"\n'
-		code += self.CppFieldStaticString()
-		code += '\n' + self.construct.dotCppCode(0, self.member_list, self.reference_list)
+		code += '#include "FablinkException.h"\n'
+		code += '#include "SuMsgErrorCode.h"\n'
+		code += '#include "' + self.GetClassNameNum(1) + '.h"\n\n'
+		code += '//this file was refactoried not yet....\n\n'
+		code += self.construct.dotCppCode(0, self._init_AddTransaction(0)) + '\n'
+		code += self.dotCppGetPtrFunction(0) + '\n'
+		code += self.SetData2TableFunction(0, 'Create') + '\n'
+		code += self.SetData2TableFunction(0, 'Modify') + '\n'
+		code += self.Delete2TableFunction(0) + '\n'
+		code += self.KXmlItemInfo(0) + '\n'
+		#for var in self.member_dict.values():
+			#print(var.SetKXmlItem('xml'), var.GetXmlElemant(), var.GetKXmlItem('xml'))
+		code += '//----\n'
+
 
 		return code
 
@@ -188,6 +209,7 @@ class xml2Class:
 		file = open( fil_path_ename, 'w')
 		file.write(self.PrintDotCppFile())
 		file.close()
+
 	#.h file
 	def HInclude(self):
 		dot_h_include = '#include "KDoProxy1.h"\n'
@@ -197,24 +219,26 @@ class xml2Class:
 
 		for filename in set(self.include_list):
 			dot_h_include += '#include "' + filename + '"\n'
+		dot_h_include += '#include <vector>\n'
 		for std_namespace in set(self.include_stdlib_list):
 			dot_h_include += '#include <' + std_namespace + '>\n'
 		return dot_h_include
 
 	def HUsingNameSpace(self):
 		dot_h_using_namespace = ''
+		dot_h_using_namespace += 'using std::vector;\n'
 		for namespace in set(self.using_namespace):
 			dot_h_using_namespace += 'using ' + namespace + ';\n'
 		return dot_h_using_namespace
 
 	def ditHTableBaseEvent(self, tab_level):
 		code = ''
-		code += '	' * tab_level + 'void CreateToTable(KXmlItem m_XmlInfo);\n'
-		code += '	' * tab_level + 'void ModifyToTable(KXmlItem m_XmlInfo);\n'
+		code += '	' * tab_level + 'void CreateToTable(KXmlItem& m_XmlInfo);\n'
+		code += '	' * tab_level + 'void ModifyToTable(KXmlItem& m_XmlInfo);\n'
 		code += '	' * tab_level + 'void Delete();\n'
 		return code
 
-	def HClassCode(self, tab_level, var_list):
+	def HInfoClassCode(self, tab_level):
 		out = ''
 		out += 'class ' + self.GetClassNameNum(1) + ' : public KDoProxy1' + '\n'
 		out += '{\n'
@@ -228,15 +252,36 @@ class xml2Class:
 		out += 'public:\n'
 		out += self.ditHTableBaseEvent(tab_level)
 		out += 'public:\n'
-		out += '	' * tab_level + 'KXmlItem GetXml_' + self.className + 'Info();\n'
-		return out + '};\n'
+		out += '	' * tab_level + 'KXmlItem GetXml_' + self.className + 'Info(const string& m_InfoName) const;\n'
+		tab_level -= 1
+		out += '};\n'
+		return out
+
+	def HListClassCode(self, tab_level):
+		out =''
+		out += 'class ' + self.GetClassNameListNum(1) + '\n'
+		out += '{\n'
+		tab_level += 1
+		out += '	' * tab_level + 'KDoTransaction* cv_Transaction;\n'
+		out += '	' * tab_level + 'vector<' + self.GetClassNameNum(1) + '> cv_List;\n'
+		out += '	' * tab_level + 'void InitialList(list<KDo' + self.className + '*>& m_List);\n'
+		out += 'public:\n'
+		out += '	' * tab_level + self.GetClassNameListNum(1) + '(const FilterType& m_FilterType, const QueryByPaging1& m_Filter, KDoTransaction* const m_Transaction = 0);\n'
+		out += '	' * tab_level + 'const unsigned int& Size() const;\n'
+		out += '	' * tab_level + 'KXmlItem GetXml_' + self.className + 'List(const string& m_ListName) const;\n'
+		tab_level -= 1
+		out += '};\n'
+		return out
 
 	def PrintDotHFile(self):
 		dot_h_code  = '#ifndef ' + self.className + '_H\n'
 		dot_h_code += '#define ' + self.className + '_H\n\n'
+		dot_h_code += '//this file was refactoried not yet....\n'
 		dot_h_code += self.HInclude() + '\n'
 		dot_h_code += self.HUsingNameSpace() + '\n'
-		dot_h_code += self.HClassCode(0, self.member_list)
+		dot_h_code += self.HInfoClassCode(0)
+		dot_h_code += '//----------------------------------------------------------------\n'
+		dot_h_code += self.HListClassCode(0)
 		dot_h_code += '\n#endif'
 		return dot_h_code
 
@@ -252,11 +297,5 @@ class xml2Class:
 
 if __name__ == "__main__":
 	classX = xml2Class("Employee")
-	classX.AddMemberVariable("string", "Id")
-	classX.AddMemberVariable("string", "SystemKey")
-	classX.AddMemberVariable("unsigned int", "Active_Flag")
-	classX.AddMemberVariable("float", "SomeValue")
-	classX.AddReference('RawMaterial', 'Link' , 'Has')
-	classX.AddReference('RawMaterialSize', 'Link' , 'Has')
 	classX.Write2DotHFile('')
 	classX.Write2DotCppFile('')

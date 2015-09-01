@@ -47,4 +47,4 @@ print('--------------------------')
 for obj in table_obj_list:
 	#obj.Write2File('KDataObject\\')
 	obj.Write2DotHFile('TableObj\\')
-	#obj.Write2DotCppFile('KDataObject\\')
+	obj.Write2DotCppFile('TableObj\\')
