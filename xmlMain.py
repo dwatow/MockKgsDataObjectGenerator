@@ -2,7 +2,7 @@ import xml.etree.ElementTree as ET
 import XmlObj as XO
 import XmlKDoMock as XKDo
 
-tree = ET.ElementTree(file='DB1.xml')
+tree = ET.ElementTree(file='DB.xml')
 root = tree.getroot()
 
 kdo_class_list = []

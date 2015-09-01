@@ -181,6 +181,92 @@ class xml2Class:
 		code += '	' * tab_level + '}\n'
 		return code
 
+	def CppListClassConstructor(self, tab_level):
+		code = ''
+		code += '	' * tab_level + self.GetClassNameListNum(1) + '::' + self.GetClassNameListNum(1)+ '(const FilterType& m_FilterType, const QueryByPaging1& m_Filter, KDoTransaction* const m_Transaction):\n'
+		code += '	' * tab_level + 'cv_TotalFilterObj(0)\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + 'list<KDo' + self.className + '*> obj_list;\n'
+		code += '	' * tab_level + 'list<string> order_condition;\n'
+		code += '	' * tab_level + 'order_condition.push_back(KDoLogBatchModifyStationCt::Field_SystemKey);\n'
+		code += '	' * tab_level + 'switch(m_FilterType)\n'
+		code += '	' * tab_level + '{\n'
+		code += '	' * tab_level + 'case ftOr:\n'
+		tab_level += 1
+		code += '	' * tab_level + 'obj_list= KDo' + self.className + '::GetDoObjectsByFilter(m_Filter.GetOrCondition(),\n'
+		code += '	' * tab_level + '	m_Filter.GetLikeField(), m_Filter.GetStartIndex(), m_Filter.GetPagingCount(), order_condition, true);\n'
+		code += '	' * tab_level + 'break;\n'
+		tab_level -= 1
+		code += '	' * tab_level + 'case ftAnd:\n'
+		tab_level += 1
+		code += '	' * tab_level + 'obj_list= KDo' + self.className + '::GetDoObjectsByFilter(m_Filter.GetAndCondition(),\n'
+		code += '	' * tab_level + '	m_Filter.GetLikeField(), m_Filter.GetStartIndex(), m_Filter.GetPagingCount(), order_condition, true);\n'
+		code += '	' * tab_level + 'break;\n'
+		tab_level -= 1
+		code += '	' * tab_level + 'case ftAssign:\n'
+		tab_level += 1
+		code += '	' * tab_level + 'obj_list= KDo' + self.className + '::GetDoObjectsByFilter(m_Filter.GetAssignCondition(),\n'
+		code += '	' * tab_level + '	m_Filter.GetLikeField(), m_Filter.GetStartIndex(), m_Filter.GetPagingCount(), order_condition, true);\n'
+		code += '	' * tab_level + 'break;\n'
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		code += '	' * tab_level + 'InitialList(obj_list);\n'
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		return code
+
+	def CppListClassInitislList(self, tab_level):
+		code = ''
+		code += '	' * tab_level + 'void ' + self.GetClassNameListNum(1) + '::InitialList(list<KDo' + self.className + '>& obj_list )\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + 'cv_List.reserve(obj_list.size());\n'
+		code += '	' * tab_level + 'for (list<KDo' + self.className + '*>::iterator it = obj_list.begin(); it != obj_list.end(); ++it)\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + self.GetClassNameNum(1) + ' obj(*it);\n'
+		code += '	' * tab_level + 'cv_List.push_back(obj);\n'
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		return code
+
+	def CppListClassSize(self, tab_level):
+		code = ''
+		code += '	' * tab_level + 'const unsigned int& ' + self.GetClassNameListNum(1) + '::Size() const\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + 'return cv_TotalFilterObj;\n'
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		return code
+
+	def CppListClassKXmlItemList(self, tab_level):
+		code =''
+		code += '	' * tab_level + 'KXmlItem ' + self.GetClassNameListNum(1) + '::GetXml_' + self.className + 'List(const string& m_ListName) const\n'
+
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + 'KXmlItem xml;\n'
+		code += '	' * tab_level + 'xml.Name = m_ListName;\n'
+		code += '	' * tab_level + 'xml.ItemType = itxList;\n'
+		code += '	' * tab_level + '\n'
+		code += '	' * tab_level + 'int i(0);\n'
+		code += '	' * tab_level + 'for (vector<' + self.GetClassNameNum(1) + '>::const_iterator it = cv_List.begin(); it != cv_List.end(); ++it)\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + 'xml.Items[i] = it->GetXml_' + self.className + 'Info();\n'
+		code += '	' * tab_level + '++i;\n'
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		code += '	' * tab_level + 'return xml;\n'
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+
+		return code
+
 	def PrintDotCppFile(self):
 		code = '#include "stdafx.h"\n'
 		code += '#include "FablinkException.h"\n'
@@ -193,10 +279,14 @@ class xml2Class:
 		code += self.SetData2TableFunction(0, 'Modify') + '\n'
 		code += self.Delete2TableFunction(0) + '\n'
 		code += self.KXmlItemInfo(0) + '\n'
+		code += '//----------------------------------------------------------------\n'
+		code += self.CppListClassConstructor(0) + '\n'
+		code += self.CppListClassInitislList(0) + '\n'
+		code += self.CppListClassSize(0) + '\n'
+		code += self.CppListClassKXmlItemList(0) + '\n'
+
 		#for var in self.member_dict.values():
 			#print(var.SetKXmlItem('xml'), var.GetXmlElemant(), var.GetKXmlItem('xml'))
-		code += '//----\n'
-
 
 		return code
 
@@ -262,6 +352,7 @@ class xml2Class:
 		out += 'class ' + self.GetClassNameListNum(1) + '\n'
 		out += '{\n'
 		tab_level += 1
+		out += '	' * tab_level + 'unsigned int cv_TotalFilterObj;\n'
 		out += '	' * tab_level + 'KDoTransaction* cv_Transaction;\n'
 		out += '	' * tab_level + 'vector<' + self.GetClassNameNum(1) + '> cv_List;\n'
 		out += '	' * tab_level + 'void InitialList(list<KDo' + self.className + '*>& m_List);\n'
