@@ -27,7 +27,7 @@ class xml2Variable:
 		elif xml_type == 'string':
 			return 'String'
 		elif xml_type == 'double':
-			return 'F8'
+			return 'F4'
 		else:
 			return str(xml_type)
 
@@ -210,18 +210,21 @@ class xml2Class:
 		tab_level += 1
 		code += '	' * tab_level + 'obj_list= KDo' + self.className + '::GetDoObjectsByFilter(m_Filter.GetOrCondition(),\n'
 		code += '	' * tab_level + '	m_Filter.GetLikeField(), m_Filter.GetStartIndex(), m_Filter.GetPagingCount(), order_condition, true);\n'
+		code += '	' * tab_level + 'cv_TotalFilterObj = ' + self.GetKDoClassName() + '::GetDoObjectsCountByFilter(m_Filter.GetOrCondition(), m_Filter.GetLikeField());\n'
 		code += '	' * tab_level + 'break;\n'
 		tab_level -= 1
 		code += '	' * tab_level + 'case ftAnd:\n'
 		tab_level += 1
 		code += '	' * tab_level + 'obj_list= KDo' + self.className + '::GetDoObjectsByFilter(m_Filter.GetAndCondition(),\n'
 		code += '	' * tab_level + '	m_Filter.GetLikeField(), m_Filter.GetStartIndex(), m_Filter.GetPagingCount(), order_condition, true);\n'
+		code += '	' * tab_level + 'cv_TotalFilterObj = ' + self.GetKDoClassName() + '::GetDoObjectsCountByFilter(m_Filter.GetAndCondition(), m_Filter.GetLikeField());\n'
 		code += '	' * tab_level + 'break;\n'
 		tab_level -= 1
 		code += '	' * tab_level + 'case ftAssign:\n'
 		tab_level += 1
 		code += '	' * tab_level + 'obj_list= KDo' + self.className + '::GetDoObjectsByFilter(m_Filter.GetAssignCondition(),\n'
 		code += '	' * tab_level + '	m_Filter.GetLikeField(), m_Filter.GetStartIndex(), m_Filter.GetPagingCount(), order_condition, true);\n'
+		code += '	' * tab_level + 'cv_TotalFilterObj = ' + self.GetKDoClassName() + '::GetDoObjectsCountByFilter(m_Filter.GetAssignCondition(), m_Filter.GetLikeField());\n'
 		code += '	' * tab_level + 'break;\n'
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
@@ -259,7 +262,7 @@ class xml2Class:
 
 	def CppListClassKXmlItemList(self, tab_level):
 		code =''
-		code += '	' * tab_level + 'KXmlItem ' + self.GetClassNameListNum(1) + '::GetXml_' + self.className + 'List(const string& m_ListName) const\n'
+		code += '	' * tab_level + 'KXmlItem ' + self.GetClassNameListNum(1) + '::GetXml_' + self.className + 'List(const string& m_ListName, const string& m_InfoName) const\n'
 
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
@@ -271,7 +274,7 @@ class xml2Class:
 		code += '	' * tab_level + 'for (vector<' + self.GetClassNameNum(1) + '>::const_iterator it = cv_List.begin(); it != cv_List.end(); ++it)\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
-		code += '	' * tab_level + 'xml.Items[i] = it->GetXml_' + self.className + 'Info("' + self.className + 'Info");\n'
+		code += '	' * tab_level + 'xml.Items[i] = it->GetXml_' + self.className + 'Info(m_InfoName);\n'
 		code += '	' * tab_level + '++i;\n'
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
@@ -309,7 +312,7 @@ class xml2Class:
 		fil_path_ename = ""
 		fil_path_ename = ""
 		refactoried_file_list = RefactoriedList()
-		if self.className + '1.cpp' in refactoried_file_list.GetList():
+		if str(self.className + '1.cpp').lower() in refactoried_file_list.GetList():
 			if len(filePath) != 0:
 				fil_path_ename = filePath + 'refactoried\\' + self.className + '1.cpp'
 		else:
@@ -381,7 +384,7 @@ class xml2Class:
 		out += 'public:\n'
 		out += '	' * tab_level + self.GetClassNameListNum(1) + '(const FilterType& m_FilterType, const QueryByPaging1& m_Filter, KDoTransaction* const m_Transaction = 0);\n'
 		out += '	' * tab_level + 'const unsigned int& Size() const;\n'
-		out += '	' * tab_level + 'KXmlItem GetXml_' + self.className + 'List(const string& m_ListName = "' + self.GetClassNameListNum('') + '") const;\n'
+		out += '	' * tab_level + 'KXmlItem GetXml_' + self.className + 'List(const string& m_ListName = "' + self.GetClassNameListNum('') + '", const string& m_InfoName = "' + self.GetClassNameNum('') + 'Info") const;\n'
 		tab_level -= 1
 		out += '};\n'
 		return out
@@ -401,7 +404,7 @@ class xml2Class:
 	def Write2DotHFile(self, filePath):
 		fil_path_ename = ""
 		refactoried_file_list = RefactoriedList()
-		if self.className + '1.h' in refactoried_file_list.GetList():
+		if str(self.className + '1.h').lower() in refactoried_file_list.GetList():
 			if len(filePath) != 0:
 				fil_path_ename = filePath + 'refactoried\\' + self.className + '1.h'
 		else:
@@ -417,44 +420,44 @@ class xml2Class:
 class RefactoriedList:
 	def __init__(self):
 		self.refactoried_files = []
-		self.refactoried_files.append('LogBatchModifyStation.cpp')
-		self.refactoried_files.append('LogBatchModifyStation.h')
-		self.refactoried_files.append('LogBatchModifyStationCT1.cpp')
-		self.refactoried_files.append('LogBatchModifyStationCT1.h')
-		self.refactoried_files.append('LogBatchModifyStationSOP1.cpp')
-		self.refactoried_files.append('LogBatchModifyStationSOP1.h')
-		self.refactoried_files.append('LogBatchModifyStationTI1.cpp')
-		self.refactoried_files.append('LogBatchModifyStationTI1.h')
-		self.refactoried_files.append('OrganizationAttribute1.cpp')
-		self.refactoried_files.append('OrganizationAttribute1.h')
-		self.refactoried_files.append('Process1.cpp')
-		self.refactoried_files.append('Process1.h')
-		self.refactoried_files.append('ProcessApprovalStatus1.cpp')
-		self.refactoried_files.append('ProcessApprovalStatus1.h')
-		self.refactoried_files.append('SmAddrAreaCode1.cpp')
-		self.refactoried_files.append('SmAddrAreaCode1.h')
-		self.refactoried_files.append('SmAddressAreaCurrencyType1.cpp')
-		self.refactoried_files.append('SmAddressAreaCurrencyType1.h')
-		self.refactoried_files.append('SmCurrencyType1.cpp')
-		self.refactoried_files.append('SmCurrencyType1.h')
-		self.refactoried_files.append('SmDcDeviceType1.cpp')
-		self.refactoried_files.append('SmDcDeviceType1.h')
-		self.refactoried_files.append('SmProductionCycleTime1.cpp')
-		self.refactoried_files.append('SmProductionCycleTime1.h')
-		self.refactoried_files.append('SmProductManufacturingParameter1.cpp')
-		self.refactoried_files.append('SmProductManufacturingParameter1.h')
-		self.refactoried_files.append('SmStationJobProperties1.cpp')
-		self.refactoried_files.append('SmStationJobProperties1.h')
-		self.refactoried_files.append('SmStationJobPropertiesProductionCycleTime1.cpp')
-		self.refactoried_files.append('SmStationJobPropertiesProductionCycleTime1.h')
-		self.refactoried_files.append('SmSupplyType1.cpp')
-		self.refactoried_files.append('SmSupplyType1.h')
-		self.refactoried_files.append('SmTelCode1.cpp')
-		self.refactoried_files.append('SmTelCode1.h')
-		self.refactoried_files.append('SopDoc1.cpp')
-		self.refactoried_files.append('SopDoc1.h')
-		self.refactoried_files.append('Station1.cpp')
-		self.refactoried_files.append('Station1.h')
+		self.refactoried_files.append(str('LogBatchModifyStation.cpp').lower())
+		self.refactoried_files.append(str('LogBatchModifyStation.h').lower())
+		self.refactoried_files.append(str('LogBatchModifyStationCT1.cpp').lower())
+		self.refactoried_files.append(str('LogBatchModifyStationCT1.h').lower())
+		self.refactoried_files.append(str('LogBatchModifyStationSOP1.cpp').lower())
+		self.refactoried_files.append(str('LogBatchModifyStationSOP1.h').lower())
+		self.refactoried_files.append(str('LogBatchModifyStationTI1.cpp').lower())
+		self.refactoried_files.append(str('LogBatchModifyStationTI1.h').lower())
+		self.refactoried_files.append(str('OrganizationAttribute1.cpp').lower())
+		self.refactoried_files.append(str('OrganizationAttribute1.h').lower())
+		self.refactoried_files.append(str('Process1.cpp').lower())
+		self.refactoried_files.append(str('Process1.h').lower())
+		self.refactoried_files.append(str('ProcessApprovalStatus1.cpp').lower())
+		self.refactoried_files.append(str('ProcessApprovalStatus1.h').lower())
+		self.refactoried_files.append(str('SmAddrAreaCode1.cpp').lower())
+		self.refactoried_files.append(str('SmAddrAreaCode1.h').lower())
+		self.refactoried_files.append(str('SmAddressAreaCurrencyType1.cpp').lower())
+		self.refactoried_files.append(str('SmAddressAreaCurrencyType1.h').lower())
+		self.refactoried_files.append(str('SmCurrencyType1.cpp').lower())
+		self.refactoried_files.append(str('SmCurrencyType1.h').lower())
+		self.refactoried_files.append(str('SmDcDeviceType1.cpp').lower())
+		self.refactoried_files.append(str('SmDcDeviceType1.h').lower())
+		self.refactoried_files.append(str('SmProductionCycleTime1.cpp').lower())
+		self.refactoried_files.append(str('SmProductionCycleTime1.h').lower())
+		self.refactoried_files.append(str('SmProductManufacturingParameter1.cpp').lower())
+		self.refactoried_files.append(str('SmProductManufacturingParameter1.h').lower())
+		self.refactoried_files.append(str('SmStationJobProperties1.cpp').lower())
+		self.refactoried_files.append(str('SmStationJobProperties1.h').lower())
+		self.refactoried_files.append(str('SmStationJobPropertiesProductionCycleTime1.cpp').lower())
+		self.refactoried_files.append(str('SmStationJobPropertiesProductionCycleTime1.h').lower())
+		self.refactoried_files.append(str('SmSupplyType1.cpp').lower())
+		self.refactoried_files.append(str('SmSupplyType1.h').lower())
+		self.refactoried_files.append(str('SmTelCode1.cpp').lower())
+		self.refactoried_files.append(str('SmTelCode1.h').lower())
+		self.refactoried_files.append(str('SopDoc1.cpp').lower())
+		self.refactoried_files.append(str('SopDoc1.h').lower())
+		self.refactoried_files.append(str('Station1.cpp').lower())
+		self.refactoried_files.append(str('Station1.h').lower())
 	def GetList(self):
 		return self.refactoried_files
 
