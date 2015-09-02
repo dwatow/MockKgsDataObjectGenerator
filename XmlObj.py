@@ -1,6 +1,6 @@
 class xml2Variable:
 	def CovertType_Xml2Cpp(self, cpp_type):
-		if cpp_type == 'u4' or cpp_type == 'u8':
+		if cpp_type == 'u4':
 			return 'unsigned int'
 		elif cpp_type == 'i4':
 			return 'int'
@@ -21,11 +21,13 @@ class xml2Variable:
 		elif xml_type == 'float':
 			return 'String'
 		elif xml_type == 'unsigned __int64':
-			return 'U4'
+			return 'U8'
 		elif xml_type == 'KDateTime':
 			return 'String'
 		elif xml_type == 'string':
 			return 'String'
+		elif xml_type == 'double':
+			return 'F8'
 		else:
 			return str(xml_type)
 
@@ -43,6 +45,7 @@ class xml2Variable:
 	def GetKXmlItem(self, kxmlitem_var_name):
 		return kxmlitem_var_name + '.ItemsByName["' + self.name + '"].As' + self.CovertType_Cpp2Xml(self.cpp_type)
 
+
 class Constructor:
 	def __init__(self, className):
 		self.className = className
@@ -59,7 +62,7 @@ class Constructor:
 		#code = self.dotHCode()
 		function_title1 = '	' * tab_level + self.GetClassNameNum(1) + '(KDoTransaction* const m_Transaction);\n'
 		code  = '	' * tab_level + self.GetClassNameNum(1) + '::' + function_title1[0:function_title1.index(';')] + ':\n'
-		code += '	' * tab_level + 'KDoProxy1(KDo' + self.GetClassNameNum(1) + '::CreateObject()), cv_Transaction(m_Transaction)\n'
+		code += '	' * tab_level + 'KDoProxy1(KDo' + self.className + '::CreateDoObject()), cv_Transaction(m_Transaction)\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
 		for main_code in main_code_list:
@@ -105,6 +108,8 @@ class xml2Class:
 		return self.className + str(num)
 	def GetClassNameListNum(self, num):
 		return self.className + 'List' + str(num)
+	def GetKDoClassName(self):
+		return 'KDo' + self.className
 
 	#.cpp file
 	def _init_AddTransaction(self, tab_level):
@@ -121,14 +126,14 @@ class xml2Class:
 
 	def dotCppGetPtrFunction(self, tab_level):
 		code = ''
-		code += '	' * tab_level + 'KDoEmpLoginHistoryRelation* ' + self.GetClassNameNum(1) + '::GetDataObject() const\n'
+		code += '	' * tab_level + self.GetKDoClassName() + '* ' + self.GetClassNameNum(1) + '::GetDataObject() const\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
 		code += '	' * tab_level + 'return (KDo' + self.className + '*)GetBaseObject();\n'
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
 		code += '	' * tab_level + '\n'
-		code += '	' * tab_level + 'KDoEmpLoginHistoryRelation* ' + self.GetClassNameNum(1) + '::operator->() const\n'
+		code += '	' * tab_level + self.GetKDoClassName() + '* ' + self.GetClassNameNum(1) + '::operator->() const\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
 		code += '	' * tab_level + 'return GetDataObject();\n'
@@ -144,7 +149,10 @@ class xml2Class:
 		tab_level += 1
 		code += '	' * tab_level + '//this function was refactoried not yet....\n'
 		for var in self.member_dict.values():
-			code += '	' * tab_level + 'GetDataObject()->' + var.name + ' = ' +  var.GetKXmlItem(xml_var_name) + ';\n';
+			if var.cpp_type == 'KDateTime':
+				code += '	' * tab_level + '//GetDataObject()->' + var.name + ' = ' +  var.GetKXmlItem(xml_var_name) + ';\n';
+			else:
+				code += '	' * tab_level + 'GetDataObject()->' + var.name + ' = ' +  var.GetKXmlItem(xml_var_name) + ';\n';
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
 		return code
@@ -174,7 +182,13 @@ class xml2Class:
 		code += '	' * tab_level + '\n'
 		#code += '	' * tab_level +
 		for var in self.member_dict.values():
-			code += '	' * tab_level + var.SetKXmlItem('xml') + ' = ' + 'GetDataObject()->' + var.name + ';\n'
+			if var.cpp_type == 'KDateTime':
+				pass
+				code += '	' * tab_level + '//' + var.SetKXmlItem('xml') + ' = ' + 'GetDataObject()->' + var.name + ';\n'
+			else:
+				code += '	' * tab_level + var.SetKXmlItem('xml') + ' = ' + 'GetDataObject()->' + var.name + ';\n'
+		system_var = xml2Variable('String', 'SystemKey')
+		code += '	' * tab_level + system_var.SetKXmlItem('xml') + ' = ' + 'GetDataObject()->' + system_var.name + ';\n'
 		code += '	' * tab_level + '\n'
 		code += '	' * tab_level + 'return xml;\n'
 		tab_level -= 1
@@ -184,12 +198,12 @@ class xml2Class:
 	def CppListClassConstructor(self, tab_level):
 		code = ''
 		code += '	' * tab_level + self.GetClassNameListNum(1) + '::' + self.GetClassNameListNum(1)+ '(const FilterType& m_FilterType, const QueryByPaging1& m_Filter, KDoTransaction* const m_Transaction):\n'
-		code += '	' * tab_level + 'cv_TotalFilterObj(0)\n'
+		code += '	' * tab_level + 'cv_TotalFilterObj(0), cv_Transaction(m_Transaction)\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
 		code += '	' * tab_level + 'list<KDo' + self.className + '*> obj_list;\n'
 		code += '	' * tab_level + 'list<string> order_condition;\n'
-		code += '	' * tab_level + 'order_condition.push_back(KDoLogBatchModifyStationCt::Field_SystemKey);\n'
+		code += '	' * tab_level + 'order_condition.push_back(' + self.GetKDoClassName() + '::Field_SystemKey);\n'
 		code += '	' * tab_level + 'switch(m_FilterType)\n'
 		code += '	' * tab_level + '{\n'
 		code += '	' * tab_level + 'case ftOr:\n'
@@ -218,14 +232,14 @@ class xml2Class:
 
 	def CppListClassInitislList(self, tab_level):
 		code = ''
-		code += '	' * tab_level + 'void ' + self.GetClassNameListNum(1) + '::InitialList(list<KDo' + self.className + '>& obj_list )\n'
+		code += '	' * tab_level + 'void ' + self.GetClassNameListNum(1) + '::InitialList(list<KDo' + self.className + '*>& m_List )\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
-		code += '	' * tab_level + 'cv_List.reserve(obj_list.size());\n'
-		code += '	' * tab_level + 'for (list<KDo' + self.className + '*>::iterator it = obj_list.begin(); it != obj_list.end(); ++it)\n'
+		code += '	' * tab_level + 'cv_List.reserve(m_List.size());\n'
+		code += '	' * tab_level + 'for (list<KDo' + self.className + '*>::iterator it = m_List.begin(); it != m_List.end(); ++it)\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
-		code += '	' * tab_level + self.GetClassNameNum(1) + ' obj(*it);\n'
+		code += '	' * tab_level + self.GetClassNameNum(1) + ' obj(*it, cv_Transaction);\n'
 		code += '	' * tab_level + 'cv_List.push_back(obj);\n'
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
@@ -257,7 +271,7 @@ class xml2Class:
 		code += '	' * tab_level + 'for (vector<' + self.GetClassNameNum(1) + '>::const_iterator it = cv_List.begin(); it != cv_List.end(); ++it)\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
-		code += '	' * tab_level + 'xml.Items[i] = it->GetXml_' + self.className + 'Info();\n'
+		code += '	' * tab_level + 'xml.Items[i] = it->GetXml_' + self.className + 'Info("' + self.className + 'Info");\n'
 		code += '	' * tab_level + '++i;\n'
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
@@ -271,6 +285,7 @@ class xml2Class:
 		code = '#include "stdafx.h"\n'
 		code += '#include "FablinkException.h"\n'
 		code += '#include "SuMsgErrorCode.h"\n'
+		code += '#include "ActiveFlag1.h"\n'
 		code += '#include "' + self.GetClassNameNum(1) + '.h"\n\n'
 		code += '//this file was refactoried not yet....\n\n'
 		code += self.construct.dotCppCode(0, self._init_AddTransaction(0)) + '\n'
@@ -292,10 +307,16 @@ class xml2Class:
 
 	def Write2DotCppFile(self, filePath):
 		fil_path_ename = ""
-		if len(filePath) != 0:
-			fil_path_ename = filePath + '\\' + self.className + '.cpp'
+		fil_path_ename = ""
+		refactoried_file_list = RefactoriedList()
+		if self.className + '1.cpp' in refactoried_file_list.GetList():
+			if len(filePath) != 0:
+				fil_path_ename = filePath + 'refactoried\\' + self.className + '1.cpp'
 		else:
-			fil_path_ename = self.className + '.cpp'
+			if len(filePath) != 0:
+				fil_path_ename = filePath + '\\' + self.className + '1.cpp'
+			else:
+				fil_path_ename = self.className + '1.cpp'
 		file = open( fil_path_ename, 'w')
 		file.write(self.PrintDotCppFile())
 		file.close()
@@ -305,6 +326,7 @@ class xml2Class:
 		dot_h_include = '#include "KDoProxy1.h"\n'
 		dot_h_include += '#include "KDoTransaction.h"\n'
 		dot_h_include += '#include "KXmlItem.h"\n'
+		dot_h_include += '#include "QueryByPaging1.h"\n'
 		dot_h_include += '#include "KDo' + self.className + '.h"\n'
 
 		for filename in set(self.include_list):
@@ -337,12 +359,12 @@ class xml2Class:
 		out += 'public:\n'
 		out += self.construct.dotHCode(tab_level)
 		out += 'public:\n'
-		out += '	' * tab_level + 'KDo' + self.className + '* GetDataObject() const;\n'
-		out += '	' * tab_level + 'KDo' + self.className + '* operator->() const;\n'
+		out += '	' * tab_level + self.GetKDoClassName() + '* GetDataObject() const;\n'
+		out += '	' * tab_level + self.GetKDoClassName() + '* operator->() const;\n'
 		out += 'public:\n'
 		out += self.ditHTableBaseEvent(tab_level)
 		out += 'public:\n'
-		out += '	' * tab_level + 'KXmlItem GetXml_' + self.className + 'Info(const string& m_InfoName) const;\n'
+		out += '	' * tab_level + 'KXmlItem GetXml_' + self.className + 'Info(const string& m_InfoName = "' + self.GetClassNameNum('') + 'Info") const;\n'
 		tab_level -= 1
 		out += '};\n'
 		return out
@@ -359,7 +381,7 @@ class xml2Class:
 		out += 'public:\n'
 		out += '	' * tab_level + self.GetClassNameListNum(1) + '(const FilterType& m_FilterType, const QueryByPaging1& m_Filter, KDoTransaction* const m_Transaction = 0);\n'
 		out += '	' * tab_level + 'const unsigned int& Size() const;\n'
-		out += '	' * tab_level + 'KXmlItem GetXml_' + self.className + 'List(const string& m_ListName) const;\n'
+		out += '	' * tab_level + 'KXmlItem GetXml_' + self.className + 'List(const string& m_ListName = "' + self.GetClassNameListNum('') + '") const;\n'
 		tab_level -= 1
 		out += '};\n'
 		return out
@@ -378,13 +400,65 @@ class xml2Class:
 
 	def Write2DotHFile(self, filePath):
 		fil_path_ename = ""
-		if len(filePath) != 0:
-			fil_path_ename = filePath + '\\' + self.className + '.h'
+		refactoried_file_list = RefactoriedList()
+		if self.className + '1.h' in refactoried_file_list.GetList():
+			if len(filePath) != 0:
+				fil_path_ename = filePath + 'refactoried\\' + self.className + '1.h'
 		else:
-			fil_path_ename = self.className + '.h'
+			if len(filePath) != 0:
+				fil_path_ename = filePath + '\\' + self.className + '1.h'
+			else:
+				fil_path_ename = self.className + '1.h'
 		file = open( fil_path_ename, 'w')
 		file.write(self.PrintDotHFile())
 		file.close()
+
+
+class RefactoriedList:
+	def __init__(self):
+		self.refactoried_files = []
+		self.refactoried_files.append('LogBatchModifyStation.cpp')
+		self.refactoried_files.append('LogBatchModifyStation.h')
+		self.refactoried_files.append('LogBatchModifyStationCT1.cpp')
+		self.refactoried_files.append('LogBatchModifyStationCT1.h')
+		self.refactoried_files.append('LogBatchModifyStationSOP1.cpp')
+		self.refactoried_files.append('LogBatchModifyStationSOP1.h')
+		self.refactoried_files.append('LogBatchModifyStationTI1.cpp')
+		self.refactoried_files.append('LogBatchModifyStationTI1.h')
+		self.refactoried_files.append('OrganizationAttribute1.cpp')
+		self.refactoried_files.append('OrganizationAttribute1.h')
+		self.refactoried_files.append('Process1.cpp')
+		self.refactoried_files.append('Process1.h')
+		self.refactoried_files.append('ProcessApprovalStatus1.cpp')
+		self.refactoried_files.append('ProcessApprovalStatus1.h')
+		self.refactoried_files.append('SmAddrAreaCode1.cpp')
+		self.refactoried_files.append('SmAddrAreaCode1.h')
+		self.refactoried_files.append('SmAddressAreaCurrencyType1.cpp')
+		self.refactoried_files.append('SmAddressAreaCurrencyType1.h')
+		self.refactoried_files.append('SmCurrencyType1.cpp')
+		self.refactoried_files.append('SmCurrencyType1.h')
+		self.refactoried_files.append('SmDcDeviceType1.cpp')
+		self.refactoried_files.append('SmDcDeviceType1.h')
+		self.refactoried_files.append('SmProductionCycleTime1.cpp')
+		self.refactoried_files.append('SmProductionCycleTime1.h')
+		self.refactoried_files.append('SmProductManufacturingParameter1.cpp')
+		self.refactoried_files.append('SmProductManufacturingParameter1.h')
+		self.refactoried_files.append('SmStationJobProperties1.cpp')
+		self.refactoried_files.append('SmStationJobProperties1.h')
+		self.refactoried_files.append('SmStationJobPropertiesProductionCycleTime1.cpp')
+		self.refactoried_files.append('SmStationJobPropertiesProductionCycleTime1.h')
+		self.refactoried_files.append('SmSupplyType1.cpp')
+		self.refactoried_files.append('SmSupplyType1.h')
+		self.refactoried_files.append('SmTelCode1.cpp')
+		self.refactoried_files.append('SmTelCode1.h')
+		self.refactoried_files.append('SopDoc1.cpp')
+		self.refactoried_files.append('SopDoc1.h')
+		self.refactoried_files.append('Station1.cpp')
+		self.refactoried_files.append('Station1.h')
+	def GetList(self):
+		return self.refactoried_files
+
+
 
 if __name__ == "__main__":
 	classX = xml2Class("Employee")
