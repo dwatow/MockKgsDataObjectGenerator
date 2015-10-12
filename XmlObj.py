@@ -55,7 +55,7 @@ class Constructor:
 
 	def dotHCode(self, tab_level):
 		code = '	' * tab_level + self.GetClassNameNum(1) + '(KDoTransaction* const m_Transaction = 0);\n'
-		code += '	' * tab_level + self.GetClassNameNum(1) + '(KDo' + self.className + '* m_KDataObject, KDoTransaction* const m_Transaction = 0);\n'
+		code += '	' * tab_level + self.GetClassNameNum(1) + '(KDo' + self.className + '* const m_KDataObject, KDoTransaction* const m_Transaction = 0);\n'
 		return code
 
 	def dotCppCode(self, tab_level, main_code_list):
@@ -70,7 +70,7 @@ class Constructor:
 		tab_level -= 1
 		code += '}\n'
 		code += '\n'
-		function_title2 = '	' * tab_level + self.GetClassNameNum(1) + '(KDo' + self.className + '* m_KDataObject, KDoTransaction* const m_Transaction);\n'
+		function_title2 = '	' * tab_level + self.GetClassNameNum(1) + '(KDo' + self.className + '* const m_KDataObject, KDoTransaction* const m_Transaction);\n'
 		code += '	' * tab_level + self.GetClassNameNum(1) + '::' + function_title2[0:function_title2.index(';')] + ':\n'
 		code += '	' * tab_level + 'KDoProxy1(m_KDataObject), cv_Transaction(m_Transaction)\n'
 		code += '	' * tab_level + '{\n'
@@ -165,7 +165,7 @@ class xml2Class:
 		if 'ActiveFlag' in self.member_dict:
 			code += '	' * tab_level + 'GetDataObject()->ActiveFlag = aftInactive;\n'
 		else:
-			code += '	' * tab_level + 'GetDataObject()->DeleteObject();\n';
+			return ""
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
 		return code
@@ -217,14 +217,14 @@ class xml2Class:
 		tab_level += 1
 		code += '	' * tab_level + 'obj_list= KDo' + self.className + '::GetDoObjectsByFilter(m_Filter.GetAndCondition(),\n'
 		code += '	' * tab_level + '	m_Filter.GetLikeField(), m_Filter.GetStartIndex(), m_Filter.GetPagingCount(), order_condition, true);\n'
-		code += '	' * tab_level + 'cv_TotalFilterObj = ' + self.GetKDoClassName() + '::GetDoObjectsCountByFilter(m_Filter.GetAndCondition(), m_Filter.GetLikeField());\n'
+		code += '	' * tab_level + 'cv_TotalFilterObj = ' + self.GetKDoClassName() + '::GetDoObjectsCountByFilter(m_Filter.GetOrCondition(), m_Filter.GetLikeField());\n'
 		code += '	' * tab_level + 'break;\n'
 		tab_level -= 1
 		code += '	' * tab_level + 'case ftAssign:\n'
 		tab_level += 1
 		code += '	' * tab_level + 'obj_list= KDo' + self.className + '::GetDoObjectsByFilter(m_Filter.GetAssignCondition(),\n'
 		code += '	' * tab_level + '	m_Filter.GetLikeField(), m_Filter.GetStartIndex(), m_Filter.GetPagingCount(), order_condition, true);\n'
-		code += '	' * tab_level + 'cv_TotalFilterObj = ' + self.GetKDoClassName() + '::GetDoObjectsCountByFilter(m_Filter.GetAssignCondition(), m_Filter.GetLikeField());\n'
+		code += '	' * tab_level + 'cv_TotalFilterObj = ' + self.GetKDoClassName() + '::GetDoObjectsCountByFilter(m_Filter.GetOrCondition(), m_Filter.GetLikeField());\n'
 		code += '	' * tab_level + 'break;\n'
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
@@ -246,6 +246,7 @@ class xml2Class:
 		code += '	' * tab_level + 'cv_List.push_back(obj);\n'
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
+		#code += '	' * tab_level + 'cv_TotalFilterObj = (unsigned int)obj_list.size();\n'
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
 		return code
@@ -350,7 +351,8 @@ class xml2Class:
 		code = ''
 		code += '	' * tab_level + 'void CreateToTable(KXmlItem& m_XmlInfo);\n'
 		code += '	' * tab_level + 'void ModifyToTable(KXmlItem& m_XmlInfo);\n'
-		code += '	' * tab_level + 'void Delete();\n'
+		if 'ActiveFlag' in self.member_dict:
+			code += '	' * tab_level + 'void Delete();\n'
 		return code
 
 	def HInfoClassCode(self, tab_level):
@@ -458,6 +460,10 @@ class RefactoriedList:
 		self.refactoried_files.append(str('SopDoc1.h').lower())
 		self.refactoried_files.append(str('Station1.cpp').lower())
 		self.refactoried_files.append(str('Station1.h').lower())
+		self.refactoried_files.append(str('SmAddrssAreaCodeType1.cpp').lower())
+		self.refactoried_files.append(str('SmAddrssAreaCodeType1.h').lower())
+		self.refactoried_files.append(str('SmTelecomCodeType1.cpp').lower())
+		self.refactoried_files.append(str('SmTelecomCodeType1.h').lower())
 	def GetList(self):
 		return self.refactoried_files
 
