@@ -58,14 +58,14 @@ class Constructor:
 		code += '	' * tab_level + self.GetClassNameNum(1) + '(KDo' + self.className + '* const m_KDataObject, KDoTransaction* const m_Transaction = 0);\n'
 		return code
 
-	def dotCppCode(self, tab_level, main_code_list):
+	def dotCppCode(self, tab_level, add_transaction_codes):
 		#code = self.dotHCode()
 		function_title1 = '	' * tab_level + self.GetClassNameNum(1) + '(KDoTransaction* const m_Transaction);\n'
 		code  = '	' * tab_level + self.GetClassNameNum(1) + '::' + function_title1[0:function_title1.index(';')] + ':\n'
 		code += '	' * tab_level + 'KDoProxy1(KDo' + self.className + '::CreateDoObject()), cv_Transaction(m_Transaction)\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
-		for main_code in main_code_list:
+		for main_code in add_transaction_codes:
 			code += '	' * tab_level + main_code
 		tab_level -= 1
 		code += '}\n'
@@ -75,7 +75,22 @@ class Constructor:
 		code += '	' * tab_level + 'KDoProxy1(m_KDataObject), cv_Transaction(m_Transaction)\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
-		for main_code in main_code_list:
+		for main_code in add_transaction_codes:
+			code += '	' * tab_level + main_code
+		tab_level -= 1
+		code += '}\n'
+		return code
+
+	def dotHCopy(self, tab_level):
+		code = '	' * tab_level + self.GetClassNameNum(1) + '(const ' + self.GetClassNameNum(1) + '& m_Obj);\n'
+		return code
+
+	def dotCppCopy(self, tab_level, add_transaction_codes):
+		code = '	' * tab_level + self.GetClassNameNum(1) + '::' + self.GetClassNameNum(1) + '(const ' + self.GetClassNameNum(1) + '& m_Obj):\n'
+		code += '	' * tab_level + 'KDoProxy1(m_Obj.GetDataObject()), cv_Transaction(m_Obj.cv_Transaction)\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		for main_code in add_transaction_codes:
 			code += '	' * tab_level + main_code
 		tab_level -= 1
 		code += '}\n'
@@ -141,6 +156,18 @@ class xml2Class:
 		code += '	' * tab_level + '}\n'
 		#code += '	' * tab_level +
 		return code
+
+	def dotCppOperatorAssign(self, tab_level):
+		code = ''
+		code += '	' * tab_level + 'const ' + self.GetClassNameNum(1) + '& ' + self.GetClassNameNum(1) + '::operator=( const ' + self.GetClassNameNum(1) + '& m_Obj )\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + 'SetContent(m_Obj.GetDataObject());\n'
+		code += '	' * tab_level + 'return *this;\n'
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		return code
+
 
 	def SetData2TableFunction(self, tab_level, funciton_event):
 		xml_var_name = 'm_XmlInfo'
@@ -293,6 +320,8 @@ class xml2Class:
 		code += '#include "' + self.GetClassNameNum(1) + '.h"\n\n'
 		code += '//this file was refactoried not yet....\n\n'
 		code += self.construct.dotCppCode(0, self._init_AddTransaction(0)) + '\n'
+		code += self.construct.dotCppCopy(0, self._init_AddTransaction(0)) + '\n'
+		code += self.dotCppOperatorAssign(0) + '\n'
 		code += self.dotCppGetPtrFunction(0) + '\n'
 		code += self.SetData2TableFunction(0, 'Create') + '\n'
 		code += self.SetData2TableFunction(0, 'Modify') + '\n'
@@ -360,9 +389,12 @@ class xml2Class:
 		out += 'class ' + self.GetClassNameNum(1) + ' : public KDoProxy1' + '\n'
 		out += '{\n'
 		tab_level += 1
-		out += '	' * tab_level + 'KDoTransaction* cv_Transaction;\n'
+		out += '	' * tab_level + 'KDoTransaction* const cv_Transaction;\n'
 		out += 'public:\n'
 		out += self.construct.dotHCode(tab_level)
+		out += 'public:\n'
+		out += self.construct.dotHCopy(tab_level)
+		out += '	' * tab_level + 'const ' + self.GetClassNameNum(1) + '& operator=(const ' + self.GetClassNameNum(1) + '& m_Obj);\n'
 		out += 'public:\n'
 		out += '	' * tab_level + self.GetKDoClassName() + '* GetDataObject() const;\n'
 		out += '	' * tab_level + self.GetKDoClassName() + '* operator->() const;\n'
