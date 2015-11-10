@@ -38,7 +38,7 @@ class Constructor:
 		elif var.type == 'double' or var.type == 'float':
 			return '	' * tab_level + var.name + '(' + '0.0' + ')' + ',\n'
 		elif 'int' in var.type: #unsigned int or int
-			return '	' * tab_level + var.name + '(' + '0' + ')' + ',\n'
+			return '	' * tab_level + var.name + '(' + '1' + ')' + ',\n'
 		else:
 			return ''
 
@@ -70,8 +70,11 @@ class Constructor:
 	def dotCppCode(self, tab_level, var_list, ref_list):
 		#code = self.dotHCode()
 		code = self.dotHCode(tab_level)
+
 		code = self.className + '::' + code[0:code.index(';')]
-		code += self.init_var(0, var_list) + '{\n'
+		code += self.init_var(0, var_list)
+		code += '{\n'
+		code += '	' * (tab_level+1) + 'KDataPersistentObject::cv_SystemKey = "489DA7EA-46E8-467D-951D-092593943C01";'
 		for ref in ref_list:
 			#print (ref.dotCppInit())
 			code += '	' * (tab_level+1) + ref.dotCppInit() + '\n'
@@ -98,15 +101,105 @@ class xmlFunction:
 		code += ');'
 		return code
 
-	def CppFunction(self, tab_level):
+	def CppFunctionFilterHitMap(self, field_name):
+		if field_name is 'ActiveFlag':
+			return '(*it)[' + self.className + '::Field_' + field_name + '] == ' + '"1"'
+		else:
+			return '(*it)[' + self.className + '::Field_' + field_name + '] == "' + self.className + '_' + field_name + '"'
+
+	def CppFunctionFilterHitMapList(self, field_name):
+		if field_name is 'ActiveFlag':
+			return 'find(m_Filter[' + self.className + '::Field_' + field_name + '].begin(), m_Filter[' + self.className + '::Field_' + field_name + '].end(), "1") != m_Filter[' + self.className + '::Field_' + field_name + '].end()'
+		else:
+			return 'find(m_Filter[' + self.className + '::Field_' + field_name + '].begin(), m_Filter[' + self.className + '::Field_' + field_name + '].end(), "' + self.className + '_' + field_name + '") != m_Filter[' + self.className + '::Field_' + field_name + '].end()'
+
+	def HitMapList(self, tab_level, var_list, is_true_run_code):
+		code =''
+		code += '	' * tab_level + 'if ('
+		if 'Id' in var_list:
+			code += self.CppFunctionFilterHitMapList('Id')
+			if 'ActiveFlag' in var_list:
+				code += ' &&\n' + '	' * (tab_level+1)
+		if 'ActiveFlag' in var_list:
+			code += self.CppFunctionFilterHitMapList('ActiveFlag')
+		code += ')\n'
+		code += '	' * tab_level + '{\n'
+		code += '	' * (tab_level+1) + is_true_run_code
+		code += '	' * tab_level + '}\n'
+		return code
+
+	def HitListMap(self, tab_level, var_list, is_true_run_code):
+		code =''
+		code += '	' * tab_level + 'for (list< map<string, string> >::iterator it = m_Filter.begin(); it != m_Filter.end(); ++it)\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + 'if ('
+		if 'Id' in var_list:
+			code += self.CppFunctionFilterHitMap('Id')
+			if 'ActiveFlag' in var_list:
+				code += ' &&\n' + '	' * (tab_level+1)
+		if 'ActiveFlag' in var_list:
+			code += self.CppFunctionFilterHitMap('ActiveFlag')
+		code += ')\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + is_true_run_code
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		return code
+
+	def HitMap(self, tab_level, var_list, is_true_run_code):
+		code =''
+		if 'Id' in var_list:
+			code +=  '	' * tab_level + 'map<string, string>::iterator id_it = m_Filter.find(' + self.className + '::Field_Id);\n'
+		if 'ActiveFlag' in var_list:
+			code +=  '	' * tab_level + 'map<string, string>::iterator activeflag_it = m_Filter.find(' + self.className + '::Field_ActiveFlag);\n'
+
+		code += '	' * tab_level + 'if ('
+		if 'Id' in var_list:
+			code += 'id_it != m_Filter.end() && id_it->second == "KDo' + self.className + '_Id"'
+			if 'ActiveFlag' in var_list:
+				code += ' &&\n' + '	' * (tab_level+1)
+		if 'ActiveFlag' in var_list:
+			code += 'activeflag_it != m_Filter.end() && activeflag_it->second == "1"'
+		code += ')\n'
+		code += '	' * tab_level + '{\n'
+		code += '	' * (tab_level+1) + is_true_run_code
+		code += '	' * tab_level + '}\n'
+		return code
+
+	def CppFunctionFilter(self, tab_level, member_list, is_true_run_code):
 		code = ''
-		if 'list' in self.returnType:
-			code  = '	' * tab_level + self.returnType + ' list;\n'
-			code += '	' * tab_level + 'list.push_back(new ' + self.className + '());\n'
-			code += '	' * tab_level + 'return list;\n'
-		elif 'Count' in self.functionName:
-			code = '	' * tab_level + 'return 1;\n'
-		elif self.functionName == 'GetDoObject':
+		var_list = []
+		for var in member_list:
+			var_list.append(var.GetName())
+		if len(self.parameterList) != 0 and 'map<string, list<string> >' in self.parameterList[0].GetType():
+			if 'Id' in var_list or 'ActiveFlag' in var_list:
+				code += self.HitMapList(tab_level, var_list, is_true_run_code)
+		elif len(self.parameterList) != 0 and 'list< map<string, string> >' in self.parameterList[0].GetType():
+			if 'Id' in var_list or 'ActiveFlag' in var_list:
+				code += self.HitListMap(tab_level, var_list, is_true_run_code)
+		elif len(self.parameterList) != 0 and 'map<string, string>' in self.parameterList[0].GetType():
+			if 'Id' in var_list or 'ActiveFlag' in var_list:
+				code += self.HitMap(tab_level, var_list, is_true_run_code)
+		else:
+			code = '	' * tab_level + is_true_run_code
+		return code
+
+
+	def CppFunction(self, tab_level, member_list):
+		code = ''
+		if 'list' in self.returnType:  #回傳list<KDataObject*>
+			code  = '	' * tab_level + self.returnType + ' curr_list;\n'
+			code += self.CppFunctionFilter(tab_level, member_list, 'curr_list.push_back(new ' + self.className + '());\n')
+			code += '	' * tab_level + 'return curr_list;\n'
+		elif 'int' in self.returnType: #回傳總數
+			code = self.CppFunctionFilter(tab_level, member_list, 'return 1;\n')
+			if '{' in code:
+				code += '	' * tab_level + 'return 0;\n'
+		elif self.functionName == 'GetDoObject':  #直接用Systemkey來取值的
 			code  = '	' * tab_level + 'if ("SystemKey" == m_SystemKey)\n'
 			code += '	' * tab_level + '{\n'
 			code += '	' * tab_level + '	return new ' + self.className + '();\n'
@@ -115,12 +208,14 @@ class xmlFunction:
 			code += '	' * tab_level + '{\n'
 			code += '	' * tab_level + '	return 0;\n'
 			code += '	' * tab_level + '}\n'
-		elif '' + self.className + '*' in self.returnType:
-			code = '	' * tab_level + 'return new ' + self.className + '();\n'
+		elif '' + self.className + '*' in self.returnType:  #回傳KDataObject*
+			code = self.CppFunctionFilter(tab_level, member_list, 'return new ' + self.className + '();\n')
+			if '{' in code:
+				code += '	' * tab_level + 'return 0;\n'
 
 		return code;
 
-	def dotCppCode(self, tab_level):
+	def dotCppCode(self, tab_level, member_list):
 		code = '\n'
 		code += self.returnType + ' '  + self.className + '::' + self.functionName + '('
 		for parameter in self.parameterList:
@@ -129,7 +224,7 @@ class xmlFunction:
 			code = code[0:len(code)-2] #remove ', '
 		code += ')\n'
 		code += '{\n'
-		code += '	' * tab_level + self.CppFunction(tab_level+1)
+		code += '	' * tab_level + self.CppFunction(tab_level+1, member_list)
 		code += '}'
 		return code
 
@@ -227,11 +322,22 @@ class xml2Class:
 	def PrintDotCppFile(self):
 		code = '#include "stdafx.h"\n'
 		code += '#include "' + self.className + '.h"\n'
+		code += '#include <algorithm>\n'
+		code += '#include <map>\n'
+		code += '#include <list>\n'
+		code += '#include <iterator>\n'
+		code += '#include <string>\n'
+		code += '\n'
+		code += 'using std::find;\n'
+		code += 'using std::map;\n'
+		code += 'using std::list;\n'
+		code += 'using std::iterator;\n'
+		code += 'using std::string;\n'
 		code += self.CppFieldStaticString()
 		code += '\n' + self.construct.dotCppCode(0, self.member_list, self.reference_list)
 
 		for function in self.static_function_list:
-			code += '\n' + function.dotCppCode(0)
+			code += '\n' + function.dotCppCode(0, self.member_list)
 
 		return code
 
@@ -335,8 +441,8 @@ class xml2Class:
 if __name__ == "__main__":
 	classX = xml2Class("Employee")
 	classX.AddMemberVariable("string", "Id")
-	classX.AddMemberVariable("string", "SystemKey")
-	classX.AddMemberVariable("unsigned int", "Active_Flag")
+	#classX.AddMemberVariable("string", "SystemKey")
+	classX.AddMemberVariable("unsigned int", "ActiveFlag")
 	classX.AddMemberVariable("float", "SomeValue")
 	classX.AddReference('RawMaterial', 'Link' , 'Has')
 	classX.AddReference('RawMaterialSize', 'Link' , 'Has')
