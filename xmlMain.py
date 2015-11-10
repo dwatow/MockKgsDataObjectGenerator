@@ -45,6 +45,7 @@ for class_element in root:
 
 print('--------------------------')
 for obj in table_obj_list:
-	#obj.Write2File('KDataObject\\')
-	obj.Write2DotHFile('TableObj\\')
-	obj.Write2DotCppFile('TableObj\\')
+	#obj.Write2File('KDataObject')
+	obj.Write2DotHFile('TableObj')
+	obj.Write2DotCppFile('TableObj')
+'''檔案生成，資料夾要保留，才會順利生成。'''
