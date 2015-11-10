@@ -1,66 +1,17 @@
 <DB>
-    <Class Name="Company" ParentClass="">
+    <Class Name="SendsMaterialRule" ParentClass="">
         <References>
+            <Reference Name="RawMaterial" Type="Link" Relation="Has"/>
+            <Reference Name="RawMaterialSize" Type="Link" Relation="Has"/>
         </References>
         <ExtendReferences>
         </ExtendReferences>
         <ExternalReferences>
         </ExternalReferences>
         <Properties>
-            <Property Name="ActiveFlag" Type="U4" Size="0"/>
-            <Property Name="ModifyDate" Type="String" Size="50"/>
-            <Property Name="Id" Type="String" Size="50"/>
-            <Property Name="Name" Type="String" Size="50"/>
-            <Property Name="NameLocal" Type="String" Size="50"/>
-            <Property Name="NameEng" Type="String" Size="50"/>
-            <Property Name="CreateDate" Type="String" Size="50"/>
+            <Property Name="RuleIndex" Type="U4" Size="0"/>
             <Property Name="CreateUser" Type="String" Size="50"/>
-            <Property Name="Version" Type="String" Size="50"/>
-            <Property Name="VersionDescription" Type="String" Size="500"/>
-            <Property Name="TitleColor" Type="String" Size="50"/>
-            <Property Name="CustomerType" Type="String" Size="50"/>
-            <Property Name="Picture" Type="String" Size="50"/>
-            <Property Name="VAT" Type="String" Size="50"/>
-            <Property Name="EstablishedDate" Type="String" Size="50"/>
-            <Property Name="RegisteredCountryCode" Type="String" Size="50"/>
-            <Property Name="RegisteredStateCode" Type="String" Size="50"/>
-            <Property Name="RegisteredPrefectureLevelCitiesCode" Type="String" Size="50"/>
-            <Property Name="RegisteredCityCode" Type="String" Size="50"/>
-            <Property Name="RegisteredTownCode" Type="String" Size="50"/>
-            <Property Name="RegisteredZipCode" Type="String" Size="50"/>
-            <Property Name="RegisteredAddress" Type="String" Size="500"/>
-            <Property Name="BusinessCountryCode" Type="String" Size="50"/>
-            <Property Name="BusinessStateCode" Type="String" Size="50"/>
-            <Property Name="BusinessCityCode" Type="String" Size="50"/>
-            <Property Name="BusinessPrefectureLevelCitiesCode" Type="String" Size="50"/>
-            <Property Name="BusinessTownCode" Type="String" Size="50"/>
-            <Property Name="BusinessZipCode" Type="String" Size="50"/>
-            <Property Name="BusinessAddress" Type="String" Size="500"/>
-            <Property Name="PhoneCountryCode1" Type="String" Size="50"/>
-            <Property Name="PhoneAreaCode1" Type="String" Size="50"/>
-            <Property Name="Phone1" Type="String" Size="50"/>
-            <Property Name="PhoneCountryCode2" Type="String" Size="50"/>
-            <Property Name="PhoneAreaCode2" Type="String" Size="50"/>
-            <Property Name="Phone2" Type="String" Size="50"/>
-            <Property Name="FaxNoCountryCode1" Type="String" Size="50"/>
-            <Property Name="FaxNoAreaCode1" Type="String" Size="50"/>
-            <Property Name="FaxNo1" Type="String" Size="50"/>
-            <Property Name="FaxNoCountryCode2" Type="String" Size="50"/>
-            <Property Name="FaxNoAreaCode2" Type="String" Size="50"/>
-            <Property Name="FaxNo2" Type="String" Size="50"/>
-            <Property Name="ResponsiblePersonLast" Type="String" Size="50"/>
-            <Property Name="ResponsiblePersonMiddle" Type="String" Size="50"/>
-            <Property Name="ResponsiblePersonFirst" Type="String" Size="50"/>
-            <Property Name="CapitalStock" Type="U8" Size="0"/>
-            <Property Name="CurrencyType" Type="String" Size="50"/>
-            <Property Name="NumberOfEmployees" Type="U4" Size="0"/>
-            <Property Name="Email" Type="String" Size="50"/>
-            <Property Name="WebSite" Type="String" Size="50"/>
-            <Property Name="Turnover1" Type="U8" Size="0"/>
-            <Property Name="Turnover2" Type="U8" Size="0"/>
-            <Property Name="Turnover3" Type="U8" Size="0"/>
-            <Property Name="SupplyType" Type="String" Size="50"/>
-            <Property Name="DistributorTypeSysKey" Type="String" Size="50"/>
+            <Property Name="CreateDate" Type="String" Size="50"/>
         </Properties>
     </Class>
 </DB>

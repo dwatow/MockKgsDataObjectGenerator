@@ -74,7 +74,7 @@ class Constructor:
 		code = self.className + '::' + code[0:code.index(';')]
 		code += self.init_var(0, var_list)
 		code += '{\n'
-		code += '	' * (tab_level+1) + 'KDataPersistentObject::cv_SystemKey = "489DA7EA-46E8-467D-951D-092593943C01";'
+		code += '	' * (tab_level+1) + 'KDataPersistentObject::cv_SystemKey = "489DA7EA-46E8-467D-951D-092593943C01";\n'
 		for ref in ref_list:
 			#print (ref.dotCppInit())
 			code += '	' * (tab_level+1) + ref.dotCppInit() + '\n'
@@ -103,15 +103,15 @@ class xmlFunction:
 
 	def CppFunctionFilterHitMap(self, field_name):
 		if field_name is 'ActiveFlag':
-			return '(*it)[' + self.className + '::Field_' + field_name + '] == ' + '"1"'
+			return '((*it)[' + self.className + '::Field_' + field_name + '].empty() || (*it)[' + self.className + '::Field_' + field_name + '] == ' + '"1")'
 		else:
-			return '(*it)[' + self.className + '::Field_' + field_name + '] == "' + self.className + '_' + field_name + '"'
+			return '((*it)[' + self.className + '::Field_' + field_name + '].empty() || (*it)[' + self.className + '::Field_' + field_name + '] == "' + self.className + '_' + field_name + '")'
 
 	def CppFunctionFilterHitMapList(self, field_name):
 		if field_name is 'ActiveFlag':
-			return 'find(m_Filter[' + self.className + '::Field_' + field_name + '].begin(), m_Filter[' + self.className + '::Field_' + field_name + '].end(), "1") != m_Filter[' + self.className + '::Field_' + field_name + '].end()'
+			return '(m_Filter[' + self.className + '::Field_' + field_name + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_name + '].begin(), m_Filter[' + self.className + '::Field_' + field_name + '].end(), "1") != m_Filter[' + self.className + '::Field_' + field_name + '].end())'
 		else:
-			return 'find(m_Filter[' + self.className + '::Field_' + field_name + '].begin(), m_Filter[' + self.className + '::Field_' + field_name + '].end(), "' + self.className + '_' + field_name + '") != m_Filter[' + self.className + '::Field_' + field_name + '].end()'
+			return '(m_Filter[' + self.className + '::Field_' + field_name + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_name + '].begin(), m_Filter[' + self.className + '::Field_' + field_name + '].end(), "' + self.className + '_' + field_name + '") != m_Filter[' + self.className + '::Field_' + field_name + '].end())'
 
 	def HitMapList(self, tab_level, var_list, is_true_run_code):
 		code =''
@@ -159,11 +159,11 @@ class xmlFunction:
 
 		code += '	' * tab_level + 'if ('
 		if 'Id' in var_list:
-			code += 'id_it != m_Filter.end() && id_it->second == "KDo' + self.className + '_Id"'
+			code += '(id_it != m_Filter.end() || id_it->second == "KDo' + self.className + '_Id")'
 			if 'ActiveFlag' in var_list:
 				code += ' &&\n' + '	' * (tab_level+1)
 		if 'ActiveFlag' in var_list:
-			code += 'activeflag_it != m_Filter.end() && activeflag_it->second == "1"'
+			code += '(activeflag_it != m_Filter.end() || activeflag_it->second == "1")'
 		code += ')\n'
 		code += '	' * tab_level + '{\n'
 		code += '	' * (tab_level+1) + is_true_run_code
@@ -199,8 +199,10 @@ class xmlFunction:
 			code = self.CppFunctionFilter(tab_level, member_list, 'return 1;\n')
 			if '{' in code:
 				code += '	' * tab_level + 'return 0;\n'
-		elif self.functionName == 'GetDoObject':  #直接用Systemkey來取值的
-			code  = '	' * tab_level + 'if ("SystemKey" == m_SystemKey)\n'
+			elif len(code) == 0:
+				code += '	' * tab_level + 'return 1;\n'
+		elif self.functionName == 'GetDoObject':  #直接用假Systemkey來取值的
+			code  = '	' * tab_level + 'if ("489DA7EA-46E8-467D-951D-092593943C01" == m_SystemKey)\n'
 			code += '	' * tab_level + '{\n'
 			code += '	' * tab_level + '	return new ' + self.className + '();\n'
 			code += '	' * tab_level + '}\n'
@@ -212,6 +214,8 @@ class xmlFunction:
 			code = self.CppFunctionFilter(tab_level, member_list, 'return new ' + self.className + '();\n')
 			if '{' in code:
 				code += '	' * tab_level + 'return 0;\n'
+			elif len(code) == 0:
+				code += '	' * tab_level + 'return new ' + self.className + '();\n'
 
 		return code;
 
