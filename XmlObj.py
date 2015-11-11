@@ -226,7 +226,7 @@ class xml2Class:
 
 	def CppListClassConstructor(self, tab_level):
 		code = ''
-		code += '	' * tab_level + self.GetClassNameListNum(1) + '::' + self.GetClassNameListNum(1)+ '(const FilterType& m_FilterType, const QueryByPaging1& m_Filter, KDoTransaction* const m_Transaction):\n'
+		code += '	' * tab_level + self.GetClassNameListNum(1) + '::' + self.GetClassNameListNum(1)+ '(const FilterType& m_FilterType, QueryByPaging1& m_Filter, KDoTransaction* const m_Transaction):\n'
 		code += '	' * tab_level + 'cv_TotalFilterObj(0), cv_Transaction(m_Transaction)\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
@@ -295,7 +295,7 @@ class xml2Class:
 		code += '	' * tab_level + 'void ' + self.GetClassNameListNum(1) + '::DeleteList()\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
-		code += '	' * tab_level + 'for (vector<' + self.GetClassNameNum(1) + '>::const_iterator it = cv_List.begin(); it != cv_List.end(); ++it)\n'
+		code += '	' * tab_level + 'for (vector<' + self.GetClassNameNum(1) + '>::iterator it = cv_List.begin(); it != cv_List.end(); ++it)\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
 		if 'ActiveFlag' in self.member_dict:
@@ -443,7 +443,7 @@ class xml2Class:
 		out += '	' * tab_level + 'vector<' + self.GetClassNameNum(1) + '> cv_List;\n'
 		out += '	' * tab_level + 'void InitialList(list<KDo' + self.className + '*>& m_List);\n'
 		out += 'public:\n'
-		out += '	' * tab_level + self.GetClassNameListNum(1) + '(const FilterType& m_FilterType, const QueryByPaging1& m_Filter, KDoTransaction* const m_Transaction = 0);\n'
+		out += '	' * tab_level + self.GetClassNameListNum(1) + '(const FilterType& m_FilterType, QueryByPaging1& m_Filter, KDoTransaction* const m_Transaction = 0);\n'
 		out += 'public:\n'
 		out += '	' * tab_level + 'const unsigned int& Size() const;\n'
 		out += '	' * tab_level + 'void DeleteList();\n'
@@ -478,7 +478,7 @@ class xml2Class:
 				fil_path_ename = filePath + '\\' + self.className + '1.h'
 			else:
 				fil_path_ename = self.className + '1.h'
-		print(fil_path_ename)
+		#print(fil_path_ename)
 		file = open( fil_path_ename, 'w')
 		file.write(self.PrintDotHFile())
 		file.close()
