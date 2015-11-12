@@ -90,7 +90,7 @@ class References:
 	def RelInitDotCppCode(self):
 		code = ''
 		if self.is_rel_list is not True:
-			code += self.my_class_name + '= new ' + 'KDo' + self.my_class_name + '();'
+			code += self.my_class_name + ' = new ' + 'KDo' + self.my_class_name + '();'
 		return code
 	######
 	def RelDotHCollectionFunction(self):
@@ -150,7 +150,7 @@ class ExtendReferences:  #一對多
 
 	def MyInitDotCppCode(self):
 		code = ''
-		code += self.source_name + '= new ' + 'KDo' + self.rel_class_name + '();'
+		code += self.source_name + ' = new ' + 'KDo' + self.rel_class_name + '();'
 		return code
 	def MyBeforeClass(self):
 		return 'class KDo' + self.rel_class_name + ';'

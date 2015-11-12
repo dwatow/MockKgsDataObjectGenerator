@@ -14,6 +14,7 @@ class xml2Class:
 		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('map<string, string>&', 'm_Filter'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
 		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('map<string, list<string> >&', 'm_Filter'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
 		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('list< map<string, string> >&', 'm_Filter'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
+		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsBySql', [para('string', 'm_SqlFilter')]))
 		self.static_function_list.append(xml2sfun(self.className, 'int', 'GetDoObjectsCountBySql', [para('string', 'm_SqlFilter')]))
 		self.static_function_list.append(xml2sfun(self.className, 'int', 'GetDoObjectsCountByFilter', [para('map<string, string>&', 'm_Filter')]))
 		self.static_function_list.append(xml2sfun(self.className, 'int', 'GetDoObjectsCountByFilter', [para('map<string, list<string> >&', 'm_Filter')]))
@@ -41,7 +42,8 @@ class xml2Class:
 		self.using_namespace = []
 		self.className = 'KDo' + name
 		self.collection_function_list = []
-		self.ref_init_list = []
+		self.init_ref_var_list = []
+		self.init_ref_list_function = []
 		self.ref_static_systemkey = []
 		self.construct = kdo_initfun(self.className)
 		self._init_static_function()
@@ -60,7 +62,10 @@ class xml2Class:
 			self.using_namespace.append(str('KGS::DateTime'))
 
 	def AddInitRef(self, code):
-		self.ref_init_list.append(code)
+		self.init_ref_var_list.append(code)
+
+	def AddRelListFunction(self, code):
+		self.init_ref_list_function.append(code)
 
 	def AddReference(self, dot_h_code):
 		self.reference_list.append(dot_h_code)
@@ -85,7 +90,7 @@ class xml2Class:
 
 		return code
 
-	def PrintDotCppFile(self):
+	def CppInclude(self):
 		code = '#include "stdafx.h"\n'
 		code += '#include "' + self.className + '.h"\n'
 		code += '#include <algorithm>\n'
@@ -99,9 +104,15 @@ class xml2Class:
 		code += 'using std::list;\n'
 		code += 'using std::iterator;\n'
 		code += 'using std::string;\n'
+		return code
+
+
+	def PrintDotCppFile(self):
+		code = ''
+		code += self.CppInclude()
 		code += self.CppFieldStaticString()
 		code += '\n'
-		code += self.construct.dotCppCode(0, self.member_list, self.ref_init_list) #reference_list要改
+		code += self.construct.dotCppCode(0, self.member_list, self.init_ref_var_list)
 
 		for function in self.static_function_list:
 			code += '\n' + function.dotCppCode(0, self.member_list)
@@ -162,7 +173,7 @@ class xml2Class:
 		out += 'public:\n'
 		tab_level += 1
 		out += self.HFieldStaticString(tab_level) + '\n'
-		for ref_field in self.ref_static_systemkey:
+		for ref_field in set(self.ref_static_systemkey):
 			out += '	' * tab_level + ref_field + '\n';
 		out += 'public:\n'
 		for ref in self.reference_list:

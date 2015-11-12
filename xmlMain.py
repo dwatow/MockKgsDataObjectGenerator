@@ -25,7 +25,7 @@ for class_element in root:
 				kdo_class_obj.AddBeforeClass(extl_obj.MyBeforeClass())
 				kdo_class_obj.AddReference(extl_obj.MyDotHCode())
 				kdo_class_obj.AddCollectionFunction(extl_obj.MyDotHCollectionFunction())
-				kdo_class_obj.AddInitRef(extl_obj.MyDotCppCollectionFunction())
+				kdo_class_obj.AddRelListFunction(extl_obj.MyDotCppCollectionFunction())
 
 				rel_kdo_class_obj = kdo_class_list[extl_obj.RelClassName()]
 				rel_kdo_class_obj.AddBeforeClass(extl_obj.RelBeforeClass())

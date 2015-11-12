@@ -1,10 +1,10 @@
 class KDoConstructor:
 	def __init__(self, className):
-		self.className = className
+		self.class_name = className
 
 	def _init_type_value(self, tab_level, var):
 		if var.type == 'string':
-			return '	' * tab_level + var.name + '("' + self.className + '_' + var.name + '")' + ',\n'
+			return '	' * tab_level + var.name + '("' + self.class_name + '_' + var.name + '")' + ',\n'
 		elif var.type == 'double' or var.type == 'float':
 			return '	' * tab_level + var.name + '(' + '0.0' + ')' + ',\n'
 		elif 'int' in var.type: #unsigned int or int
@@ -14,7 +14,7 @@ class KDoConstructor:
 
 	def _init_var(self, tab_level, var_list):
 		code = ':\n'
-		#print(self.className)
+		#print(self.class_name)
 		for var in var_list:
 			#print('	', var.name)
 			code += self._init_type_value(tab_level, var)
@@ -22,7 +22,7 @@ class KDoConstructor:
 		return code
 
 	def dotHCode(self, tab_level):
-		code = '	' * tab_level + self.className
+		code = '	' * tab_level + self.class_name
 		code += '();'
 		return code + '\n'
 
@@ -41,13 +41,14 @@ class KDoConstructor:
 		#code = self.dotHCode()
 		code = self.dotHCode(tab_level)
 
-		code = self.className + '::' + code[0:code.index(';')]
+		code = self.class_name + '::' + code[0:code.index(';')]
 		code += self._init_var(0, var_list)
 		code += '{\n'
 		code += '	' * (tab_level+1) + 'KDataPersistentObject::cv_SystemKey = "489DA7EA-46E8-467D-951D-092593943C01";\n'
+
 		for ref_init in ref_list:
-			#print (ref.dotCppInit())
 			code += '	' * (tab_level+1) + ref_init + '\n'
-		code += '	' * (tab_level+1) + 'cv_ClassName = "' + self.className[len('KDo'):len(self.className)] + '";\n'
+
+		code += '	' * (tab_level+1) + 'cv_ClassName = "' + self.class_name[len('KDo'):len(self.class_name)] + '";\n'
 		code += '}'
 		return code
