@@ -109,10 +109,10 @@ class References:
 		if self.is_rel_list is True:
 			tab_level = '	'
 			code += '\n'
-			code += 'bool ' + self.rel_class_name + '::Add' + self.my_class_name + '( KDo' + self.my_class_name + '* m_Object)\n{\n}\n'
-			code += 'bool ' + self.rel_class_name + '::Remove' + self.my_class_name + '( KDo' + self.my_class_name + '* m_Object)\n{\n}\n'
-			code += 'bool ' + self.rel_class_name + '::RemoveAll' + self.my_class_name + '()\n{\n}\n'
-			code += 'bool ' + self.rel_class_name + '::DeleteAll' + self.my_class_name + '()\n{\n}\n'
+			code += 'bool KDo' + self.rel_class_name + '::Add' + self.my_class_name + '( KDo' + self.my_class_name + '* m_Object)\n{\n' + tab_level + 'return true;\n}\n'
+			code += 'bool KDo' + self.rel_class_name + '::Remove' + self.my_class_name + '( KDo' + self.my_class_name + '* m_Object)\n{\n' + tab_level + 'return true;\n}\n'
+			code += 'bool KDo' + self.rel_class_name + '::RemoveAll' + self.my_class_name + '()\n{\n' + tab_level + 'return true;\n}\n'
+			code += 'bool KDo' + self.rel_class_name + '::DeleteAll' + self.my_class_name + '()\n{\n' + tab_level + 'return true;\n}\n'
 		return code
 
 
@@ -172,10 +172,10 @@ class ExtendReferences:  #一對多
 		code = ''
 		tab_level = '	'
 		code += '\n'
-		code += 'bool ' + self.rel_class_name + '::Add' + self.target_name + '( KDo' + self.my_class_name + '* m_Object)\n{\n}\n'
-		code += 'bool ' + self.rel_class_name + '::Remove' + self.target_name + '( KDo' + self.my_class_name + '* m_Object)\n{\n}\n'
-		code += 'bool ' + self.rel_class_name + '::RemoveAll' + self.target_name + '()\n{\n}\n'
-		code += 'bool ' + self.rel_class_name + '::DeleteAll' + self.target_name + '()\n{\n}\n'
+		code += 'bool KDo' + self.rel_class_name + '::Add' + self.target_name + '( KDo' + self.my_class_name + '* m_Object)\n{\n' + tab_level + 'return true;\n}\n'
+		code += 'bool KDo' + self.rel_class_name + '::Remove' + self.target_name + '( KDo' + self.my_class_name + '* m_Object)\n{\n' + tab_level + 'return true;\n}\n'
+		code += 'bool KDo' + self.rel_class_name + '::RemoveAll' + self.target_name + '()\n{\n' + tab_level + 'return true;\n}\n'
+		code += 'bool KDo' + self.rel_class_name + '::DeleteAll' + self.target_name + '()\n{\n' + tab_level + 'return true;\n}\n'
 		return code
 '''
     <Class Name="DispatchListStatusRelation" ParentClass="">
@@ -218,10 +218,10 @@ class ExternalReferences:  #多對多
 		code = ''
 		tab_level = '	'
 		code += '\n'
-		code += 'bool ' + self.rel_class_name + '::Add' + self.source_name + '( KDo' + self.rel_class_name + '* m_Object)\n{\n}\n'
-		code += 'bool ' + self.rel_class_name + '::Remove' + self.source_name + '( KDo' + self.rel_class_name + '* m_Object)\n{\n}\n'
-		code += 'bool ' + self.rel_class_name + '::RemoveAll' + self.source_name + '()\n{\n}\n'
-		code += 'bool ' + self.rel_class_name + '::DeleteAll' + self.source_name + '()\n{\n}\n'
+		code += 'bool KDo' + self.my_class_name + '::Add' + self.source_name + '( KDo' + self.rel_class_name + '* m_Object)\n{\n' + tab_level + 'return true;\n}\n'
+		code += 'bool KDo' + self.my_class_name + '::Remove' + self.source_name + '( KDo' + self.rel_class_name + '* m_Object)\n{\n' + tab_level + 'return true;\n}\n'
+		code += 'bool KDo' + self.my_class_name + '::RemoveAll' + self.source_name + '()\n{\n' + tab_level + 'return true;\n}\n'
+		code += 'bool KDo' + self.my_class_name + '::DeleteAll' + self.source_name + '()\n{\n' + tab_level + 'return true;\n}\n'
 		return code
 	def MyBeforeClass(self):
 		return 'class KDo' + self.rel_class_name + ';'
@@ -243,8 +243,8 @@ class ExternalReferences:  #多對多
 		code = ''
 		tab_level = '	'
 		code += '\n'
-		code += 'bool ' + self.rel_class_name + '::Add' + self.target_name + '( KDo' + self.my_class_name + '* m_Object)\n{\n}\n'
-		code += 'bool ' + self.rel_class_name + '::Remove' + self.target_name + '( KDo' + self.my_class_name + '* m_Object)\n{\n}\n'
-		code += 'bool ' + self.rel_class_name + '::RemoveAll' + self.target_name + '()\n{\n}\n'
-		code += 'bool ' + self.rel_class_name + '::DeleteAll' + self.target_name + '()\n{\n}\n'
+		code += 'bool KDo' + self.rel_class_name + '::Add' + self.target_name + '( KDo' + self.my_class_name + '* m_Object)\n{\n' + tab_level + 'return true;\n}\n'
+		code += 'bool KDo' + self.rel_class_name + '::Remove' + self.target_name + '( KDo' + self.my_class_name + '* m_Object)\n{\n' + tab_level + 'return true;\n}\n'
+		code += 'bool KDo' + self.rel_class_name + '::RemoveAll' + self.target_name + '()\n{\n' + tab_level + 'return true;\n}\n'
+		code += 'bool KDo' + self.rel_class_name + '::DeleteAll' + self.target_name + '()\n{\n' + tab_level + 'return true;\n}\n'
 		return code

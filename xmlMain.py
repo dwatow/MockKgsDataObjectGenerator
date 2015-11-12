@@ -31,6 +31,7 @@ for class_element in root:
 				rel_kdo_class_obj.AddBeforeClass(extl_obj.RelBeforeClass())
 				rel_kdo_class_obj.AddReference(extl_obj.RelDotHCode())
 				rel_kdo_class_obj.AddCollectionFunction(extl_obj.RelDotHCollectionFunction())
+				rel_kdo_class_obj.AddRelListFunction(extl_obj.RelDotCppCollectionFunction())
 				kdo_class_list[extl_obj.RelClassName()] = rel_kdo_class_obj
 
 		if class_chirld.tag == 'ExtendReferences':
@@ -45,6 +46,7 @@ for class_element in root:
 				rel_kdo_class_obj.AddReference(extd_obj.RelDotHCode())
 
 				rel_kdo_class_obj.AddCollectionFunction(extd_obj.RelDotHCollectionFunction())
+				rel_kdo_class_obj.AddRelListFunction(extd_obj.RelDotCppCollectionFunction())
 				kdo_class_list[extd_obj.RelClassName()] = rel_kdo_class_obj
 
 		if class_chirld.tag == 'References':
@@ -60,6 +62,7 @@ for class_element in root:
 				rel_kdo_class_obj.AddReference(ref_obj.RelDotHCode())
 				rel_kdo_class_obj.AddCollectionFunction(ref_obj.RelDotHCollectionFunction())
 				rel_kdo_class_obj.AddInitRef(ref_obj.RelInitDotCppCode())
+				rel_kdo_class_obj.AddRelListFunction(ref_obj.RelDotCppCollectionFunction())
 				kdo_class_list[ref_obj.RelClassName()] = rel_kdo_class_obj
 
 		if class_chirld.tag == 'Properties':

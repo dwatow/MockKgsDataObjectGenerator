@@ -117,6 +117,9 @@ class xml2Class:
 		for function in self.static_function_list:
 			code += '\n' + function.dotCppCode(0, self.member_list)
 
+		for function in self.init_ref_list_function:
+			code += '\n' + function + '\n'
+
 		return code
 
 	def Write2DotCppFile(self, filePath):
@@ -129,10 +132,16 @@ class xml2Class:
 		file.write(self.PrintDotCppFile())
 		file.close()
 
+
+
 	#.h file
 	def HInclude(self):
 		dot_h_include = '#include "KDo.h"\n'
+		dot_h_include += '\n'
+		dot_h_include += '#ifndef KDOObjectsH\n'
 		dot_h_include += '#include "KDoObjects.h"\n'
+		dot_h_include += '#endif\n'
+		dot_h_include += '\n'
 		for filename in set(self.include_list):
 			dot_h_include += '#include "' + filename + '"\n'
 		dot_h_include += '#include <string>\n'
