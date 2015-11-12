@@ -42,6 +42,7 @@ class xml2Class:
 		self.className = 'KDo' + name
 		self.collection_function_list = []
 		self.ref_init_list = []
+		self.ref_static_systemkey = []
 		self.construct = kdo_initfun(self.className)
 		self._init_static_function()
 
@@ -63,6 +64,9 @@ class xml2Class:
 
 	def AddReference(self, dot_h_code):
 		self.reference_list.append(dot_h_code)
+
+	def AddRefField(self, dot_h_code):
+		self.ref_static_systemkey.append(dot_h_code)
 
 	def AddBeforeClass(self, class_name):
 		self.before_class_name_list.append(class_name)
@@ -158,6 +162,8 @@ class xml2Class:
 		out += 'public:\n'
 		tab_level += 1
 		out += self.HFieldStaticString(tab_level) + '\n'
+		for ref_field in self.ref_static_systemkey:
+			out += '	' * tab_level + ref_field + '\n';
 		out += 'public:\n'
 		for ref in self.reference_list:
 			out += '	' * tab_level + ref + '\n';

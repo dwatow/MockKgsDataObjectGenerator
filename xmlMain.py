@@ -24,6 +24,8 @@ for class_element in root:
 				extl_obj = xml2extlref(curr_class_name, external_reference_element.attrib['SourceName'], external_reference_element.attrib['TargetName'], external_reference_element.attrib['ClassName'])
 				kdo_class_obj.AddBeforeClass(extl_obj.MyBeforeClass())
 				kdo_class_obj.AddReference(extl_obj.MyDotHCode())
+				kdo_class_obj.AddCollectionFunction(extl_obj.MyDotHCollectionFunction())
+				kdo_class_obj.AddInitRef(extl_obj.MyDotCppCollectionFunction())
 
 				rel_kdo_class_obj = kdo_class_list[extl_obj.RelClassName()]
 				rel_kdo_class_obj.AddBeforeClass(extl_obj.RelBeforeClass())
@@ -41,6 +43,7 @@ for class_element in root:
 				rel_kdo_class_obj = kdo_class_list[extd_obj.RelClassName()]
 				rel_kdo_class_obj.AddBeforeClass(extd_obj.RelBeforeClass())
 				rel_kdo_class_obj.AddReference(extd_obj.RelDotHCode())
+
 				rel_kdo_class_obj.AddCollectionFunction(extd_obj.RelDotHCollectionFunction())
 				kdo_class_list[extd_obj.RelClassName()] = rel_kdo_class_obj
 
@@ -50,6 +53,7 @@ for class_element in root:
 				kdo_class_obj.AddBeforeClass(ref_obj.MyBeforeClass())
 				kdo_class_obj.AddReference(ref_obj.MyDotHCode())
 				kdo_class_obj.AddInitRef(ref_obj.MyInitDotCppCode())
+				kdo_class_obj.AddRefField(ref_obj.RelDotHField_Syskey())
 
 				rel_kdo_class_obj = kdo_class_list[ref_obj.RelClassName()]
 				rel_kdo_class_obj.AddBeforeClass(ref_obj.RelBeforeClass())

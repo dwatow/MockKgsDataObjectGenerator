@@ -5,8 +5,6 @@ class References:
 		self.rel_class_name = rel_class_name
 		self.is_rel_list = False
 		self._init_type(ref_type)
-		#self._init_relation(ref_relation)
-
 	'''
 		比較
 		Type="Unique"
@@ -82,6 +80,13 @@ class References:
 			return 'list<KDo' + self.my_class_name + '*> ' + self.my_class_name + 'Collection;'
 		else:
 			return 'KDo' + self.my_class_name + '* ' + self.my_class_name + ';'
+
+	def RelDotHField_Syskey(self):
+		return 'static const string Field_' + self.rel_class_name + '_SystemKey;'
+
+#	def RelDotCppField(self):
+#		return 'static const string Field_' + self.my_class_name + '_SystemKey;'
+
 	def RelInitDotCppCode(self):
 		code = ''
 		if self.is_rel_list is not True:
@@ -139,6 +144,10 @@ class ExtendReferences:  #一對多
 		return self.rel_class_name
 	def MyDotHCode(self):
 		return 'KDo' + self.rel_class_name + ' *' + self.source_name + ';'
+
+#	def RelDotCppField(self):
+#		return 'static const string Field_' + self.rel_class_name + '_SystemKey;'
+
 	def MyInitDotCppCode(self):
 		code = ''
 		code += self.source_name + '= new ' + 'KDo' + self.rel_class_name + '();'
