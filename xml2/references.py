@@ -84,6 +84,9 @@ class References:
 	def RelDotHField_Syskey(self):
 		return 'static const string Field_' + self.rel_class_name + '_SystemKey;'
 
+	def RelDotCppField_Syskey(self):
+		return 'const string KDo' + self.my_class_name + '::Field_' + self.rel_class_name + '_SystemKey = "' + self.rel_class_name + '_SystemKey";'
+
 #	def RelDotCppField(self):
 #		return 'static const string Field_' + self.my_class_name + '_SystemKey;'
 

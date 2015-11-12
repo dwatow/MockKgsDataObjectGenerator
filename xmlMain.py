@@ -56,6 +56,8 @@ for class_element in root:
 				kdo_class_obj.AddReference(ref_obj.MyDotHCode())
 				kdo_class_obj.AddInitRef(ref_obj.MyInitDotCppCode())
 				kdo_class_obj.AddRefField(ref_obj.RelDotHField_Syskey())
+				kdo_class_obj.AddInitRefField(ref_obj.RelDotCppField_Syskey())
+#				kdo_class_obj.AddRefField
 
 				rel_kdo_class_obj = kdo_class_list[ref_obj.RelClassName()]
 				rel_kdo_class_obj.AddBeforeClass(ref_obj.RelBeforeClass())

@@ -44,7 +44,8 @@ class xml2Class:
 		self.collection_function_list = []
 		self.init_ref_var_list = []
 		self.init_ref_list_function = []
-		self.ref_static_systemkey = []
+		self.ref_static_systemkey_list = []
+		self.ref_init_static_systemkey_list = []
 		self.construct = kdo_initfun(self.className)
 		self._init_static_function()
 
@@ -61,17 +62,20 @@ class xml2Class:
 			self.include_list.append('KDateTime')
 			self.using_namespace.append(str('KGS::DateTime'))
 
-	def AddInitRef(self, code):
-		self.init_ref_var_list.append(code)
-
-	def AddRelListFunction(self, code):
-		self.init_ref_list_function.append(code)
-
 	def AddReference(self, dot_h_code):
 		self.reference_list.append(dot_h_code)
 
+	def AddInitRef(self, dot_cpp_code):
+		self.init_ref_var_list.append(dot_cpp_code)
+
+	def AddRelListFunction(self, dot_cpp_code):
+		self.init_ref_list_function.append(dot_cpp_code)
+
 	def AddRefField(self, dot_h_code):
-		self.ref_static_systemkey.append(dot_h_code)
+		self.ref_static_systemkey_list.append(dot_h_code)
+
+	def AddInitRefField(self, dot_cpp_code):
+		self.ref_init_static_systemkey_list.append(dot_cpp_code)
 
 	def AddBeforeClass(self, class_name):
 		self.before_class_name_list.append(class_name)
@@ -111,6 +115,9 @@ class xml2Class:
 		code = ''
 		code += self.CppInclude()
 		code += self.CppFieldStaticString()
+
+		for static_str in self.ref_init_static_systemkey_list:
+			code += static_str + '\n'
 		code += '\n'
 		code += self.construct.dotCppCode(0, self.member_list, self.init_ref_var_list)
 
@@ -182,7 +189,7 @@ class xml2Class:
 		out += 'public:\n'
 		tab_level += 1
 		out += self.HFieldStaticString(tab_level) + '\n'
-		for ref_field in set(self.ref_static_systemkey):
+		for ref_field in set(self.ref_static_systemkey_list):
 			out += '	' * tab_level + ref_field + '\n';
 		out += 'public:\n'
 		for ref in self.reference_list:
