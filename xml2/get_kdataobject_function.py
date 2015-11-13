@@ -6,8 +6,8 @@ class Parameter:
 			return 'int'
 		elif type == 'f4':
 			return 'float'
-		elif type == 'u8':
-			return 'unsigned __int64'
+		#elif type == 'u8':
+		#	return 'unsigned __int64'
 		elif type == 'datetime':
 			return 'KDateTime'
 		else:
@@ -33,11 +33,11 @@ class GetDoObjectFunction:
 		self.className = class_name
 		self.returnType = return_type
 		self.functionName = function_name
-		self.parameterList = parameter_list
+		self.parameter_list = parameter_list
 
 	def dotHCode(self, tab_level):
 		code = 'static ' + self.returnType + ' ' + self.functionName + '('
-		for parameter in self.parameterList:
+		for parameter in self.parameter_list:
 			if ' =' in parameter.GetName():
 				code += parameter.GetType() + ' ' + parameter.GetName()[0:parameter.GetName().index(' =')] + ', '
 			else:
@@ -47,45 +47,54 @@ class GetDoObjectFunction:
 		code += ');'
 		return code
 
-	def CppFunctionFilterHitMap(self, field_name):
-		if field_name is 'ActiveFlag':
-			return '((*it)[' + self.className + '::Field_' + field_name + '].empty() || (*it)[' + self.className + '::Field_' + field_name + '] == ' + '"1")'
+	def CppFunctionFilterHitListMap(self, field_var):
+		if field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
+			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == ' + '"1")'
+		elif field_var.GetType() == 'float':
+			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == ' + '"0.0")'
 		else:
-			return '((*it)[' + self.className + '::Field_' + field_name + '].empty() || (*it)[' + self.className + '::Field_' + field_name + '] == "' + self.className + '_' + field_name + '")'
+			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == "' + self.className + '_' + field_var.GetName() + '")'
 
-	def CppFunctionFilterHitMapList(self, field_name):
-		if field_name is 'ActiveFlag':
-			return '(m_Filter[' + self.className + '::Field_' + field_name + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_name + '].begin(), m_Filter[' + self.className + '::Field_' + field_name + '].end(), "1") != m_Filter[' + self.className + '::Field_' + field_name + '].end())'
+	def CppFunctionFilterHitMapList(self, field_var):
+		if field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
+			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), "1") != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
+		elif field_var.GetType() == 'float':
+			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), "0.0") != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
 		else:
-			return '(m_Filter[' + self.className + '::Field_' + field_name + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_name + '].begin(), m_Filter[' + self.className + '::Field_' + field_name + '].end(), "' + self.className + '_' + field_name + '") != m_Filter[' + self.className + '::Field_' + field_name + '].end())'
+			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), "' + self.className + '_' + field_var.GetName() + '") != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
 
-	def HitMapList(self, tab_level, var_list, is_true_run_code):
+	def CppFunctionFilterHitMap(self, field_var):
+		if field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
+			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == "1")'
+		elif field_var.GetType() == 'float':
+			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == "0.0")'
+		else:
+			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == "' + self.className + '_' + field_var.GetName() + '")'
+
+	def HitMapList(self, tab_level, member_list, is_true_run_code):
 		code =''
 		code += '	' * tab_level + 'if ('
-		if 'Id' in var_list:
-			code += self.CppFunctionFilterHitMapList('Id')
-			if 'ActiveFlag' in var_list:
+		for member in member_list:
+			code += self.CppFunctionFilterHitMapList(member)
+			if member is not member_list[-1]:
 				code += ' &&\n' + '	' * (tab_level+1)
-		if 'ActiveFlag' in var_list:
-			code += self.CppFunctionFilterHitMapList('ActiveFlag')
 		code += ')\n'
 		code += '	' * tab_level + '{\n'
 		code += '	' * (tab_level+1) + is_true_run_code
 		code += '	' * tab_level + '}\n'
 		return code
 
-	def HitListMap(self, tab_level, var_list, is_true_run_code):
+	def HitListMap(self, tab_level, member_list, is_true_run_code):
 		code =''
 		code += '	' * tab_level + 'for (list< map<string, string> >::iterator it = m_Filter.begin(); it != m_Filter.end(); ++it)\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
 		code += '	' * tab_level + 'if ('
-		if 'Id' in var_list:
-			code += self.CppFunctionFilterHitMap('Id')
-			if 'ActiveFlag' in var_list:
+		for member in member_list:
+			code += self.CppFunctionFilterHitListMap(member)
+			if member is not member_list[-1]:
 				code += ' &&\n' + '	' * (tab_level+1)
-		if 'ActiveFlag' in var_list:
-			code += self.CppFunctionFilterHitMap('ActiveFlag')
+
 		code += ')\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
@@ -96,20 +105,16 @@ class GetDoObjectFunction:
 		code += '	' * tab_level + '}\n'
 		return code
 
-	def HitMap(self, tab_level, var_list, is_true_run_code):
+	def HitMap(self, tab_level, member_list, is_true_run_code):
 		code =''
-		if 'Id' in var_list:
-			code +=  '	' * tab_level + 'map<string, string>::iterator id_it = m_Filter.find(' + self.className + '::Field_Id);\n'
-		if 'ActiveFlag' in var_list:
-			code +=  '	' * tab_level + 'map<string, string>::iterator activeflag_it = m_Filter.find(' + self.className + '::Field_ActiveFlag);\n'
+		for member in member_list:
+			code +=  '	' * tab_level + 'map<string, string>::iterator ' + member.GetName().lower() + '_it = m_Filter.find(' + self.className + '::Field_' + member.GetName() + ');\n'
 
 		code += '	' * tab_level + 'if ('
-		if 'Id' in var_list:
-			code += '(id_it != m_Filter.end() || id_it->second == "KDo' + self.className + '_Id")'
-			if 'ActiveFlag' in var_list:
+		for member in member_list:
+			code += self.CppFunctionFilterHitMap(member)
+			if member is not member_list[-1]:
 				code += ' &&\n' + '	' * (tab_level+1)
-		if 'ActiveFlag' in var_list:
-			code += '(activeflag_it != m_Filter.end() || activeflag_it->second == "1")'
 		code += ')\n'
 		code += '	' * tab_level + '{\n'
 		code += '	' * (tab_level+1) + is_true_run_code
@@ -118,18 +123,12 @@ class GetDoObjectFunction:
 
 	def CppFunctionFilter(self, tab_level, member_list, is_true_run_code):
 		code = ''
-		var_list = []
-		for var in member_list:
-			var_list.append(var.GetName())
-		if len(self.parameterList) != 0 and 'map<string, list<string> >' in self.parameterList[0].GetType():
-			if 'Id' in var_list or 'ActiveFlag' in var_list:
-				code += self.HitMapList(tab_level, var_list, is_true_run_code)
-		elif len(self.parameterList) != 0 and 'list< map<string, string> >' in self.parameterList[0].GetType():
-			if 'Id' in var_list or 'ActiveFlag' in var_list:
-				code += self.HitListMap(tab_level, var_list, is_true_run_code)
-		elif len(self.parameterList) != 0 and 'map<string, string>' in self.parameterList[0].GetType():
-			if 'Id' in var_list or 'ActiveFlag' in var_list:
-				code += self.HitMap(tab_level, var_list, is_true_run_code)
+		if len(self.parameter_list) is not 0 and len(member_list) is not 0 and 'map<string, list<string> >' in self.parameter_list[0].GetType():
+			code += self.HitMapList(tab_level, member_list, is_true_run_code)
+		elif len(self.parameter_list) is not 0 and len(member_list) is not 0 and 'list< map<string, string> >' in self.parameter_list[0].GetType():
+			code += self.HitListMap(tab_level, member_list, is_true_run_code)
+		elif len(self.parameter_list) is not 0 and len(member_list) is not 0 and 'map<string, string>' in self.parameter_list[0].GetType():
+			code += self.HitMap(tab_level, member_list, is_true_run_code)
 		else:
 			code = '	' * tab_level + is_true_run_code
 		return code
@@ -168,7 +167,7 @@ class GetDoObjectFunction:
 	def dotCppCode(self, tab_level, member_list):
 		code = '\n'
 		code += self.returnType + ' '  + self.className + '::' + self.functionName + '('
-		for parameter in self.parameterList:
+		for parameter in self.parameter_list:
 			code += parameter.GetType() + ' ' + parameter.GetName() + ', '
 		if ', ' in code :
 			code = code[0:len(code)-2] #remove ', '

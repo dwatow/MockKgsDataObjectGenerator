@@ -404,17 +404,6 @@
             <Property Name="DefectReasonSystemKey" Type="String" Size="50"/>
         </Properties>
     </Class>
-    <Class Name="DemoString" ParentClass="">
-        <References>
-        </References>
-        <ExtendReferences>
-        </ExtendReferences>
-        <ExternalReferences>
-        </ExternalReferences>
-        <Properties>
-            <Property Name="Id" Type="String" Size="50"/>
-        </Properties>
-    </Class>
     <Class Name="DiscussionRawDataNgRelation" ParentClass="">
         <References>
         </References>
@@ -814,6 +803,7 @@
             <Property Name="SVID" Type="U4" Size="0"/>
             <Property Name="DataName" Type="String" Size="50"/>
             <Property Name="DataValue" Type="String" Size="50"/>
+            <Property Name="DataValue2" Type="String" Size="50"/>
             <Property Name="Description" Type="String" Size="50"/>
             <Property Name="IOPort" Type="String" Size="50"/>
             <Property Name="Format" Type="String" Size="50"/>
