@@ -48,15 +48,19 @@ class GetDoObjectFunction:
 		return code
 
 	def CppFunctionFilterHitListMap(self, field_var):
-		if field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
-			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == ' + '"1")'
+		if 'SystemKey' in field_var.GetName():
+			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == "489DA7EA-46E8-467D-951D-092593943C01")'
+		elif field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
+			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == "1")'
 		elif field_var.GetType() == 'float':
-			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == ' + '"0.0")'
+			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == "0.0")'
 		else:
 			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == "' + self.className + '_' + field_var.GetName() + '")'
 
 	def CppFunctionFilterHitMapList(self, field_var):
-		if field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
+		if 'SystemKey' in field_var.GetName():
+			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), "489DA7EA-46E8-467D-951D-092593943C01") != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
+		elif field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
 			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), "1") != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
 		elif field_var.GetType() == 'float':
 			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), "0.0") != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
@@ -64,7 +68,9 @@ class GetDoObjectFunction:
 			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), "' + self.className + '_' + field_var.GetName() + '") != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
 
 	def CppFunctionFilterHitMap(self, field_var):
-		if field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
+		if 'SystemKey' in field_var.GetName():
+			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == "489DA7EA-46E8-467D-951D-092593943C01")'
+		elif field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
 			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == "1")'
 		elif field_var.GetType() == 'float':
 			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == "0.0")'

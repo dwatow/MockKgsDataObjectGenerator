@@ -3,6 +3,8 @@ class KDoConstructor:
 		self.class_name = className
 
 	def _init_type_value(self, tab_level, var):
+		if 'SystemKey' in var.name:
+			return '	' * tab_level + var.name + '("489DA7EA-46E8-467D-951D-092593943C01")' + ',\n'
 		if var.type == 'string':
 			return '	' * tab_level + var.name + '("' + self.class_name + '_' + var.name + '")' + ',\n'
 		elif var.type == 'double' or var.type == 'float':
@@ -16,7 +18,7 @@ class KDoConstructor:
 		code = ':\n'
 		#print(self.class_name)
 		for var in var_list:
-			#print('	', var.name)
+
 			code += self._init_type_value(tab_level, var)
 		code = code[0:len(code)-2] + '\n' + '	' * tab_level
 		return code
