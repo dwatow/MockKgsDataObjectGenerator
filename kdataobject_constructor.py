@@ -48,6 +48,9 @@ class KDoConstructor:
 		code += '{\n'
 		code += '	' * (tab_level+1) + 'KDataPersistentObject::cv_SystemKey = "489DA7EA-46E8-467D-951D-092593943C01";\n'
 
+		if len(ref_list) != 0:
+			code += '	' * (tab_level+1) + 'MockKDataObjectPool database;\n'
+
 		for ref_init in ref_list:
 			code += '	' * (tab_level+1) + ref_init + '\n'
 

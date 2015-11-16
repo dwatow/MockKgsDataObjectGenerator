@@ -97,6 +97,7 @@ class xml2Class:
 	def CppInclude(self):
 		code = '#include "stdafx.h"\n'
 		code += '#include "' + self.className + '.h"\n'
+		code += '#include "MockKDataObjectPool.h"\n'
 		code += '#include <algorithm>\n'
 		code += '#include <map>\n'
 		code += '#include <list>\n'

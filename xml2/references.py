@@ -66,7 +66,7 @@ class References:
 
 	def MyInitDotCppCode(self):
 		code = ''
-		code += self.rel_class_name + '= new ' + 'KDo' + self.rel_class_name + '();'
+		code += self.rel_class_name + ' = database.GetObj<' + 'KDo' + self.rel_class_name + '*>("' + 'KDo' + self.rel_class_name + '");'
 		return code
 	######
 	def MyBeforeClass(self):
@@ -93,7 +93,9 @@ class References:
 	def RelInitDotCppCode(self):
 		code = ''
 		if self.is_rel_list is not True:
-			code += self.my_class_name + ' = new ' + 'KDo' + self.my_class_name + '();'
+			code += self.my_class_name + ' = database.GetObj<' + 'KDo' + self.my_class_name + '*>("' + 'KDo' + self.my_class_name + '");'
+		else:
+			code += self.my_class_name + 'Collection' + ' = database.GetList<' + 'KDo' + self.my_class_name + '*>("' + 'KDo' + self.my_class_name + '");'
 		return code
 	######
 	def RelDotHCollectionFunction(self):
@@ -153,7 +155,7 @@ class ExtendReferences:  #一對多
 
 	def MyInitDotCppCode(self):
 		code = ''
-		code += self.source_name + ' = new ' + 'KDo' + self.rel_class_name + '();'
+		code += self.source_name + ' = database.GetObj<' + 'KDo' + self.rel_class_name + '*>("' + 'KDo' + self.rel_class_name + '");'
 		return code
 	def MyBeforeClass(self):
 		return 'class KDo' + self.rel_class_name + ';'

@@ -86,6 +86,8 @@ class GetDoObjectFunction:
 				code += ' &&\n' + '	' * (tab_level+1)
 		code += ')\n'
 		code += '	' * tab_level + '{\n'
+		if 'return 1;' not in is_true_run_code:
+			code += '	' * (tab_level+1) + 'MockKDataObjectPool database;\n'
 		code += '	' * (tab_level+1) + is_true_run_code
 		code += '	' * tab_level + '}\n'
 		return code
@@ -104,6 +106,8 @@ class GetDoObjectFunction:
 		code += ')\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
+		if 'return 1;' not in is_true_run_code:
+			code += '	' * tab_level + 'MockKDataObjectPool database;\n'
 		code += '	' * tab_level + is_true_run_code
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
@@ -123,6 +127,8 @@ class GetDoObjectFunction:
 				code += ' &&\n' + '	' * (tab_level+1)
 		code += ')\n'
 		code += '	' * tab_level + '{\n'
+		if 'return 1;' not in is_true_run_code:
+			code += '	' * (tab_level+1) + 'MockKDataObjectPool database;\n'
 		code += '	' * (tab_level+1) + is_true_run_code
 		code += '	' * tab_level + '}\n'
 		return code
@@ -136,7 +142,9 @@ class GetDoObjectFunction:
 		elif len(self.parameter_list) is not 0 and len(member_list) is not 0 and 'map<string, string>' in self.parameter_list[0].GetType():
 			code += self.HitMap(tab_level, member_list, is_true_run_code)
 		else:
-			code = '	' * tab_level + is_true_run_code
+			if 'return 1;' not in is_true_run_code:
+				code += '	' * tab_level + 'MockKDataObjectPool database;\n'
+			code += '	' * tab_level + is_true_run_code
 		return code
 
 
@@ -144,7 +152,7 @@ class GetDoObjectFunction:
 		code = ''
 		if 'list' in self.returnType:  #回傳list<KDataObject*>
 			code  = '	' * tab_level + self.returnType + ' curr_list;\n'
-			code += self.CppFunctionFilter(tab_level, member_list, 'curr_list.push_back(new ' + self.className + '());\n')
+			code += self.CppFunctionFilter(tab_level, member_list, 'curr_list = database.GetList<' + self.className + '*>("' + self.className + '");\n')
 			code += '	' * tab_level + 'return curr_list;\n'
 		elif 'int' in self.returnType and '*' not in self.returnType: #回傳總數
 			code = self.CppFunctionFilter(tab_level, member_list, 'return 1;\n')
@@ -155,18 +163,20 @@ class GetDoObjectFunction:
 		elif self.functionName == 'GetDoObject':  #直接用假Systemkey來取值的
 			code  = '	' * tab_level + 'if ("489DA7EA-46E8-467D-951D-092593943C01" == m_SystemKey)\n'
 			code += '	' * tab_level + '{\n'
-			code += '	' * tab_level + '	return new ' + self.className + '();\n'
+			code += '	' * tab_level + '	MockKDataObjectPool database;\n'
+			code += '	' * tab_level + '	return database.GetObj<' + self.className + '*>("' + self.className + '");\n'
 			code += '	' * tab_level + '}\n'
 			code += '	' * tab_level + 'else\n'
 			code += '	' * tab_level + '{\n'
 			code += '	' * tab_level + '	return 0;\n'
 			code += '	' * tab_level + '}\n'
 		elif self.className + '*' == self.returnType:  #回傳KDataObject*
-			code = self.CppFunctionFilter(tab_level, member_list, 'return new ' + self.className + '();\n')
+			code = self.CppFunctionFilter(tab_level, member_list, 'return database.GetObj<' + self.className + '*>("' + self.className + '");\n')
 			if '{' in code:
 				code += '	' * tab_level + 'return 0;\n'
 			elif len(code) == 0:
-				code += '	' * tab_level + 'return new ' + self.className + '();\n'
+				code += '	' * tab_level + 'MockKDataObjectPool database;\n'
+				code += '	' * tab_level + 'return database.GetObj<' + self.className + '*>("' + self.className + '");\n'
 
 		return code;
 
