@@ -170,6 +170,11 @@ class GetDoObjectFunction:
 			code += '	' * tab_level + '{\n'
 			code += '	' * tab_level + '	return 0;\n'
 			code += '	' * tab_level + '}\n'
+		elif self.functionName == 'CreateDoObject':
+			code += '	' * tab_level + self.className + '* new_obj = new ' + self.className + '();\n'
+			code += '	' * tab_level + 'DbObjectPool database;\n'
+			code += '	' * tab_level + 'database.SetData(new_obj);\n'
+			code += '	' * tab_level + 'return new_obj;\n'
 		elif self.className + '*' == self.returnType:  #回傳KDataObject*
 			code = self.CppFunctionFilter(tab_level, member_list, 'return database.GetObj<' + self.className + '*>("' + self.className + '");\n')
 			if '{' in code:
