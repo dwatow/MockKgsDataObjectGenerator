@@ -48,53 +48,69 @@ class GetDoObjectFunction:
 		return code
 
 	def CppFunctionFilterHitListMap(self, field_var):
-		if 'SystemKey' in field_var.GetName():
-			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == "489DA7EA-46E8-467D-951D-092593943C01")'
-		elif field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
-			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == "1")'
-		elif field_var.GetType() == 'float':
-			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == "0.0")'
+#		if 'SystemKey' in field_var.GetName():
+#			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == "489DA7EA-46E8-467D-951D-092593943C01")'
+#		el
+		if field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
+			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == IntToStr((*tobj_it)->' + field_var.GetName() + '))'
+		elif field_var.GetType() == 'float' or field_var.GetType() == 'double':
+			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == FloatToStr((*tobj_it)->' + field_var.GetName() + '))'
+		elif field_var.GetType() == 'KDateTime':
+			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == (*tobj_it)->' + field_var.GetName() + '.LongDateTimeString())'
 		else:
-			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == "' + self.className + '_' + field_var.GetName() + '")'
+			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == (*tobj_it)->' + field_var.GetName() + ')'
 
 	def CppFunctionFilterHitMapList(self, field_var):
-		if 'SystemKey' in field_var.GetName():
-			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), "489DA7EA-46E8-467D-951D-092593943C01") != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
-		elif field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
-			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), "1") != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
-		elif field_var.GetType() == 'float':
-			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), "0.0") != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
+#		if 'SystemKey' in field_var.GetName():
+#			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), "489DA7EA-46E8-467D-951D-092593943C01") != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
+#		el
+		if field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
+			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), IntToStr((*tobj_it)->' + field_var.GetName() + ')) != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
+		elif field_var.GetType() == 'float' or field_var.GetType() == 'double':
+			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), FloatToStr((*tobj_it)->' + field_var.GetName() + ')) != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
+		elif field_var.GetType() == 'KDateTime':
+			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), (*tobj_it)->' + field_var.GetName() + '.LongDateTimeString()) != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
 		else:
-			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), "' + self.className + '_' + field_var.GetName() + '") != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
+			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), (*tobj_it)->' + field_var.GetName() + ') != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
 
 	def CppFunctionFilterHitMap(self, field_var):
-		if 'SystemKey' in field_var.GetName():
-			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == "489DA7EA-46E8-467D-951D-092593943C01")'
-		elif field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
-			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == "1")'
-		elif field_var.GetType() == 'float':
-			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == "0.0")'
+#		if 'SystemKey' in field_var.GetName():
+#			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == "489DA7EA-46E8-467D-951D-092593943C01")'
+#		el
+		if field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
+			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == IntToStr((*tobj_it)->' + field_var.GetName() + '))'
+		elif field_var.GetType() == 'float' or field_var.GetType() == 'double':
+			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == FloatToStr((*tobj_it)->' + field_var.GetName() + '))'
+		elif field_var.GetType() == 'KDateTime':
+			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == (*tobj_it)->' + field_var.GetName() + '.LongDateTimeString())'
 		else:
-			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == "' + self.className + '_' + field_var.GetName() + '")'
+			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == (*tobj_it)->' + field_var.GetName() + ')'
 
 	def HitMapList(self, tab_level, member_list, is_true_run_code):
 		code =''
+		code += '	' * tab_level + 'for (list<' + self.className + '*>::iterator tobj_it = curr_list.begin(); tobj_it != curr_list.end(); ++tobj_it)\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
 		code += '	' * tab_level + 'if ('
 		for member in member_list:
 			code += self.CppFunctionFilterHitMapList(member)
 			if member is not member_list[-1]:
 				code += ' &&\n' + '	' * (tab_level+1)
+
 		code += ')\n'
 		code += '	' * tab_level + '{\n'
-		if 'return 1;' not in is_true_run_code:
-			code += '	' * (tab_level+1) + 'DbObjectPool database;\n'
 		code += '	' * (tab_level+1) + is_true_run_code
+		code += '	' * tab_level + '}\n'
+		tab_level -= 1
 		code += '	' * tab_level + '}\n'
 		return code
 
 	def HitListMap(self, tab_level, member_list, is_true_run_code):
 		code =''
 		code += '	' * tab_level + 'for (list< map<string, string> >::iterator it = m_Filter.begin(); it != m_Filter.end(); ++it)\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
+		code += '	' * tab_level + 'for (list<' + self.className + '*>::iterator tobj_it = curr_list.begin(); tobj_it != curr_list.end(); ++tobj_it)\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
 		code += '	' * tab_level + 'if ('
@@ -106,9 +122,9 @@ class GetDoObjectFunction:
 		code += ')\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
-		if 'return 1;' not in is_true_run_code:
-			code += '	' * tab_level + 'DbObjectPool database;\n'
 		code += '	' * tab_level + is_true_run_code
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
 		tab_level -= 1
@@ -119,7 +135,9 @@ class GetDoObjectFunction:
 		code =''
 		for member in member_list:
 			code +=  '	' * tab_level + 'map<string, string>::iterator ' + member.GetName().lower() + '_it = m_Filter.find(' + self.className + '::Field_' + member.GetName() + ');\n'
-
+		code += '	' * tab_level + 'for (list<' + self.className + '*>::iterator tobj_it = curr_list.begin(); tobj_it != curr_list.end(); ++tobj_it)\n'
+		code += '	' * tab_level + '{\n'
+		tab_level += 1
 		code += '	' * tab_level + 'if ('
 		for member in member_list:
 			code += self.CppFunctionFilterHitMap(member)
@@ -127,9 +145,11 @@ class GetDoObjectFunction:
 				code += ' &&\n' + '	' * (tab_level+1)
 		code += ')\n'
 		code += '	' * tab_level + '{\n'
-		if 'return 1;' not in is_true_run_code:
-			code += '	' * (tab_level+1) + 'DbObjectPool database;\n'
-		code += '	' * (tab_level+1) + is_true_run_code
+		tab_level += 1
+		code += '	' * tab_level + is_true_run_code
+		tab_level -= 1
+		code += '	' * tab_level + '}\n'
+		tab_level -= 1
 		code += '	' * tab_level + '}\n'
 		return code
 
@@ -141,29 +161,17 @@ class GetDoObjectFunction:
 			code += self.HitListMap(tab_level, member_list, is_true_run_code)
 		elif len(self.parameter_list) is not 0 and len(member_list) is not 0 and 'map<string, string>' in self.parameter_list[0].GetType():
 			code += self.HitMap(tab_level, member_list, is_true_run_code)
-		else:
-			if 'return 1;' not in is_true_run_code:
-				code += '	' * tab_level + 'DbObjectPool database;\n'
-			code += '	' * tab_level + is_true_run_code
+		#else:
+		#	code += '	' * tab_level + is_true_run_code
 		return code
 
 
 	def CppFunction(self, tab_level, member_list):
 		code = ''
-		if 'list' in self.returnType:  #回傳list<KDataObject*>
-			code  = '	' * tab_level + self.returnType + ' curr_list;\n'
-			code += self.CppFunctionFilter(tab_level, member_list, 'curr_list = database.GetList<' + self.className + '*>("' + self.className + '");\n')
-			code += '	' * tab_level + 'return curr_list;\n'
-		elif 'int' in self.returnType and '*' not in self.returnType: #回傳總數
-			code = self.CppFunctionFilter(tab_level, member_list, 'return 1;\n')
-			if '{' in code:
-				code += '	' * tab_level + 'return 0;\n'
-			elif len(code) == 0:
-				code += '	' * tab_level + 'return 1;\n'
-		elif self.functionName == 'GetDoObject':  #直接用假Systemkey來取值的
-			code  = '	' * tab_level + 'if ("489DA7EA-46E8-467D-951D-092593943C01" == m_SystemKey)\n'
+		code += '	' * tab_level + 'DbObjectPool database;\n'
+		if self.functionName == 'GetDoObject':  #直接用假Systemkey來取值的
+			code += '	' * tab_level + 'if ("489DA7EA-46E8-467D-951D-092593943C01" == m_SystemKey)\n'
 			code += '	' * tab_level + '{\n'
-			code += '	' * tab_level + '	DbObjectPool database;\n'
 			code += '	' * tab_level + '	return database.GetObj<' + self.className + '*>("' + self.className + '");\n'
 			code += '	' * tab_level + '}\n'
 			code += '	' * tab_level + 'else\n'
@@ -172,16 +180,43 @@ class GetDoObjectFunction:
 			code += '	' * tab_level + '}\n'
 		elif self.functionName == 'CreateDoObject':
 			code += '	' * tab_level + self.className + '* new_obj = new ' + self.className + '();\n'
-			code += '	' * tab_level + 'DbObjectPool database;\n'
 			code += '	' * tab_level + 'database.SetData(new_obj);\n'
 			code += '	' * tab_level + 'return new_obj;\n'
+		elif self.returnType == 'int' and 'BySql' in self.functionName:
+			code += '	' * tab_level + 'return ' + '(int)(database.GetList<' + self.className + '*>("' + self.className + '").size());\n'
+		elif 'list' in self.returnType and 'BySql' in self.functionName:
+			code += '	' * tab_level + 'return ' + 'database.GetList<' + self.className + '*>("' + self.className + '");\n'
+		elif '*' in self.returnType and 'BySql' in self.functionName:
+			code += '	' * tab_level + 'list<' + self.className + '*> curr_list;\n'
+			code += '	' * tab_level + 'curr_list = ' + 'database.GetList<' + self.className + '*>("' + self.className + '");\n'
+			code += '	' * tab_level + 'if (curr_list.empty())\n'
+			code += '	' * tab_level + '{\n'
+			code += '	' * tab_level + '	return 0;\n'
+			code += '	' * tab_level + '}\n'
+			code += '	' * tab_level + 'else\n'
+			code += '	' * tab_level + '{\n'
+			code += '	' * tab_level + '	return curr_list.front();\n'
+			code += '	' * tab_level + '}\n'
+		elif 'list' in self.returnType:  #回傳list<KDataObject*>
+			code += '	' * tab_level + 'list<' + self.className + '*>' + ' curr_list = database.GetList<' + self.className + '*>("' + self.className + '");\n'
+			code += self.CppFunctionFilter(tab_level, member_list, 'curr_list.push_back(*tobj_it);\n')
+			code += '	' * tab_level + 'return curr_list;\n'
+		elif 'int' in self.returnType and '*' not in self.returnType: #回傳總數
+			code += '	' * tab_level + 'int i(0);\n'
+			code += '	' * tab_level + 'list<' + self.className + '*>' + ' curr_list = database.GetList<' + self.className + '*>("' + self.className + '");\n'
+			code += self.CppFunctionFilter(tab_level, member_list, 'i += 1;\n')
+			code += '	' * tab_level + 'return i;\n'
 		elif self.className + '*' == self.returnType:  #回傳KDataObject*
-			code = self.CppFunctionFilter(tab_level, member_list, 'return database.GetObj<' + self.className + '*>("' + self.className + '");\n')
-			if '{' in code:
-				code += '	' * tab_level + 'return 0;\n'
-			elif len(code) == 0:
-				code += '	' * tab_level + 'DbObjectPool database;\n'
-				code += '	' * tab_level + 'return database.GetObj<' + self.className + '*>("' + self.className + '");\n'
+			code += '	' * tab_level + 'list<' + self.className + '*>' + ' curr_list = database.GetList<' + self.className + '*>("' + self.className + '");\n'
+			code += self.CppFunctionFilter(tab_level, member_list, 'return database.GetObj<' + self.className + '*>("' + self.className + '");\n')
+			code += '	' * tab_level + 'if (curr_list.empty())\n'
+			code += '	' * tab_level + '{\n'
+			code += '	' * tab_level + '	return 0;\n'
+			code += '	' * tab_level + '}\n'
+			code += '	' * tab_level + 'else\n'
+			code += '	' * tab_level + '{\n'
+			code += '	' * tab_level + '	return curr_list.front();\n'
+			code += '	' * tab_level + '}\n'
 
 		return code;
 
