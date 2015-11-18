@@ -199,8 +199,9 @@ class GetDoObjectFunction:
 			code += '	' * tab_level + '}\n'
 		elif 'list' in self.returnType:  #回傳list<KDataObject*>
 			code += '	' * tab_level + 'list<' + self.className + '*>' + ' curr_list = database.GetList<' + self.className + '*>("' + self.className + '");\n'
-			code += self.CppFunctionFilter(tab_level, member_list, 'curr_list.push_back(*tobj_it);\n')
-			code += '	' * tab_level + 'return curr_list;\n'
+			code += '	' * tab_level + 'list<' + self.className + '*>' + ' target_objs_list;\n'
+			code += self.CppFunctionFilter(tab_level, member_list, 'target_objs_list.push_back(*tobj_it);\n')
+			code += '	' * tab_level + 'return target_objs_list;\n'
 		elif 'int' in self.returnType and '*' not in self.returnType: #回傳總數
 			code += '	' * tab_level + 'int i(0);\n'
 			code += '	' * tab_level + 'list<' + self.className + '*>' + ' curr_list = database.GetList<' + self.className + '*>("' + self.className + '");\n'
@@ -209,14 +210,7 @@ class GetDoObjectFunction:
 		elif self.className + '*' == self.returnType:  #回傳KDataObject*
 			code += '	' * tab_level + 'list<' + self.className + '*>' + ' curr_list = database.GetList<' + self.className + '*>("' + self.className + '");\n'
 			code += self.CppFunctionFilter(tab_level, member_list, 'return database.GetObj<' + self.className + '*>("' + self.className + '");\n')
-			code += '	' * tab_level + 'if (curr_list.empty())\n'
-			code += '	' * tab_level + '{\n'
-			code += '	' * tab_level + '	return 0;\n'
-			code += '	' * tab_level + '}\n'
-			code += '	' * tab_level + 'else\n'
-			code += '	' * tab_level + '{\n'
-			code += '	' * tab_level + '	return curr_list.front();\n'
-			code += '	' * tab_level + '}\n'
+			code += '	' * tab_level + 'return 0;\n'
 
 		return code;
 
