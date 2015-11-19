@@ -205,8 +205,10 @@ class ExternalReferences:  #多對多
 		self.source_name = source_name
 		self.target_name = target_name
 
-	def RelClassName(self):
-		return self.rel_class_name
+	def MyInitDotCppCode(self):
+		code = ''
+		code += self.source_name + ' = database.GetList<' + 'KDo' + self.rel_class_name + '*>("' + 'KDo' + self.rel_class_name + '");'
+		return code
 	def MyDotHCode(self):
 		return 'list<KDo' + self.rel_class_name + '*> ' + self.source_name + ';'
 	def MyDotHCollectionFunction(self):
@@ -230,6 +232,15 @@ class ExternalReferences:  #多對多
 		return code
 	def MyBeforeClass(self):
 		return 'class KDo' + self.rel_class_name + ';'
+
+	def RelInitDotCppCode(self):
+		code = ''
+		code += self.target_name + '= database.GetList<' + 'KDo' + self.my_class_name + '*>("' + 'KDo' + self.my_class_name + '");'
+		return code
+
+	def RelClassName(self):
+		return self.rel_class_name
+
 	def RelBeforeClass(self):
 		return 'class KDo' + self.my_class_name + ';'
 	def RelDotHCode(self):
