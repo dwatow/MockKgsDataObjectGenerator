@@ -12,7 +12,7 @@ root = tree.getroot()
 kdo_class_list = {}
 for class_element in root:
 	kdo_class_obj = xml2class(class_element.attrib["Name"])
-	kdo_class_list[class_element.attrib["Name"]] = kdo_class_obj
+	kdo_class_list[ class_element.attrib["Name"] ] = kdo_class_obj
 
 for class_element in root:
 	#print(class_element.attrib["Name"])
@@ -41,6 +41,8 @@ for class_element in root:
 				extd_obj = xml2extdref(curr_class_name, extend_reference_element.attrib['SourceName'], extend_reference_element.attrib['TargetName'], extend_reference_element.attrib['ClassName'], extend_reference_element.attrib['Relation'])
 				kdo_class_obj.AddBeforeClass(extd_obj.MyBeforeClass())
 				kdo_class_obj.AddReference(extd_obj.MyDotHCode())
+				kdo_class_obj.AddRefField(extd_obj.RelDotHField_Syskey())
+				kdo_class_obj.AddInitRefField(extd_obj.RelDotCppField_Syskey())
 				kdo_class_obj.AddInitRef(extd_obj.MyInitDotCppCode())
 
 				rel_kdo_class_obj = kdo_class_list[extd_obj.RelClassName()]
@@ -57,9 +59,10 @@ for class_element in root:
 				kdo_class_obj.AddBeforeClass(ref_obj.MyBeforeClass())
 				kdo_class_obj.AddReference(ref_obj.MyDotHCode())
 				kdo_class_obj.AddInitRef(ref_obj.MyInitDotCppCode())
+				if curr_class_name == 'ManufactureProcess':
+					print(ref_obj.my_class_name)
 				kdo_class_obj.AddRefField(ref_obj.RelDotHField_Syskey())
 				kdo_class_obj.AddInitRefField(ref_obj.RelDotCppField_Syskey())
-#				kdo_class_obj.AddRefField
 
 				rel_kdo_class_obj = kdo_class_list[ref_obj.RelClassName()]
 				rel_kdo_class_obj.AddBeforeClass(ref_obj.RelBeforeClass())

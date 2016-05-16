@@ -58,27 +58,17 @@ class Constructor:
 		code += '	' * tab_level + self.GetClassNameNum(1) + '(KDo' + self.className + '* const m_KDataObject, KDoTransaction* const m_Transaction = 0);\n'
 		return code
 
-	def dotCppCode(self, tab_level, add_transaction_codes):
+	def dotCppCode(self, tab_level):
 		#code = self.dotHCode()
 		function_title1 = '	' * tab_level + self.GetClassNameNum(1) + '(KDoTransaction* const m_Transaction);\n'
 		code  = '	' * tab_level + self.GetClassNameNum(1) + '::' + function_title1[0:function_title1.index(';')] + ':\n'
-		code += '	' * tab_level + 'KDoProxy1(KDo' + self.className + '::CreateDoObject()), cv_Transaction(m_Transaction)\n'
-		code += '	' * tab_level + '{\n'
-		tab_level += 1
-		for main_code in add_transaction_codes:
-			code += '	' * tab_level + main_code
-		tab_level -= 1
-		code += '}\n'
+		code += '	' * tab_level + 'KDoProxy1(KDo' + self.className + '::CreateDoObject(), m_Transaction)\n'
+		code += '	' * tab_level + '{}\n'
 		code += '\n'
 		function_title2 = '	' * tab_level + self.GetClassNameNum(1) + '(KDo' + self.className + '* const m_KDataObject, KDoTransaction* const m_Transaction);\n'
 		code += '	' * tab_level + self.GetClassNameNum(1) + '::' + function_title2[0:function_title2.index(';')] + ':\n'
-		code += '	' * tab_level + 'KDoProxy1(m_KDataObject), cv_Transaction(m_Transaction)\n'
-		code += '	' * tab_level + '{\n'
-		tab_level += 1
-		for main_code in add_transaction_codes:
-			code += '	' * tab_level + main_code
-		tab_level -= 1
-		code += '}\n'
+		code += '	' * tab_level + 'KDoProxy1(m_KDataObject, m_Transaction)\n'
+		code += '	' * tab_level + '{}\n'
 		return code
 
 	def dotHCopy(self, tab_level):
@@ -87,7 +77,7 @@ class Constructor:
 
 	def dotCppCopy(self, tab_level):
 		code = '	' * tab_level + self.GetClassNameNum(1) + '::' + self.GetClassNameNum(1) + '(const ' + self.GetClassNameNum(1) + '& m_Obj):\n'
-		code += '	' * tab_level + 'KDoProxy1(m_Obj.GetDataObject()), cv_Transaction(m_Obj.cv_Transaction)\n'
+		code += '	' * tab_level + 'KDoProxy1(m_Obj.GetDataObject(), m_Obj.cv_Transaction)\n'
 		code += '	' * tab_level + '{}\n'
 		return code
 
@@ -122,6 +112,7 @@ class xml2Class:
 		return 'KDo' + self.className
 
 	#.cpp file
+	'''
 	def _init_AddTransaction(self, tab_level):
 		head = '	'
 		code_list = []
@@ -133,6 +124,7 @@ class xml2Class:
 		code_list.append(head * (tab_level+1) + '}\n')
 		code_list.append(head * tab_level + '}\n')
 		return code_list
+	'''
 
 	def dotCppGetPtrFunction(self, tab_level):
 		code = ''
@@ -341,7 +333,7 @@ class xml2Class:
 		code += '#include "fKDateTime.h"\n'
 		code += '#include "' + self.GetClassNameNum(1) + '.h"\n\n'
 		code += '//this file was refactoried not yet....\n\n'
-		code += self.construct.dotCppCode(0, self._init_AddTransaction(0)) + '\n'
+		code += self.construct.dotCppCode(0) + '\n'
 		code += self.construct.dotCppCopy(0) + '\n'
 		code += self.dotCppOperatorAssign(0) + '\n'
 		code += self.dotCppGetPtrFunction(0) + '\n'
@@ -416,7 +408,6 @@ class xml2Class:
 		out += 'class ' + self.GetClassNameNum(1) + ' : public KDoProxy1' + '\n'
 		out += '{\n'
 		tab_level += 1
-		out += '	' * tab_level + 'KDoTransaction* const cv_Transaction;\n'
 		out += 'public:\n'
 		out += self.construct.dotHCode(tab_level)
 		out += 'public:\n'
@@ -487,6 +478,24 @@ class xml2Class:
 class RefactoriedList:
 	def __init__(self):
 		self.refactoried_files = []
+		self.refactoried_files.append(str('AutoPipeLineParam1.cpp').lower())
+		self.refactoried_files.append(str('AutoPipeLineParam1.h').lower())
+		self.refactoried_files.append(str('BomUseMaterial1.cpp').lower())
+		self.refactoried_files.append(str('BomUseMaterial1.h').lower())
+		self.refactoried_files.append(str('Company1.cpp').lower())
+		self.refactoried_files.append(str('Company1.h').lower())
+		self.refactoried_files.append(str('CompanyLicense1.cpp').lower())
+		self.refactoried_files.append(str('CompanyLicense1.h').lower())
+		self.refactoried_files.append(str('DistributorType1.cpp').lower())
+		self.refactoried_files.append(str('DistributorType1.h').lower())
+		self.refactoried_files.append(str('Employee1.cpp').lower())
+		self.refactoried_files.append(str('Employee1.h').lower())
+		self.refactoried_files.append(str('EmployeeTitles1.cpp').lower())
+		self.refactoried_files.append(str('EmployeeTitles1.h').lower())
+		self.refactoried_files.append(str('InputControlCarrierQuantityRelation1.cpp').lower())
+		self.refactoried_files.append(str('InputControlCarrierQuantityRelation1.h').lower())
+		self.refactoried_files.append(str('Layout1.cpp').lower())
+		self.refactoried_files.append(str('Layout1.h').lower())
 		self.refactoried_files.append(str('LogBatchModifyStation.cpp').lower())
 		self.refactoried_files.append(str('LogBatchModifyStation.h').lower())
 		self.refactoried_files.append(str('LogBatchModifyStationCT1.cpp').lower())
@@ -495,12 +504,60 @@ class RefactoriedList:
 		self.refactoried_files.append(str('LogBatchModifyStationSOP1.h').lower())
 		self.refactoried_files.append(str('LogBatchModifyStationTI1.cpp').lower())
 		self.refactoried_files.append(str('LogBatchModifyStationTI1.h').lower())
+		self.refactoried_files.append(str('LogisticsWorkingHours1.cpp').lower())
+		self.refactoried_files.append(str('LogisticsWorkingHours1.h').lower())
+		self.refactoried_files.append(str('ManufactureProcess1.cpp').lower())
+		self.refactoried_files.append(str('ManufactureProcess1.h').lower())
+		self.refactoried_files.append(str('ManufactureProcessMaterial1.cpp').lower())
+		self.refactoried_files.append(str('ManufactureProcessMaterial1.h').lower())
+		self.refactoried_files.append(str('ManufactureProcessStation1.cpp').lower())
+		self.refactoried_files.append(str('ManufactureProcessStation1.h').lower())
+		self.refactoried_files.append(str('ManufactureProcessStationPreNextRelation1.cpp').lower())
+		self.refactoried_files.append(str('ManufactureProcessStationPreNextRelation1.h').lower())
+		self.refactoried_files.append(str('ManufactureProcessStationReportWorkRawData1.cpp').lower())
+		self.refactoried_files.append(str('ManufactureProcessStationReportWorkRawData1.h').lower())
+		self.refactoried_files.append(str('ManufactureProcessStationTestItemsRelation1.cpp').lower())
+		self.refactoried_files.append(str('ManufactureProcessStationTestItemsRelation1.h').lower())
+		self.refactoried_files.append(str('ManufactureProcessTool1.cpp').lower())
+		self.refactoried_files.append(str('ManufactureProcessTool1.h').lower())
+		self.refactoried_files.append(str('MeasurementUnits1.cpp').lower())
+		self.refactoried_files.append(str('MeasurementUnits1.h').lower())
+		self.refactoried_files.append(str('MeasurementUnitsCF1.cpp').lower())
+		self.refactoried_files.append(str('MeasurementUnitsCF1.h').lower())
+		self.refactoried_files.append(str('Organization1.cpp').lower())
+		self.refactoried_files.append(str('Organization1.h').lower())
 		self.refactoried_files.append(str('OrganizationAttribute1.cpp').lower())
 		self.refactoried_files.append(str('OrganizationAttribute1.h').lower())
+		self.refactoried_files.append(str('OrganizationRelation1.cpp').lower())
+		self.refactoried_files.append(str('OrganizationRelation1.h').lower())
+		self.refactoried_files.append(str('OrgEmpRelation1.cpp').lower())
+		self.refactoried_files.append(str('OrgEmpRelation1.h').lower())
+		self.refactoried_files.append(str('OrgWorkCenterRelation1.cpp').lower())
+		self.refactoried_files.append(str('OrgWorkCenterRelation1.h').lower())
+		self.refactoried_files.append(str('OutputControlCarrierQuantityRelation1.cpp').lower())
+		self.refactoried_files.append(str('OutputControlCarrierQuantityRelation1.h').lower())
+		self.refactoried_files.append(str('PeripheralsDevice1.cpp').lower())
+		self.refactoried_files.append(str('PeripheralsDevice1.h').lower())
 		self.refactoried_files.append(str('Process1.cpp').lower())
 		self.refactoried_files.append(str('Process1.h').lower())
 		self.refactoried_files.append(str('ProcessApprovalStatus1.cpp').lower())
 		self.refactoried_files.append(str('ProcessApprovalStatus1.h').lower())
+		self.refactoried_files.append(str('ProcessMaterialBom1.cpp').lower())
+		self.refactoried_files.append(str('ProcessMaterialBom1.h').lower())
+		self.refactoried_files.append(str('RawMaterial1.cpp').lower())
+		self.refactoried_files.append(str('RawMaterial1.h').lower())
+		self.refactoried_files.append(str('RawMaterialAttribteEmpRelation1.cpp').lower())
+		self.refactoried_files.append(str('RawMaterialAttribteEmpRelation1.h').lower())
+		self.refactoried_files.append(str('RawMaterialAttribute1.cpp').lower())
+		self.refactoried_files.append(str('RawMaterialAttribute1.h').lower())
+		self.refactoried_files.append(str('RawMaterialSize1.cpp').lower())
+		self.refactoried_files.append(str('RawMaterialSize1.h').lower())
+		self.refactoried_files.append(str('SendsMaterialRule1.cpp').lower())
+		self.refactoried_files.append(str('SendsMaterialRule1.h').lower())
+		self.refactoried_files.append(str('Shift1.cpp').lower())
+		self.refactoried_files.append(str('Shift1.h').lower())
+		self.refactoried_files.append(str('ShiftTimeSliceRelation1.cpp').lower())
+		self.refactoried_files.append(str('ShiftTimeSliceRelation1.h').lower())
 		self.refactoried_files.append(str('SmAddrAreaCode1.cpp').lower())
 		self.refactoried_files.append(str('SmAddrAreaCode1.h').lower())
 		self.refactoried_files.append(str('SmAddressAreaCurrencyType1.cpp').lower())
@@ -511,6 +568,12 @@ class RefactoriedList:
 		self.refactoried_files.append(str('SmCurrencyType1.h').lower())
 		self.refactoried_files.append(str('SmDcDeviceType1.cpp').lower())
 		self.refactoried_files.append(str('SmDcDeviceType1.h').lower())
+		self.refactoried_files.append(str('SmFablinkSystemParameter1.cpp').lower())
+		self.refactoried_files.append(str('SmFablinkSystemParameter1.h').lower())
+		self.refactoried_files.append(str('SmJobProperties1.cpp').lower())
+		self.refactoried_files.append(str('SmJobProperties1.h').lower())
+		self.refactoried_files.append(str('SmManufactureProcessType1.cpp').lower())
+		self.refactoried_files.append(str('SmManufactureProcessType1.h').lower())
 		self.refactoried_files.append(str('SmProductionCycleTime1.cpp').lower())
 		self.refactoried_files.append(str('SmProductionCycleTime1.h').lower())
 		self.refactoried_files.append(str('SmProductManufacturingParameter1.cpp').lower())
@@ -529,83 +592,39 @@ class RefactoriedList:
 		self.refactoried_files.append(str('SopDoc1.h').lower())
 		self.refactoried_files.append(str('Station1.cpp').lower())
 		self.refactoried_files.append(str('Station1.h').lower())
-		''''''
-		self.refactoried_files.append(str('Employee1.h').lower())
-		self.refactoried_files.append(str('Employee1.cpp').lower())
-		self.refactoried_files.append(str('Organization1.h').lower())
-		self.refactoried_files.append(str('Organization1.cpp').lower())
-		self.refactoried_files.append(str('OrganizationAttribute1.h').lower())
-		self.refactoried_files.append(str('OrganizationAttribute1.cpp').lower())
-		self.refactoried_files.append(str('OrganizationRelation1.h').lower())
-		self.refactoried_files.append(str('OrganizationRelation1.cpp').lower())
-		self.refactoried_files.append(str('OrgEmpRelation1.h').lower())
-		self.refactoried_files.append(str('OrgEmpRelation1.cpp').lower())
-		self.refactoried_files.append(str('OrgWorkCenterRelation1.h').lower())
-		self.refactoried_files.append(str('OrgWorkCenterRelation1.cpp').lower())
-		self.refactoried_files.append(str('PeripheralsDevice1.h').lower())
-		self.refactoried_files.append(str('PeripheralsDevice1.cpp').lower())
-		self.refactoried_files.append(str('Shift1.h').lower())
-		self.refactoried_files.append(str('Shift1.cpp').lower())
-		self.refactoried_files.append(str('ShiftTimeSliceRelation1.h').lower())
-		self.refactoried_files.append(str('ShiftTimeSliceRelation1.cpp').lower())
-		self.refactoried_files.append(str('WorkCenterGroup1.h').lower())
-		self.refactoried_files.append(str('WorkCenterGroup1.cpp').lower())
-		self.refactoried_files.append(str('WorkingReportPeripheralsDeviceRelation1.h').lower())
-		self.refactoried_files.append(str('WorkingReportPeripheralsDeviceRelation1.cpp').lower())
-
-		self.refactoried_files.append(str('EmployeeTitles1.cpp').lower())
-		self.refactoried_files.append(str('EmployeeTitles1.h').lower())
+		self.refactoried_files.append(str('StationSop1.cpp').lower())
+		self.refactoried_files.append(str('StationSop1.h').lower())
+		self.refactoried_files.append(str('TestItems1.cpp').lower())
+		self.refactoried_files.append(str('TestItems1.h').lower())
 		self.refactoried_files.append(str('Tool1.cpp').lower())
 		self.refactoried_files.append(str('Tool1.h').lower())
 		self.refactoried_files.append(str('ToolAlarmGroup1.cpp').lower())
 		self.refactoried_files.append(str('ToolAlarmGroup1.h').lower())
 		self.refactoried_files.append(str('ToolAlarmTable1.cpp').lower())
 		self.refactoried_files.append(str('ToolAlarmTable1.h').lower())
-		self.refactoried_files.append(str('TreeVersion1.cpp').lower())
-		self.refactoried_files.append(str('TreeVersion1.h').lower())
-		self.refactoried_files.append(str('WorkCenterEmpRelation1.cpp').lower())
-		self.refactoried_files.append(str('WorkCenterEmpRelation1.h').lower())
-		self.refactoried_files.append(str('WorkingReportDevice1.cpp').lower())
-		self.refactoried_files.append(str('WorkingReportDevice1.h').lower())
-
-		self.refactoried_files.append(str('Company1.cpp').lower())
-		self.refactoried_files.append(str('Company1.h').lower())
-
-
-		self.refactoried_files.append(str('Layout1.h').lower())
-		self.refactoried_files.append(str('Layout1.cpp').lower())
-		self.refactoried_files.append(str('RawMaterialAttribute1.h').lower())
-		self.refactoried_files.append(str('RawMaterialAttribute1.cpp').lower())
-		self.refactoried_files.append(str('RawMaterialSize1.h').lower())
-		self.refactoried_files.append(str('RawMaterialSize1.cpp').lower())
-		self.refactoried_files.append(str('Company1.cpp').lower())
-		self.refactoried_files.append(str('Company1.h').lower())
-		self.refactoried_files.append(str('CompanyLicense1.cpp').lower())
-		self.refactoried_files.append(str('CompanyLicense1.h').lower())
-		self.refactoried_files.append(str('DistributorType1.cpp').lower())
-		self.refactoried_files.append(str('DistributorType1.h').lower())
-		self.refactoried_files.append(str('ManufactureProcessStationReportWorkRawData1.cpp').lower())
-		self.refactoried_files.append(str('ManufactureProcessStationReportWorkRawData1.h').lower())
-		self.refactoried_files.append(str('MeasurementUnits1.cpp').lower())
-		self.refactoried_files.append(str('MeasurementUnits1.h').lower())
-		self.refactoried_files.append(str('MeasurementUnitsCF1.cpp').lower())
-		self.refactoried_files.append(str('MeasurementUnitsCF1.h').lower())
-		self.refactoried_files.append(str('RawMaterial1.cpp').lower())
-		self.refactoried_files.append(str('RawMaterial1.h').lower())
-		self.refactoried_files.append(str('RawMaterialAttribteEmpRelation1.cpp').lower())
-		self.refactoried_files.append(str('RawMaterialAttribteEmpRelation1.h').lower())
-		self.refactoried_files.append(str('RawMaterialAttribute1.cpp').lower())
-		self.refactoried_files.append(str('RawMaterialAttribute1.h').lower())
-		self.refactoried_files.append(str('SmFablinkSystemParameter1.cpp').lower())
-		self.refactoried_files.append(str('SmFablinkSystemParameter1.h').lower())
-		self.refactoried_files.append(str('Tool1.cpp').lower())
-		self.refactoried_files.append(str('Tool1.h').lower())
 		self.refactoried_files.append(str('ToolGroup1.cpp').lower())
 		self.refactoried_files.append(str('ToolGroup1.h').lower())
 		self.refactoried_files.append(str('ToolParameterRelation1.cpp').lower())
 		self.refactoried_files.append(str('ToolParameterRelation1.h').lower())
+		self.refactoried_files.append(str('TreeVersion1.cpp').lower())
+		self.refactoried_files.append(str('TreeVersion1.h').lower())
+		self.refactoried_files.append(str('WorkCenterEmpRelation1.cpp').lower())
+		self.refactoried_files.append(str('WorkCenterEmpRelation1.h').lower())
+		self.refactoried_files.append(str('WorkCenterGroup1.cpp').lower())
+		self.refactoried_files.append(str('WorkCenterGroup1.h').lower())
+		self.refactoried_files.append(str('WorkingReportDevice1.cpp').lower())
+		self.refactoried_files.append(str('WorkingReportDevice1.h').lower())
 		self.refactoried_files.append(str('WorkingReportItem1.cpp').lower())
 		self.refactoried_files.append(str('WorkingReportItem1.h').lower())
+		self.refactoried_files.append(str('WorkingReportItemGroup1.cpp').lower())
+		self.refactoried_files.append(str('WorkingReportItemGroup1.h').lower())
+		self.refactoried_files.append(str('WorkingReportItemGroupP1.cpp').lower())
+		self.refactoried_files.append(str('WorkingReportItemGroupP1.h').lower())
+		self.refactoried_files.append(str('WorkingReportItemP1.cpp').lower())
+		self.refactoried_files.append(str('WorkingReportItemP1.h').lower())
+		self.refactoried_files.append(str('WorkingReportPeripheralsDeviceRelation1.cpp').lower())
+		self.refactoried_files.append(str('WorkingReportPeripheralsDeviceRelation1.h').lower())
+
 	def GetList(self):
 		return self.refactoried_files
 

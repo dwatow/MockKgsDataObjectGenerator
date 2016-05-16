@@ -150,8 +150,11 @@ class ExtendReferences:  #一對多
 	def MyDotHCode(self):
 		return 'KDo' + self.rel_class_name + ' *' + self.source_name + ';'
 
-#	def RelDotCppField(self):
-#		return 'static const string Field_' + self.rel_class_name + '_SystemKey;'
+	def RelDotHField_Syskey(self):
+		return 'static const string Field_' + self.rel_class_name + '_' + self.source_name + '_ExtendSystemKey;'
+
+	def RelDotCppField_Syskey(self):
+		return 'const string KDo' + self.my_class_name + '::Field_' + self.rel_class_name + '_' + self.source_name + '_ExtendSystemKey = "' + self.rel_class_name + '_' + self.source_name + '_ExtendSystemKey";'
 
 	def MyInitDotCppCode(self):
 		code = ''

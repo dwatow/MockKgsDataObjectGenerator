@@ -6,31 +6,31 @@ from xml2.references import ExtendReferences as xml2exref
 
 class xml2Class:
 	def _init_static_function(self):
-		self.static_function_list.append(xml2sfun(self.className, '' + self.className + '*', 'CreateDoObject', []))
-		self.static_function_list.append(xml2sfun(self.className, '' + self.className + '*', 'GetDoObject', [para('string', 'm_SystemKey')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('map<string, string>&', 'm_Filter')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('map<string, list<string> >&', 'm_Filter')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('list< map<string, string> >&', 'm_Filter')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('map<string, string>&', 'm_Filter'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('map<string, list<string> >&', 'm_Filter'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('list< map<string, string> >&', 'm_Filter'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsBySql', [para('string', 'm_SqlFilter')]))
-		self.static_function_list.append(xml2sfun(self.className, 'int', 'GetDoObjectsCountBySql', [para('string', 'm_SqlFilter')]))
-		self.static_function_list.append(xml2sfun(self.className, 'int', 'GetDoObjectsCountByFilter', [para('map<string, string>&', 'm_Filter')]))
-		self.static_function_list.append(xml2sfun(self.className, 'int', 'GetDoObjectsCountByFilter', [para('map<string, list<string> >&', 'm_Filter')]))
-		self.static_function_list.append(xml2sfun(self.className, 'int', 'GetDoObjectsCountByFilter', [para('list< map<string, string> >&', 'm_Filter')]))
-		self.static_function_list.append(xml2sfun(self.className, 'int', 'GetDoObjectsCountByFilter', [para('map<string, string>&', 'm_Filter'), para('set<string>&', 'm_LikeColumns')]))
-		self.static_function_list.append(xml2sfun(self.className, 'int', 'GetDoObjectsCountByFilter', [para('map<string, list<string> >&', 'm_Filter'), para('set<string>&', 'm_LikeColumns')]))
-		self.static_function_list.append(xml2sfun(self.className, 'int', 'GetDoObjectsCountByFilter', [para('list< map<string, string> >&', 'm_Filter'), para('set<string>&', 'm_LikeColumns')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsBySql', [para('string', 'm_SqlFilter'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('map<string, string>&', 'm_Filter'), para('set<string>&', 'm_LikeColumns')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('map<string, list<string> >&', 'm_Filter'), para('set<string>&', 'm_LikeColumns')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('list< map<string, string> >&', 'm_Filter'), para('set<string>&', 'm_LikeColumns')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('map<string, string>&', 'm_Filter'), para('set<string>&', 'm_LikeColumns'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('map<string, list<string> >&', 'm_Filter'), para('set<string>&', 'm_LikeColumns'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xml2sfun(self.className, 'list<' + self.className + '*>', 'GetDoObjectsByFilter', [para('list< map<string, string> >&', 'm_Filter'), para('set<string>&', 'm_LikeColumns'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
-		self.static_function_list.append(xml2sfun(self.className, '' + self.className + '*', 'GetDoObjectByFilter', [para('map<string, string>&', 'm_Filter')]))
-		self.static_function_list.append(xml2sfun(self.className, '' + self.className + '*', 'GetDoObjectBySql', [para('string', 'm_SqlFilter')]))
+		self.static_function_list.append(xml2sfun(self.class_name, '' + self.class_name + '*', 'CreateDoObject', []))
+		self.static_function_list.append(xml2sfun(self.class_name, '' + self.class_name + '*', 'GetDoObject', [para('string', 'm_SystemKey')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsByFilter', [para('map<string, string>&', 'm_Filter')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsByFilter', [para('map<string, list<string> >&', 'm_Filter')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsByFilter', [para('list< map<string, string> >&', 'm_Filter')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsByFilter', [para('map<string, string>&', 'm_Filter'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsByFilter', [para('map<string, list<string> >&', 'm_Filter'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsByFilter', [para('list< map<string, string> >&', 'm_Filter'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsBySql', [para('string', 'm_SqlFilter')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'int', 'GetDoObjectsCountBySql', [para('string', 'm_SqlFilter')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'int', 'GetDoObjectsCountByFilter', [para('map<string, string>&', 'm_Filter')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'int', 'GetDoObjectsCountByFilter', [para('map<string, list<string> >&', 'm_Filter')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'int', 'GetDoObjectsCountByFilter', [para('list< map<string, string> >&', 'm_Filter')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'int', 'GetDoObjectsCountByFilter', [para('map<string, string>&', 'm_Filter'), para('set<string>&', 'm_LikeColumns')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'int', 'GetDoObjectsCountByFilter', [para('map<string, list<string> >&', 'm_Filter'), para('set<string>&', 'm_LikeColumns')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'int', 'GetDoObjectsCountByFilter', [para('list< map<string, string> >&', 'm_Filter'), para('set<string>&', 'm_LikeColumns')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsBySql', [para('string', 'm_SqlFilter'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsByFilter', [para('map<string, string>&', 'm_Filter'), para('set<string>&', 'm_LikeColumns')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsByFilter', [para('map<string, list<string> >&', 'm_Filter'), para('set<string>&', 'm_LikeColumns')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsByFilter', [para('list< map<string, string> >&', 'm_Filter'), para('set<string>&', 'm_LikeColumns')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsByFilter', [para('map<string, string>&', 'm_Filter'), para('set<string>&', 'm_LikeColumns'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsByFilter', [para('map<string, list<string> >&', 'm_Filter'), para('set<string>&', 'm_LikeColumns'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
+		self.static_function_list.append(xml2sfun(self.class_name, 'list<' + self.class_name + '*>', 'GetDoObjectsByFilter', [para('list< map<string, string> >&', 'm_Filter'), para('set<string>&', 'm_LikeColumns'), para('int', 'm_StartIndex'), para('int', 'm_Number'), para('list<string>&', 'm_OrderList'), para('bool', 'm_AscendingFlag = true')]))
+		self.static_function_list.append(xml2sfun(self.class_name, '' + self.class_name + '*', 'GetDoObjectByFilter', [para('map<string, string>&', 'm_Filter')]))
+		self.static_function_list.append(xml2sfun(self.class_name, '' + self.class_name + '*', 'GetDoObjectBySql', [para('string', 'm_SqlFilter')]))
 
 	def __init__(self, name):
 		self.member_list = []
@@ -40,13 +40,14 @@ class xml2Class:
 		self.include_list = []
 		self.include_stdlib_list = []
 		self.using_namespace = []
-		self.className = 'KDo' + name
+		self.class_name = 'KDo' + name
+		self.table_name = name
 		self.collection_function_list = []
 		self.init_ref_var_list = []
 		self.init_ref_list_function = []
 		self.ref_static_systemkey_list = []
 		self.ref_init_static_systemkey_list = []
-		self.construct = kdo_initfun(self.className)
+		self.construct = kdo_initfun(self.class_name)
 		self._init_static_function()
 
 	def AddCollectionFunction(self, code):
@@ -83,20 +84,20 @@ class xml2Class:
 	#.cpp file
 	def CppFieldStaticString(self):
 		code = '\n'
-		#code += 'const string ' + self.className + '::ClassDbTableName = "' + '";
-		code += 'const string ' + self.className + '::Field_SystemKey = "SystemKey";\n'
-		code += 'const string ' + self.className + '::Field_SystemKeyType = "SystemKeyType";\n\n'
+		code += 'const string ' + self.class_name + '::ClassDbTableName = "' + self.table_name + '";\n\n'
+		code += 'const string ' + self.class_name + '::Field_SystemKey = "SystemKey";\n'
+		code += 'const string ' + self.class_name + '::Field_SystemKeyType = "SystemKeyType";\n\n'
 
 		for member in self.member_list:
 			if member.name == 'SystemKey':
 				continue
-			code += member.dotCppFieldStr(self.className) + '\n'
+			code += member.dotCppFieldStr(self.class_name) + '\n'
 
 		return code
 
 	def CppInclude(self):
 		code = '#include "stdafx.h"\n'
-		code += '#include "' + self.className + '.h"\n'
+		code += '#include "' + self.class_name + '.h"\n'
 		code += '#include "DbObjectPool.h"\n'
 		code += '#include <algorithm>\n'
 		code += '#include <map>\n'
@@ -133,13 +134,12 @@ class xml2Class:
 	def Write2DotCppFile(self, filePath):
 		fil_path_ename = ""
 		if len(filePath) != 0:
-			fil_path_ename = filePath + '\\' + self.className + '.cpp'
+			fil_path_ename = filePath + '\\' + self.class_name + '.cpp'
 		else:
-			fil_path_ename = self.className + '.cpp'
+			fil_path_ename = self.class_name + '.cpp'
 		file = open( fil_path_ename, 'w')
 		file.write(self.PrintDotCppFile())
 		file.close()
-
 
 
 	#.h file
@@ -170,7 +170,7 @@ class xml2Class:
 
 	def HFieldStaticString(self, tab_level):
 		code = ''
-		#code += '	' * tab_level + 'static const string ClassDbTableName;\n\n'
+		code += '	' * tab_level + 'static const string ClassDbTableName;\n\n'
 		code += '	' * tab_level + 'static const string Field_SystemKey;\n'
 		code += '	' * tab_level + 'static const string Field_SystemKeyType;\n'
 
@@ -185,7 +185,7 @@ class xml2Class:
 		out = ''
 		for class_kdo_name in set(self.before_class_name_list):
 			out += class_kdo_name + '\n'
-		out += 'class ' + self.className + ' : public KDataPersistentObject' + '\n'
+		out += 'class ' + self.class_name + ' : public KDataPersistentObject' + '\n'
 		out += '{\n'
 		out += 'public:\n'
 		tab_level += 1
@@ -213,8 +213,8 @@ class xml2Class:
 		return out
 
 	def PrintDotHFile(self):
-		dot_h_code = '#ifndef ' + self.className + '_H\n'
-		dot_h_code += '#define ' + self.className + '_H\n\n'
+		dot_h_code = '#ifndef ' + self.class_name + '_H\n'
+		dot_h_code += '#define ' + self.class_name + '_H\n\n'
 		dot_h_code += self.HInclude() + '\n'
 		dot_h_code += self.HUsingNameSpace() + '\n'
 		dot_h_code += self.HClassCode(0, self.member_list)
@@ -224,9 +224,9 @@ class xml2Class:
 	def Write2DotHFile(self, filePath):
 		fil_path_ename = ""
 		if len(filePath) != 0:
-			fil_path_ename = filePath + '\\' + self.className + '.h'
+			fil_path_ename = filePath + '\\' + self.class_name + '.h'
 		else:
-			fil_path_ename = self.className + '.h'
+			fil_path_ename = self.class_name + '.h'
 		file = open( fil_path_ename, 'w')
 		file.write(self.PrintDotHFile())
 		file.close()

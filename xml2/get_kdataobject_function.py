@@ -1,13 +1,13 @@
 class Parameter:
 	def CovertType(self, type):
-		if type == 'u4' or type == 'u8':
+		if type == 'u4':
 			return 'unsigned int'
 		elif type == 'i4':
 			return 'int'
 		elif type == 'f4':
 			return 'float'
-		#elif type == 'u8':
-		#	return 'unsigned __int64'
+		elif type == 'u8':
+			return 'unsigned __int64'
 		elif type == 'datetime':
 			return 'KDateTime'
 		else:
@@ -53,6 +53,8 @@ class GetDoObjectFunction:
 #		el
 		if field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
 			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == IntToStr((*tobj_it)->' + field_var.GetName() + '))'
+		elif field_var.GetType() == 'unsigned __int64' or field_var.GetType() == 'int':
+			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == UintToStr((*tobj_it)->' + field_var.GetName() + '))'
 		elif field_var.GetType() == 'float' or field_var.GetType() == 'double':
 			return '((*it)[' + self.className + '::Field_' + field_var.GetName() + '].empty() || (*it)[' + self.className + '::Field_' + field_var.GetName() + '] == FloatToStr((*tobj_it)->' + field_var.GetName() + '))'
 		elif field_var.GetType() == 'KDateTime':
@@ -66,6 +68,8 @@ class GetDoObjectFunction:
 #		el
 		if field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
 			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), IntToStr((*tobj_it)->' + field_var.GetName() + ')) != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
+		elif field_var.GetType() == 'unsigned __int64':
+			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), UintToStr((*tobj_it)->' + field_var.GetName() + ')) != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
 		elif field_var.GetType() == 'float' or field_var.GetType() == 'double':
 			return '(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].empty() || find(m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].begin(), m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end(), FloatToStr((*tobj_it)->' + field_var.GetName() + ')) != m_Filter[' + self.className + '::Field_' + field_var.GetName() + '].end())'
 		elif field_var.GetType() == 'KDateTime':
@@ -79,6 +83,8 @@ class GetDoObjectFunction:
 #		el
 		if field_var.GetType() == 'unsigned int' or field_var.GetType() == 'int':
 			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == IntToStr((*tobj_it)->' + field_var.GetName() + '))'
+		elif field_var.GetType() == 'unsigned __int64':
+			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == UintToStr((*tobj_it)->' + field_var.GetName() + '))'
 		elif field_var.GetType() == 'float' or field_var.GetType() == 'double':
 			return '(' + field_var.GetName().lower() + '_it == m_Filter.end() || ' + field_var.GetName().lower() + '_it->second == FloatToStr((*tobj_it)->' + field_var.GetName() + '))'
 		elif field_var.GetType() == 'KDateTime':
@@ -135,6 +141,8 @@ class GetDoObjectFunction:
 		code =''
 		for member in member_list:
 			code +=  '	' * tab_level + 'map<string, string>::iterator ' + member.GetName().lower() + '_it = m_Filter.find(' + self.className + '::Field_' + member.GetName() + ');\n'
+
+		code += '	' * tab_level + 'int index_table(0);\n'
 		code += '	' * tab_level + 'for (list<' + self.className + '*>::iterator tobj_it = curr_list.begin(); tobj_it != curr_list.end(); ++tobj_it)\n'
 		code += '	' * tab_level + '{\n'
 		tab_level += 1
@@ -149,6 +157,7 @@ class GetDoObjectFunction:
 		code += '	' * tab_level + is_true_run_code
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
+		code += '	' * tab_level + '++index_table;\n'
 		tab_level -= 1
 		code += '	' * tab_level + '}\n'
 		return code
@@ -209,7 +218,7 @@ class GetDoObjectFunction:
 			code += '	' * tab_level + 'return i;\n'
 		elif self.className + '*' == self.returnType:  #回傳KDataObject*
 			code += '	' * tab_level + 'list<' + self.className + '*>' + ' curr_list = database.GetList<' + self.className + '*>("' + self.className + '");\n'
-			code += self.CppFunctionFilter(tab_level, member_list, 'return database.GetObj<' + self.className + '*>("' + self.className + '");\n')
+			code += self.CppFunctionFilter(tab_level, member_list, 'return database.GetObj<' + self.className + '*>("' + self.className + '", index_table);\n')
 			code += '	' * tab_level + 'return 0;\n'
 
 		return code;
